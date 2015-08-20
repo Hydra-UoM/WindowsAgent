@@ -107,6 +107,7 @@
     <ClCompile Include="MyApplicationInformation.cpp" />
     <ClCompile Include="MyCalloutInformation.cpp" />
     <ClCompile Include="MyChangeInformation.cpp" />
+    <ClCompile Include="MyErrorInformation.cpp" />
     <ClCompile Include="MyFilterInformation.cpp" />
     <ClCompile Include="MyLayerInformation.cpp" />
     <ClCompile Include="MyLogStructure.cpp" />
@@ -115,6 +116,7 @@
     <ClCompile Include="MyObject.cpp" />
     <ClCompile Include="MyProcessInformation.cpp" />
     <ClCompile Include="MyProviderInformation.cpp" />
+    <ClCompile Include="MyRuleInformation.cpp" />
     <ClCompile Include="MySubject.cpp" />
     <ClCompile Include="MyTimeCreated.cpp" />
     <ClCompile Include="MyTimeStamp.cpp" />

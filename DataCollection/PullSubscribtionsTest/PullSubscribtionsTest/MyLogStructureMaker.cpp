@@ -105,6 +105,7 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
     ullNanoseconds = (ullTimeStamp % 10000000) * 100; // Display nanoseconds instead of milliseconds for higher resolution
 	{
 		MyTimeStamp timeStamp(ullTimeStamp,st,ft);
+		/**
 		WCHAR* processName = (WCHAR*)malloc(sizeof(WCHAR));
 		if(GetProcessImageNameFromPID::getProcessNameFromProcessID(executionProcessID,&processName) == TRUE)
 		{
@@ -115,6 +116,7 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
 		{
 			processName = L"couldn't found";
 		}
+		*/
 		/**
 		if (eventMessageString)
 		{
@@ -126,7 +128,7 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
 		*/
 		MyLogStructure outputLog(eventMessageString,levelMessageString,taskMessageString,opCodeMessageString,channelMessageString,
 			providerMessageString,version,level,task,opCode,keywords,eventRecordID,executionProcessID,executionThreadID,
-			channel,computer,EventID,timeStamp,processName);
+			channel,computer,EventID,timeStamp/**,processName*/);
 		*outputLogStructure = outputLog;
 
 		/**

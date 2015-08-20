@@ -43,12 +43,14 @@ class MyLogStructure
 		MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageString1,LPWSTR taskMessageString1,LPWSTR opCodeMessageString1,
 			LPWSTR channelMessageString1,LPWSTR providerMessageString1,int version1,int level1,int task1,int opCode1,UINT64 keywords1,
 			UINT64 eventRecordID1,UINT32 executionProcessID1,UINT32 executionThreadID1,const wchar_t* channel1,
-			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1,WCHAR* processImageName1);
+			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1/**,WCHAR* processImageName1*/);
 			
 		~MyLogStructure(void);
 
 		void print();
+		void printExtractedEventMessageString();
 		void extractEventMessageString();
+		void initializeAvailableInformation();
 		std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
 
 	//private:
@@ -71,6 +73,39 @@ class MyLogStructure
 		LPCWSTR computer;
 		DWORD EventID;
 		MyTimeStamp timeStamp;
-		WCHAR* processImageName;
+		//WCHAR* processImageName;
+
+		bool isAvailableMySubject;
+		bool isAvailableMyProviderInformation;
+		bool isAvailableMyProcessInformation;
+		bool isAvailableMyObject;
+		bool isAvailableMyNetworkInformation;
+		bool isAvailableMyLayerInformation;
+		bool isAvailableMyFilterInformation;
+		bool isAvailableMyChangeInformation;
+		bool isAvailableMyCalloutInformation;
+		bool isAvailableMyApplicationInformation;
+		bool isAvailableMyAdditionalInformation;
+		bool isAvailableMyAccessRequestInformation;
+		bool isAvailableMyRuleInformation;
+		bool isAvailableMyErrorInformation;
+
+		MySubject*mySubject;
+		const wchar_t*message;
+		/**
+		MyProviderInformation myProviderInformation;
+		MyProcessInformation myProcessInformation;
+		MyObject myObject;
+		MyNetworkInformation myNetworkInformation;
+		MyLayerInformation myLayerInformation;
+		MyFilterInformation myFilterInformation;
+		MyChangeInformation myChangeInformation;
+		MyCalloutInformation myCalloutInformation;
+		MyApplicationInformation myApplicationInformation;
+		MyAdditionalInformation myAdditionalInformation;
+		MyAccessRequestInformation myAccessRequestInformation;
+		MyRuleInformation myRuleInformation;
+		MyErrorInformation myErrorInformation;
+		*/
 };
 #endif

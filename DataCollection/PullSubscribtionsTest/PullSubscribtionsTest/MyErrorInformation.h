@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#ifndef MySubject_H
-#define MySubject_H
+#ifndef MyErrorInformation_H
+#define MyErrorInformation_H
 
 #include <windows.h>
 #include <conio.h>
@@ -12,17 +12,14 @@
 
 #pragma comment(lib, "wevtapi.lib")
 
-class MySubject
+class MyErrorInformation
 {
 	public:
-		MySubject(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1);
-		~MySubject(void);
+		MyErrorInformation(const wchar_t* Reason1);
+		~MyErrorInformation(void);
 
 		void print();
 
-		const wchar_t* Security_ID;
-		const wchar_t* Account_Name;
-		const wchar_t* Account_Domain;
-		const wchar_t* Logon_ID;
+		const wchar_t* Reason;
 };
 #endif

@@ -4,13 +4,13 @@
 MyLogStructure::MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageString1,LPWSTR taskMessageString1,LPWSTR opCodeMessageString1,
 			LPWSTR channelMessageString1,LPWSTR providerMessageString1,int version1,int level1,int task1,int opCode1,UINT64 keywords1,
 			UINT64 eventRecordID1,UINT32 executionProcessID1,UINT32 executionThreadID1,const wchar_t* channel1,
-			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1,WCHAR* processImageName1):
+			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1/**,WCHAR* processImageName1*/):
 
 			eventMessageString(eventMessageString1),levelMessageString(levelMessageString1),taskMessageString(taskMessageString1),
 			opCodeMessageString(opCodeMessageString1),channelMessageString(channelMessageString1),providerMessageString(providerMessageString1),
 			version(version1),level(level1),task(task1),opCode(opCode1),keywords(keywords1),eventRecordID(eventRecordID1),
-			executionProcessID(executionProcessID1),channel(channel1),computer(computer1),EventID(EventID1),timeStamp(timeStamp1),
-			processImageName(processImageName1)
+			executionProcessID(executionProcessID1),channel(channel1),computer(computer1),EventID(EventID1),timeStamp(timeStamp1)/**,
+			processImageName(processImageName1)*/
 {
 	    eventMessageString = eventMessageString1;
 	    levelMessageString = levelMessageString1;
@@ -31,8 +31,29 @@ MyLogStructure::MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageStr
 		computer = computer1;
 		EventID = EventID1;
 		timeStamp = timeStamp1;
-		processImageName = processImageName1;
+		//processImageName = processImageName1;
+		initializeAvailableInformation();
 		extractEventMessageString();
+}
+
+void MyLogStructure::initializeAvailableInformation()
+{
+		isAvailableMySubject = false;
+		isAvailableMyProviderInformation = false;
+		isAvailableMyProcessInformation = false;
+		isAvailableMyObject = false;
+		isAvailableMyNetworkInformation = false;
+		isAvailableMyLayerInformation = false;
+		isAvailableMyFilterInformation = false;
+		isAvailableMyChangeInformation = false;
+		isAvailableMyCalloutInformation = false;
+		isAvailableMyApplicationInformation = false;
+		isAvailableMyAdditionalInformation = false;
+		isAvailableMyAccessRequestInformation = false;
+		isAvailableMyErrorInformation = false;
+		isAvailableMyRuleInformation = false;
+
+		mySubject = (MySubject*)malloc(sizeof(MySubject));
 }
 
 void MyLogStructure::extractEventMessageString()
@@ -41,26 +62,10 @@ void MyLogStructure::extractEventMessageString()
 	vector<wstring> results = splitLPWSTRWithManyDelimiters(eventMessageString, separators);
 	int noOfSplitedStrings = 0;
 	enum attributeName{Message,Client_ID,
-		Subject,Security_ID,Account_Name,Account_Domain,Logon_ID,
-		Object,Object_Server,Object_Type,Object_Name,Handle_ID,Resource_Attributes,
-		Process_Information,Process_ID,Process_Name,
-		Access_Request_Information,Transaction_ID,Accesses,Access_Reasons,Access_Mask,Privileges_Used_For_Access_Check,Restricted_SID_Count,
-		Provider_Information,Provider_ID,Provider_Name,
-		Change_Information,Change_Type,
-		Filter_Information,Filter_ID,Filter_Name,Filter_Type,Filter_Runtime_ID,Filter_Layer_Name,Filter_Layer_Runtime_ID,
-		Layer_Information,Layer_ID,Layer_Name,Layer_Runtime_ID,
-		Callout_Information,Callout_ID,Callout_Name,
-		Additional_Information,Weight,Conditions,Condition_ID1,Match_Value1,Condition_Value1,
-			Condition_ID2,Match_Value2,Condition_Value2,
-			Condition_ID3,Match_Value3,Condition_Value3,Filter_Action,
-		Application_Information,Application_Process_ID,Application_Name,
-		Network_Information, Direction,Source_Address,Source_Port,Destination_Address,Destination_Port,Protocol,
-
 		Source_Handle_Information,Source_Handle_ID,Source_Process_ID,
 		New_Handle_Information,Target_Handle_ID,Target_Process_ID
 		};
 	const wchar_t*arrayOfSplitted[200];
-	const wchar_t*arrayOfSplittedAndUse[200];
     for (auto const& w : results)
 	{
 		const wchar_t* st = w.c_str();
@@ -68,15 +73,15 @@ void MyLogStructure::extractEventMessageString()
 		arrayOfSplitted[noOfSplitedStrings] = st;
 		noOfSplitedStrings++;
 	}
-	arrayOfSplittedAndUse[Message] = arrayOfSplitted[0];
-	wprintf(L"Message: %ls\n", arrayOfSplittedAndUse[Message]);
+	//wprintf(L"Message: %ls\n", arrayOfSplitted[0]);
+	message = arrayOfSplitted[0];
 	// Setup logs contains Client id
 	int i = 1;
-	//MySubject* mySubject = (MySubject*)malloc(sizeof(MySubject));
 	while(i < noOfSplitedStrings)
 	{
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Subject") == 0)// There is Subject type
 		{
+			isAvailableMySubject = true;
 			i = i + 2;
 			const wchar_t* Security_ID;
 			const wchar_t* Account_Name;
@@ -126,12 +131,13 @@ void MyLogStructure::extractEventMessageString()
 			{
 				Logon_ID = L"Unavailable for this event";
 			}
-			MySubject mySubject1(Security_ID,Account_Name,Account_Domain,Logon_ID);
-				//*mySubject = mySubject1;
-			//mySubject1.print();
+			mySubject = new MySubject(Security_ID,Account_Name,Account_Domain,Logon_ID);
+			//*mySubject = mySubject1;
+			//mySubject->print();
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Object") == 0)// There is Object type
 		{
+			isAvailableMyObject = true;
 			i = i + 2;
 			const wchar_t* Object_Server;
 			const wchar_t* Object_Type;
@@ -199,6 +205,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Process Information") == 0)// There is Process Information type
 		{
+			isAvailableMyProcessInformation = true;
 			i = i + 2;
 			const wchar_t* Process_ID;
 			const wchar_t* Process_Name;
@@ -230,6 +237,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Application Information") == 0)// There is Application Information type
 		{
+			isAvailableMyApplicationInformation = true;
 			i = i + 2;
 			const wchar_t* Application_Process_ID;
 			const wchar_t* Application_Name;
@@ -261,6 +269,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Network Information") == 0)// There is Network Information type
 		{
+			isAvailableMyNetworkInformation = true;
 			i = i + 2;
 			const wchar_t* Direction;
 			const wchar_t* Source_Address;
@@ -340,6 +349,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Provider Information") == 0)// There is Provider Information type
 		{
+			isAvailableMyProviderInformation = true;
 			i = i + 2;
 			const wchar_t* Provider_ID;
 			const wchar_t* Provider_Name;
@@ -371,6 +381,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(wcscmp(arrayOfSplitted[i],L"Change Information") == 0)// There is Change Information type
 		{
+			isAvailableMyChangeInformation = true;
 			i = i + 2;
 			const wchar_t* Change_Type;
 			if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Change Type") == 0)
@@ -390,6 +401,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(wcscmp(arrayOfSplitted[i],L"Access Request Information") == 0)// There is Access Request Information type
 		{
+			isAvailableMyAccessRequestInformation = true;
 			i = i + 2;
 			const wchar_t* Transaction_ID;
 			const wchar_t* Accesses;
@@ -470,6 +482,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Filter Information") == 0)// There is Filter Information type
 		{
+			isAvailableMyFilterInformation = true;
 			i = i + 2;
 			const wchar_t* Filter_ID;
 			const wchar_t* Filter_Name;
@@ -562,6 +575,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Layer Information") == 0)// There is Layer Information type
 		{
+			isAvailableMyLayerInformation = true;
 			i = i + 2;
 			const wchar_t* Layer_ID;
 			const wchar_t* Layer_Name;
@@ -605,6 +619,7 @@ void MyLogStructure::extractEventMessageString()
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Callout Information") == 0)// There is Callout Information type
 		{
+			isAvailableMyCalloutInformation = true;
 			i = i + 2;
 			const wchar_t* Callout_ID;
 			const wchar_t* Callout_Name;
@@ -632,7 +647,59 @@ void MyLogStructure::extractEventMessageString()
 			}
 			MyCalloutInformation myCalloutInformation(Callout_ID,Callout_Name);
 				//*mySubject = mySubject1;
-			myCalloutInformation.print();
+			//myCalloutInformation.print();
+		}
+		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Rule Information") == 0)// There is Rule Information type
+		{
+			isAvailableMyRuleInformation = true;
+			i = i + 2;
+			const wchar_t* Rule_ID;
+			const wchar_t* Rule_Name;
+			if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"ID") == 0)
+			{
+				i++;
+				Rule_ID = arrayOfSplitted[i];
+				//wprintf(L"Security_ID: %ls\n", Security_ID);
+				i++;
+			}
+			else
+			{
+				Rule_ID = L"Unavailable for this event";
+			}
+			if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Name") == 0)
+			{
+				i++;
+				Rule_Name = arrayOfSplitted[i];
+				//wprintf(L"Account_Name: %ls\n", Account_Name);
+				i++;
+			}
+			else
+			{
+				Rule_Name = L"Unavailable for this event";
+			}
+			MyRuleInformation myRuleInformation(Rule_ID,Rule_Name);
+				//*mySubject = mySubject1;
+			//myRuleInformation.print();
+		}
+		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Error Information") == 0)// There is Error Information type
+		{
+			isAvailableMyErrorInformation = true;
+			i = i + 2;
+			const wchar_t* Error_Reason;
+			if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Reason") == 0)
+			{
+				i++;
+				Error_Reason = arrayOfSplitted[i];
+				//wprintf(L"Security_ID: %ls\n", Security_ID);
+				i++;
+			}
+			else
+			{
+				Error_Reason = L"Unavailable for this event";
+			}
+			MyErrorInformation myErrorInformation(Error_Reason);
+				//*mySubject = mySubject1;
+			//myErrorInformation.print();
 		}
 		i++;
 	}
@@ -662,8 +729,46 @@ std::vector<wstring> MyLogStructure::splitLPWSTRWithManyDelimiters(const wstring
     return wordVector;
 }
 
+void MyLogStructure::printExtractedEventMessageString()
+{
+		wprintf(L"Message: %ls\n", message);
+		if(isAvailableMySubject)
+		{
+			std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
+			mySubject->print();
+		}
+		/**
+		MySubject mySubject;
+		MyProviderInformation myProviderInformation;
+		MyProcessInformation myProcessInformation;
+		MyObject myObject;
+		MyNetworkInformation myNetworkInformation;
+		MyLayerInformation myLayerInformation;
+		MyFilterInformation myFilterInformation;
+		MyChangeInformation myChangeInformation;
+		MyCalloutInformation myCalloutInformation;
+		MyApplicationInformation myApplicationInformation;
+		MyAdditionalInformation myAdditionalInformation;
+		MyAccessRequestInformation myAccessRequestInformation;
+		*/
+		/**
+		isAvailableMyProviderInformation = false;
+		isAvailableMyProcessInformation = false;
+		isAvailableMyObject = false;
+		isAvailableMyNetworkInformation = false;
+		isAvailableMyLayerInformation = false;
+		isAvailableMyFilterInformation = false;
+		isAvailableMyChangeInformation = false;
+		isAvailableMyCalloutInformation = false;
+		isAvailableMyApplicationInformation = false;
+		isAvailableMyAdditionalInformation = false;
+		isAvailableMyAccessRequestInformation = false;
+		*/
+}
+
 void MyLogStructure::print()
 {
+	printExtractedEventMessageString();
 	//wprintf(L"EventRecordID: %I64u\n",eventRecordID);
 	wprintf(L"EventID: %lu\n", EventID);
 	//wprintf(L"Provider Name: %s\n", providerMessageString);
@@ -672,16 +777,17 @@ void MyLogStructure::print()
     //wprintf(L"Task: %hu\n",task);
     //wprintf(L"Opcode: %u\n",opCode);
 	//wprintf(L"Keywords: 0x%I64x\n",keywords);
-	//wprintf(L"Execution ProcessID: %lu\n",executionProcessID);
+	wprintf(L"Execution ProcessID: %lu\n",executionProcessID);
     //wprintf(L"Execution ThreadID: %lu\n",executionThreadID);
     //wprintf(L"Channel: %s\n",channel);
     //wprintf(L"Computer: %s\n",computer);
-	if (eventMessageString)
+	/**if (eventMessageString)
     {
         wprintf(L"Event message string: %s\n", eventMessageString);
         free(eventMessageString);
         eventMessageString = NULL;
     }
+	*/
 	/**
 	// don't need to extract
     if (levelMessageString)
@@ -720,7 +826,7 @@ void MyLogStructure::print()
         providerMessageString = NULL;
     }
 	*/
-	//timeStamp.ToPrintTimeStamp();
+	timeStamp.ToPrintTimeStamp();
 	//_tprintf( TEXT("Process's image name:  %ls\n\n"),processImageName);
 }
 
