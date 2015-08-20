@@ -150,15 +150,6 @@ void printResultedEvent(MyLogStructure*myResultedLogStructures[],int numberOfFil
 	}
 }
 
-void filterLogs(int process_id,MyLogStructure*myResultedLogStructures[],int*numberOfFilteredEvents)
-{
-	LPWSTR pwsPath = L"Security"; // channel name// "Application","Security","System","Setup","Operational" ;security works when admin previlege
-    LPWSTR pwsQuery = L"*[System/TimeCreated[timediff(@SystemTime) <= 10000]]";// xpath query // , [System/EventID!= 100]
-	filterEvents(pwsPath,pwsQuery);
-	filterResultedEvents(process_id,myResultedLogStructures,numberOfFilteredEvents);
-
-}
-
 // Enumerate the events in the result set.
 DWORD EnumerateResults(EVT_HANDLE hResults)
 {
@@ -244,12 +235,23 @@ BOOL IsKeyEvent(HANDLE hStdIn)
     return fKeyPress;
 }
 
+void filterLogs(int process_id,MyLogStructure*myResultedLogStructures[],int*numberOfFilteredEvents)
+{
+	LPWSTR pwsPath = L"Security"; // channel name// "Application","Security","System","Setup","Operational" ;security works when admin previlege
+    //LPWSTR pwsQuery = L"*[System/TimeCreated[timediff(@SystemTime) <= 10000]]";// xpath query // , [System/EventID!= 100]
+	LPWSTR pwsQuery = L"*[System[(Level <= 3) and TimeCreated[timediff(@SystemTime) <= 10000]]]";
+	filterEvents(pwsPath,pwsQuery);
+	filterResultedEvents(process_id,myResultedLogStructures,numberOfFilteredEvents);
+}
+
 void __cdecl wmain()
 {
 	MyLogStructure*myResultedLogStructures[100];
 	int numberOfFilteredEvents = 0;
 	filterLogs(4,myResultedLogStructures,&numberOfFilteredEvents);
-	
+	// test with App : 8404 && 1000000ms
+	// test with Sec: 4 && 10000ms
+	// test with Sys: 4 && 10000000ms
 	
 	//std::cout << numberOfFilteredEvents << std::endl;
 	printResultedEvent(myResultedLogStructures,numberOfFilteredEvents);

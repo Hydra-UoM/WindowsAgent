@@ -7,6 +7,7 @@ E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCR
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYAPPLICATIONINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYCALLOUTINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYCHANGEINFORMATION.OBJ
+E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYERRORINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYFILTERINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYLAYERINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYLOGSTRUCTURE.OBJ
@@ -15,16 +16,14 @@ E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCR
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYOBJECT.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYPROCESSINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYPROVIDERINFORMATION.OBJ
+E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYRULEINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYSUBJECT.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYTIMECREATED.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYTIMESTAMP.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\PULLSUBSCRIBTIONSTEST.OBJ
-E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYERRORINFORMATION.OBJ
-E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\PULLSUBSCRIBTIONSTEST\DEBUG\MYRULEINFORMATION.OBJ
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\DEBUG\PULLSUBSCRIBTIONSTEST.ILK
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\DEBUG\PULLSUBSCRIBTIONSTEST.EXE
 E:\GIT\WINDOWSAGENT\WINDOWSAGENT\DATACOLLECTION\PULLSUBSCRIBTIONSTEST\DEBUG\PULLSUBSCRIBTIONSTEST.PDB
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\PullSubscribtionsTest.vcxprojResolveAssemblyReference.cache
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\GetProcessImageNameFromPID.obj
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\MyAccessRequestInformation.obj
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\MyAdditionalInformation.obj
@@ -44,6 +43,7 @@ E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscr
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\MySubject.obj
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\MyTimeCreated.obj
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\MyTimeStamp.obj
+E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\PullSubscribtionsTest.obj
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\stdafx.obj
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\cl.command.1.tlog
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\CL.read.1.tlog
@@ -52,12 +52,6 @@ E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscr
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link-cvtres.write.1.tlog
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link-rc.read.1.tlog
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link-rc.write.1.tlog
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.2512-cvtres.read.1.tlog
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.2512-cvtres.write.1.tlog
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.2512-rc.read.1.tlog
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.2512-rc.write.1.tlog
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.2512.read.1.tlog
-E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.2512.write.1.tlog
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.command.1.tlog
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.read.1.tlog
 E:\git\WindowsAgent\WindowsAgent\DataCollection\PullSubscribtionsTest\PullSubscribtionsTest\Debug\link.write.1.tlog

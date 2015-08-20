@@ -131,8 +131,10 @@ void MyLogStructure::extractEventMessageString()
 			{
 				Logon_ID = L"Unavailable for this event";
 			}
-			mySubject = new MySubject(Security_ID,Account_Name,Account_Domain,Logon_ID);
-			//*mySubject = mySubject1;
+			//mySubject = new MySubject(Security_ID,Account_Name,Account_Domain,Logon_ID);
+			MySubject mySubject1(Security_ID,Account_Name,Account_Domain,Logon_ID);
+			*mySubject = mySubject1;
+			// mySubject = &mySubject1;
 			//mySubject->print();
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Object") == 0)// There is Object type
@@ -200,7 +202,7 @@ void MyLogStructure::extractEventMessageString()
 				Resource_Attributes = L"Unavailable for this event";
 			}
 			MyObject myObject1(Object_Server,Object_Type,Object_Name,Handle_ID,Resource_Attributes);
-				//*mySubject = mySubject1;
+				//*myObject1 = myObject;
 			//myObject1.print();
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Process Information") == 0)// There is Process Information type
@@ -232,7 +234,7 @@ void MyLogStructure::extractEventMessageString()
 				Process_Name = L"Unavailable for this event";
 			}
 			MyProcessInformation myProcessInformation1(Process_ID,Process_Name);
-				//*mySubject = mySubject1;
+				//*myProcessInformation1 = myProcessInformation;
 			//myProcessInformation1.print();
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Application Information") == 0)// There is Application Information type
@@ -731,11 +733,11 @@ std::vector<wstring> MyLogStructure::splitLPWSTRWithManyDelimiters(const wstring
 
 void MyLogStructure::printExtractedEventMessageString()
 {
-		wprintf(L"Message: %ls\n", message);
+		//wprintf(L"Message: %ls\n", message);
 		if(isAvailableMySubject)
 		{
 			std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
-			mySubject->print();
+			//mySubject->print();
 		}
 		/**
 		MySubject mySubject;
