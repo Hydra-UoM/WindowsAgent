@@ -52,6 +52,7 @@ class MyLogStructure
 		void extractEventMessageString();
 		void initializeAvailableInformation();
 		std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
+		string wchar_t_pointerToString(const wchar_t*text);
 
 	//private:
 		LPWSTR eventMessageString;
@@ -90,8 +91,11 @@ class MyLogStructure
 		bool isAvailableMyRuleInformation;
 		bool isAvailableMyErrorInformation;
 
-		MySubject*mySubject;
+		MySubject mySubject;
 		const wchar_t*message;
+		//string sid;
+
+		
 		/**
 		MyProviderInformation myProviderInformation;
 		MyProcessInformation myProcessInformation;

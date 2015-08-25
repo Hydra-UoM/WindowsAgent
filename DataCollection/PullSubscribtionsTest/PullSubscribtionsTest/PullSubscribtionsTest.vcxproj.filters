@@ -75,6 +75,9 @@
     <ClInclude Include="MyNetworkInformation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WindowsAgentConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

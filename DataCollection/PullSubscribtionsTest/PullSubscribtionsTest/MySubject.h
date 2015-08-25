@@ -15,7 +15,8 @@
 class MySubject
 {
 	public:
-		MySubject(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1);
+		MySubject();
+		void setElements(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1);
 		~MySubject(void);
 
 		void print();

@@ -33,7 +33,17 @@ MyLogStructure::MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageStr
 		timeStamp = timeStamp1;
 		//processImageName = processImageName1;
 		initializeAvailableInformation();
+		//sid = "***";
 		extractEventMessageString();
+		//cout << sid << endl;
+		//mySubject.print();
+}
+
+string MyLogStructure::wchar_t_pointerToString(const wchar_t*wchar_t_pointer_text)
+{
+		wstring wstring_text(wchar_t_pointer_text);
+		string string_text(wstring_text.begin(), wstring_text.end());
+		return string_text;
 }
 
 void MyLogStructure::initializeAvailableInformation()
@@ -53,7 +63,7 @@ void MyLogStructure::initializeAvailableInformation()
 		isAvailableMyErrorInformation = false;
 		isAvailableMyRuleInformation = false;
 
-		mySubject = (MySubject*)malloc(sizeof(MySubject));
+		//mySubject = (MySubject*)malloc(sizeof(MySubject));
 }
 
 void MyLogStructure::extractEventMessageString()
@@ -91,6 +101,7 @@ void MyLogStructure::extractEventMessageString()
 			{
 				i++;
 				Security_ID = arrayOfSplitted[i];
+				//sid = wchar_t_pointerToString(Security_ID);
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
@@ -131,11 +142,11 @@ void MyLogStructure::extractEventMessageString()
 			{
 				Logon_ID = L"Unavailable for this event";
 			}
+			mySubject.setElements(Security_ID,Account_Name,Account_Domain,Logon_ID);
 			//mySubject = new MySubject(Security_ID,Account_Name,Account_Domain,Logon_ID);
-			MySubject mySubject1(Security_ID,Account_Name,Account_Domain,Logon_ID);
-			*mySubject = mySubject1;
+			//MySubject mySubject1(Security_ID,Account_Name,Account_Domain,Logon_ID);
+			//*mySubject = mySubject1;
 			// mySubject = &mySubject1;
-			//mySubject->print();
 		}
 		if(i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i],L"Object") == 0)// There is Object type
 		{
@@ -736,8 +747,8 @@ void MyLogStructure::printExtractedEventMessageString()
 		//wprintf(L"Message: %ls\n", message);
 		if(isAvailableMySubject)
 		{
-			std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
-			//mySubject->print();
+			//std::cout << "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n";
+			//mySubject.print();
 		}
 		/**
 		MySubject mySubject;
@@ -770,20 +781,21 @@ void MyLogStructure::printExtractedEventMessageString()
 
 void MyLogStructure::print()
 {
-	printExtractedEventMessageString();
-	//wprintf(L"EventRecordID: %I64u\n",eventRecordID);
+	wprintf(L"EventRecordID: %I64u\n",eventRecordID);
 	wprintf(L"EventID: %lu\n", EventID);
 	//wprintf(L"Provider Name: %s\n", providerMessageString);
     //wprintf(L"Version: %u\n",version);
-    //wprintf(L"Level: %u\n",level);
+    wprintf(L"Level: %u\n",level);
     //wprintf(L"Task: %hu\n",task);
     //wprintf(L"Opcode: %u\n",opCode);
 	//wprintf(L"Keywords: 0x%I64x\n",keywords);
 	wprintf(L"Execution ProcessID: %lu\n",executionProcessID);
+	printExtractedEventMessageString();
     //wprintf(L"Execution ThreadID: %lu\n",executionThreadID);
     //wprintf(L"Channel: %s\n",channel);
     //wprintf(L"Computer: %s\n",computer);
-	/**if (eventMessageString)
+	/**
+	if (eventMessageString)
     {
         wprintf(L"Event message string: %s\n", eventMessageString);
         free(eventMessageString);
@@ -828,7 +840,7 @@ void MyLogStructure::print()
         providerMessageString = NULL;
     }
 	*/
-	timeStamp.ToPrintTimeStamp();
+	//timeStamp.ToPrintTimeStamp();
 	//_tprintf( TEXT("Process's image name:  %ls\n\n"),processImageName);
 }
 

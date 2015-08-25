@@ -99,6 +99,7 @@
     <ClInclude Include="MyProviderInformation.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WindowsAgentConstants.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GetProcessImageNameFromPID.cpp" />
