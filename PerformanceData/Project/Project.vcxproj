@@ -98,9 +98,6 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\vld.lib" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="System">
       <Private>true</Private>
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
