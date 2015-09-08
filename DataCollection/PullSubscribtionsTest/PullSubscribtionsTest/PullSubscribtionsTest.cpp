@@ -11,6 +11,10 @@
 #include <stdio.h>
 #include <winevt.h>
 #include <iostream>
+#include <thread>
+#include<string>
+#include<sstream>
+#include "WindowsAgentConstants.h"
 
 #include <sddl.h>
 
@@ -22,14 +26,14 @@ using namespace std;
 #define ARRAY_SIZE 1 // earlier was 10, handle by 10 of blocks
 #define TIME_OUT INFINITE
 
-DWORD EnumerateResults(EVT_HANDLE hResults);
+DWORD EnumerateResults(EVT_HANDLE hResults,int process_id);
 BOOL IsKeyEvent(HANDLE hStdIn);
 DWORD PrintEventSystemData(EVT_HANDLE hEvent);
 
 MyLogStructure*myLogStructures[100];
 int numberOfAvailableEvents = 0;
 
-void filterEvents(LPWSTR pwsPath,LPWSTR pwsQuery)
+void getEvents(LPCWSTR pwsPath,LPCWSTR pwsQuery,int process_id)
 {
 	DWORD status = ERROR_SUCCESS;
     EVT_HANDLE hSubscription = NULL;
@@ -71,8 +75,6 @@ void filterEvents(LPWSTR pwsPath,LPWSTR pwsQuery)
         goto cleanup;
     }
 
-    wprintf(L"Press any key to quit.\n");
-
     // Loop until the user presses a key or there is an error && no more waits. Only the existing past events
     while (true)
     {
@@ -85,8 +87,8 @@ void filterEvents(LPWSTR pwsPath,LPWSTR pwsQuery)
         }
         else if (1 == dwWait - WAIT_OBJECT_0) // Query results
         {
-			std::cout << "*********** Query Results ******************\n";
-			status = EnumerateResults(hSubscription);
+			std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
+			status = EnumerateResults(hSubscription,process_id);
             if (ERROR_NO_MORE_ITEMS != status)
             {
 				std::cout << "***********End Before Break******************\n";
@@ -118,29 +120,6 @@ cleanup:
         CloseHandle(aWaitHandles[1]);
 }
 
-bool filterResultedEvents(int process_id,MyLogStructure*myResultedLogStructures[],int*numberOfFilteredEvents)
-{
-	bool isAvailable = false;
-	int numberOfResultedEvents = 0;
-	for(int i = 0; i < numberOfAvailableEvents; i++)
-	{
-		//myLogStructures[i]->print();
-		if(myLogStructures[i]->executionProcessID == process_id)
-		{
-			//std::cout << "True\n";
-			myResultedLogStructures[numberOfResultedEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			myResultedLogStructures[numberOfResultedEvents] = myLogStructures[i];
-			//myResultedLogStructures[numberOfResultedEvents]->print();
-			//std::cout << "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n";
-			numberOfResultedEvents++;
-			isAvailable = true;
-		}
-	}
-	*numberOfFilteredEvents = numberOfResultedEvents;
-	return isAvailable;
-	//std::getchar();
-}
-
 void printResultedEvent(MyLogStructure*myResultedLogStructures[],int numberOfFilteredEvents)
 {
 	for(int i = 0; i < numberOfFilteredEvents; i++)
@@ -151,7 +130,7 @@ void printResultedEvent(MyLogStructure*myResultedLogStructures[],int numberOfFil
 }
 
 // Enumerate the events in the result set.
-DWORD EnumerateResults(EVT_HANDLE hResults)
+DWORD EnumerateResults(EVT_HANDLE hResults,int process_id)
 {
     DWORD status = ERROR_SUCCESS;
     EVT_HANDLE hEvents[ARRAY_SIZE];
@@ -180,13 +159,29 @@ DWORD EnumerateResults(EVT_HANDLE hResults)
 			MyLogStructureMaker l(hEvents[i]);
 			//pBuffer = (LPWSTR)malloc(dwBufferSize * sizeof(WCHAR));
 			
-			//MyLogStructure*outputLogStructure = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			myLogStructures[numberOfAvailableEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			status = l.getStatus(myLogStructures[numberOfAvailableEvents]);
+			MyLogStructure*outputLogStructure = (MyLogStructure*)malloc(sizeof(MyLogStructure));
+			//myLogStructures[numberOfAvailableEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
+			status = l.getStatus(outputLogStructure);
+			if(process_id != -1)
+			{
+				if(outputLogStructure->executionProcessID == process_id)
+				{
+					myLogStructures[numberOfAvailableEvents] = outputLogStructure;
+					numberOfAvailableEvents++;
+				}
+				else
+				{
+					// just leave the event
+				}
+			}
+			else
+			{
+				myLogStructures[numberOfAvailableEvents] = outputLogStructure;
+				numberOfAvailableEvents++;
+			}
 			//std::cout << "*******************************************************************************\n";
 			//myLogStructures[numberOfAvailableEvents]->print();
 			//std::cout << "*******************************************************************************\n";
-			numberOfAvailableEvents++;
             if (ERROR_SUCCESS == status) // PrintEvent
             {
                 EvtClose(hEvents[i]);
@@ -235,25 +230,125 @@ BOOL IsKeyEvent(HANDLE hStdIn)
     return fKeyPress;
 }
 
-void filterLogs(int process_id,MyLogStructure*myResultedLogStructures[],int*numberOfFilteredEvents)
+std::wstring stringToWidestring(const std::string& s)
 {
-	LPWSTR pwsPath = L"Security"; // channel name// "Application","Security","System","Setup","Operational" ;security works when admin previlege
-    //LPWSTR pwsQuery = L"*[System/TimeCreated[timediff(@SystemTime) <= 10000]]";// xpath query // , [System/EventID!= 100]
-	LPWSTR pwsQuery = L"*[System[(Level <= 3) and TimeCreated[timediff(@SystemTime) <= 10000]]]";
-	filterEvents(pwsPath,pwsQuery);
-	filterResultedEvents(process_id,myResultedLogStructures,numberOfFilteredEvents);
+    int len;
+    int slength = (int)s.length() + 1;
+    len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+    wchar_t* buf = new wchar_t[len];
+    MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+    std::wstring r(buf);
+    delete[] buf;
+    return r;
+}
+
+void releaseMemory()
+{
+	for(int i = 0; i < numberOfAvailableEvents; i++)
+	{
+		free(myLogStructures[i]);
+	}
 }
 
 void __cdecl wmain()
 {
-	MyLogStructure*myResultedLogStructures[100];
-	int numberOfFilteredEvents = 0;
-	filterLogs(4,myResultedLogStructures,&numberOfFilteredEvents);
+	//acceptParameters(Log type, level cons, level,time period,pid);
+	/** parameters to accept 
+			i.  logType - from WindowsAgentConstants.h,
+			ii. securityLevelConstraint - from WindowsAgentConstants.h, take all events ==> give ALL
+			iii.securityLevel - 
+					Application Level:
+					0 -Information, 1 - Information, 2 - Error, 3 – Warning, 4 – Information
+					Security
+					0 -Information, 1 -, 2 - Error, 3 –, 4 – Information
+					System
+					0 -, 1 - Critical, 2 - Error, 3 – Warning, 4 – Information
+			iv. timePeriodInMilliSeconds - monitoring time period
+			v. process_id - if not want to filter enter -1
+			
+	*/
+	std::string logType = MY_SECURITY;
+	SecurityLevelRelationshipConstraints securityLevelConstraint = EQUAL_TO;
+	int securityLevel = 0;
+	int timePeriodInMilliSeconds = 10000;
+	int process_id = 4;
+
 	// test with App : 8404 && 1000000ms
 	// test with Sec: 4 && 10000ms
 	// test with Sys: 4 && 10000000ms
-	
-	//std::cout << numberOfFilteredEvents << std::endl;
-	printResultedEvent(myResultedLogStructures,numberOfFilteredEvents);
+
+	wstring wsLogType = stringToWidestring(logType);
+    LPCWSTR lpcwstrLogType = wsLogType.c_str();
+    //wcout << lpcwstrLogType;
+
+	string string_query = "";
+	boolean isLevelConstraintAvailable = false;
+	boolean isProcessIDConstraintAvailable = false;
+	if(securityLevelConstraint != ALL)	isLevelConstraintAvailable		= true;
+	if(process_id != -1)				isProcessIDConstraintAvailable	= true;
+
+	if(!isLevelConstraintAvailable)
+	{
+		string_query = string_query + "*[System/TimeCreated[timediff(@SystemTime) <= " + to_string(timePeriodInMilliSeconds) + "]]";
+	}
+	else
+	{
+		string_query = string_query + "*[System[(Level ";
+		string sec_lev_cons = "";
+		switch(securityLevelConstraint)
+		{
+			case LESS_THAN:					sec_lev_cons = "< ";		break;
+			case LESS_THAN_OR_EQUAL_TO:		sec_lev_cons = "<= ";		break;
+			case GREATER_THAN:				sec_lev_cons = "> ";		break;
+			case GREATER_THAN_OR_EQUAL_TO:	sec_lev_cons = ">= ";		break;
+			case EQUAL_TO:					sec_lev_cons = "= ";		break;
+		}
+		string_query = string_query + sec_lev_cons + to_string(securityLevel) + ") and TimeCreated[timediff(@SystemTime) <= " + to_string(timePeriodInMilliSeconds) + "]]]";
+	}	
+
+	wstring wsCons = stringToWidestring(string_query);
+	LPCWSTR pwsQuery = wsCons.c_str();
+	//wcout << pwsQuery;
+
+	std::cout << "*********** Query Results *****************************\n";
+	while(true)
+	{
+		getEvents(lpcwstrLogType,pwsQuery,process_id);
+		printResultedEvent(myLogStructures,numberOfAvailableEvents);
+		numberOfAvailableEvents = 0;
+		//releaseMemory();
+		Sleep(timePeriodInMilliSeconds);
+	}
 	getchar();
 }
+
+/**********************************************************************************************************************************/
+/**
+void filterLogsWithProcessID(int process_id,MyLogStructure*myResultedLogStructures[],int*numberOfFilteredEvents)
+{
+	LPWSTR pwsPath = L"Security"; // channel name// "Application","Security","System","Setup","Operational" ;security works when admin previlege
+    //LPWSTR pwsQuery = L"*[System/TimeCreated[timediff(@SystemTime) <= 10000]]";// xpath query // , [System/EventID!= 100]
+	LPWSTR pwsQuery = L"*[System[(Level <= 3) and TimeCreated[timediff(@SystemTime) <= 10000]]]";
+	getEvents(pwsPath,pwsQuery,process_id);
+	filterResultedEvents(process_id,myResultedLogStructures,numberOfFilteredEvents);
+}
+
+void filterResultedEvents(int process_id,MyLogStructure*myResultedLogStructures[],int*numberOfFilteredEvents)
+{
+	int numberOfResultedEvents = 0;
+	for(int i = 0; i < numberOfAvailableEvents; i++)
+	{
+		//myLogStructures[i]->print();
+		if(myLogStructures[i]->executionProcessID == process_id)
+		{
+			//std::cout << "True\n";
+			myResultedLogStructures[numberOfResultedEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
+			myResultedLogStructures[numberOfResultedEvents] = myLogStructures[i];
+			//myResultedLogStructures[numberOfResultedEvents]->print();
+			numberOfResultedEvents++;
+		}
+	}
+	*numberOfFilteredEvents = numberOfResultedEvents;
+	//std::getchar();
+}
+*/
