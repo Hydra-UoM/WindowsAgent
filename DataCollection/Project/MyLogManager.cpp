@@ -91,6 +91,37 @@ void MyLogManager::getLogsForAProcessWithSecurityConstraint()
 	myLogRetriever.handleLogs(logType, securityLevelConstraint, securityLevel, process_id, timePeriodInMilliSeconds);
 }
 
+void MyLogManager::getLogonFailures()
+{
+	MyLogRetriever myLogRetriever;
+	LPCWSTR pwsQuery = L"*";
+	DWORD eventIDs[] = { 4625, 4648, 537 };
+	myLogRetriever.handleEventsOnEventIDs("Security", pwsQuery, eventIDs);
+	/**
+		4625: An account failed to log on
+		Ref:
+		https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4625
+		4648: A logon was attempted using explicit credentials
+		Ref:
+		https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4648
+		537: Logon failure - The logon attempt failed for other reasons.
+		Ref:
+		https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=537
+	*/
+}
+
+void MyLogManager::getCurrentLoggedInUser()
+{
+	MyUserAccountDetails details;
+	details.getCurrentLoggedOnUserInformation();
+}
+
+void MyLogManager::getAllUserInformation()
+{
+	MyUserAccountDetails details;
+	details.getAllUserInformation();
+}
+
 MyLogManager::~MyLogManager(void)
 {
 

@@ -35,11 +35,13 @@ char Menu()
 		<< left << '*' << setw(38) << " P.Get All Processes." << '*' << endl
 
 
+		<< left << '*' << setw(38) << " Q.Get Logon failures." << '*' << endl
 		<< left << '*' << setw(38) << " R.Get Logs for all processes." << '*' << endl
 		<< left << '*' << setw(38) << " S.Get Logs for a process." << '*' << endl
 		<< left << '*' << setw(38) << " T.Get logs for all processes with a security level constraint." << '*' << endl
 		<< left << '*' << setw(38) << " U.Get logs for a process with a security level constraint." << '*' << endl
-
+		<< left << '*' << setw(38) << " V.Get currently logged in user information." << '*' << endl
+		<< left << '*' << setw(38) << " W.Get All user information." << '*' << endl
 
 
 		<< left << '*' << setw(38) << " X.Exit." << '*' << endl
@@ -312,6 +314,11 @@ int main()
 				gotoxy(0, 0); Sleep(2000);
 			}
 			break;
+
+
+		case 'q':
+			manager.getLogonFailures();
+			break;
 		case 'r':
 			manager.getLogsForAllProcesses();
 			break;
@@ -324,7 +331,12 @@ int main()
 		case 'u':
 			manager.getLogsForAProcessWithSecurityConstraint();
 			break;
-
+		case 'v':
+			manager.getCurrentLoggedInUser();
+			break;
+		case 'w':
+			manager.getAllUserInformation();
+			break;
 		case 'x':
 			return 0;
 		default:

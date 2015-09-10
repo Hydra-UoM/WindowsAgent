@@ -34,6 +34,12 @@ public:
 		int securityLevel, int process_id, int timePeriodInMilliSeconds);
 	std::wstring stringToWidestring(const std::string& s);
 
+	// need to test
+	void handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuery, DWORD eventIDs[]);
+	void getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWORD eventIDs[]);
+	DWORD EnumerateResultsOnEventIDs(EVT_HANDLE hResults, DWORD eventIDs[]);
+
+	void handleEventsOnEventID(std::string logType, DWORD eventID);
 	~MyLogRetriever(void);
 };
 #endif

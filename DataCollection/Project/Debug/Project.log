@@ -1,38 +1,10 @@
-﻿Build started 9/9/2015 8:01:37 PM.
-     1>Project "E:\git_fyp\PerformanceData\Project\Project.vcxproj" on node 2 (Build target(s)).
+﻿Build started 9/10/2015 4:14:57 PM.
+     1>Project "E:\git_fyp\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=8 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
-         main.cpp
-     1>main.cpp(79): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(84): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(88): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(92): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(102): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(112): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(122): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(132): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(135): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
-     1>main.cpp(150): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
-     1>main.cpp(164): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
-     1>main.cpp(178): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
-     1>main.cpp(196): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
-     1>main.cpp(248): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(277): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
-     1>main.cpp(280): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
-     1>main.cpp(332): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
-                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\conio.h(131) : see declaration of 'getch'
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=8 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MyUserAccountDetails.cpp
+         MyUserAccountDetails.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\git_fyp\PerformanceData\Debug\Project.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\git_fyp\PerformanceData\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\git_fyp\PerformanceData\Debug\Project.lib" /MACHINE:X86 Debug\GetProcessImageNameFromPID.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\git_fyp\DataCollection\Debug\Project.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\git_fyp\DataCollection\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\git_fyp\DataCollection\Debug\Project.lib" /MACHINE:X86 Debug\GetProcessImageNameFromPID.obj
          Debug\main.obj
          Debug\CPU.obj
          Debug\Data.obj
@@ -59,10 +31,12 @@
          Debug\MySubject.obj
          Debug\MyTimeCreated.obj
          Debug\MyTimeStamp.obj
+         Debug\MyUserAccountDetails.obj
+         Debug\MyUserAccountDetailsStructure.obj
          Debug\stdafx.obj
-         Project.vcxproj -> E:\git_fyp\PerformanceData\Debug\Project.exe
-     1>Done Building Project "E:\git_fyp\PerformanceData\Project\Project.vcxproj" (Build target(s)).
+         Project.vcxproj -> E:\git_fyp\DataCollection\Debug\Project.exe
+     1>Done Building Project "E:\git_fyp\DataCollection\Project\Project.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.20
+Time Elapsed 00:00:01.74

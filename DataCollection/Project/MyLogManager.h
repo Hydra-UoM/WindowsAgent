@@ -4,6 +4,7 @@
 
 #include "WindowsAgentConstants.h"
 #include "MyLogRetriever.h"
+#include "MyUserAccountDetails.h"
 
 class MyLogManager
 {
@@ -20,6 +21,9 @@ public:
 	void getProcessID();
 	void getTimePeriodToObserve();
 	void getSecurityConstraint();
+	void getLogonFailures();
+	void getCurrentLoggedInUser();
+	void getAllUserInformation();
 
 
 	std::string logType;
