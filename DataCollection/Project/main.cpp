@@ -1,6 +1,8 @@
 #include "Manager.h"
 #include "MyLogManager.h"
-
+#define RESULT_POSITION1 5
+#define RESULT_POSITION2 26
+#define RESULT_POSITION3 32
 
 void gotoxy(int column, int line)
 {
@@ -16,36 +18,36 @@ void gotoxy(int column, int line)
 char Menu()
 {
 	char c;
-	cout << "******************Menu******************" << endl
-		<< left << '*' << setw(38) << " A.Total CPU Usage." << '*' << endl
-		<< left << '*' << setw(38) << " B.Total Memory Usage." << '*' << endl
-		<< left << '*' << setw(38) << " C.Total Network Usage (DOWN)." << '*' << endl
-		<< left << '*' << setw(38) << " D.Total Network Usage (UP)." << '*' << endl
-		<< left << '*' << setw(38) << " E.Min/Max CPU Process." << '*' << endl
-		<< left << '*' << setw(38) << " F.Min/Max Memory Process." << '*' << endl
-		<< left << '*' << setw(38) << " G.Min/Max NetDownlaod Process." << '*' << endl
-		<< left << '*' << setw(38) << " H.Min/Max NetUpload Process." << '*' << endl
-		<< left << '*' << setw(38) << " I.All CPU Processes." << '*' << endl
-		<< left << '*' << setw(38) << " J.All Memory Processes." << '*' << endl
-		<< left << '*' << setw(38) << " K.All Network Download Processes." << '*' << endl
-		<< left << '*' << setw(38) << " L.All Network Upload Processes." << '*' << endl
-		<< left << '*' << setw(38) << " M.Filter All Processes." << '*' << endl
-		<< left << '*' << setw(38) << " N.Filter All Average Processes." << '*' << endl
-		<< left << '*' << setw(38) << " O.Get Average Process(PID)." << '*' << endl
-		<< left << '*' << setw(38) << " P.Get All Processes." << '*' << endl
+	cout << "******************************Menu*******************************" << endl
+		<< left << '*' << setw(38) << " A.Total CPU Usage." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " B.Total Memory Usage." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " C.Total Network Usage (DOWN)." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " D.Total Network Usage (UP)." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " E.Min/Max CPU Process." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " F.Min/Max Memory Process." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " G.Min/Max NetDownlaod Process." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " H.Min/Max NetUpload Process." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " I.All CPU Processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " J.All Memory Processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " K.All Network Download Processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " L.All Network Upload Processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " M.Filter All Processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " N.Filter All Average Processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " O.Get Average Process(PID)." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " P.Get All Processes." << "\t\t\t\t*" << endl
 
 
-		<< left << '*' << setw(38) << " Q.Get Logon failures." << '*' << endl
-		<< left << '*' << setw(38) << " R.Get Logs for all processes." << '*' << endl
-		<< left << '*' << setw(38) << " S.Get Logs for a process." << '*' << endl
-		<< left << '*' << setw(38) << " T.Get logs for all processes with a security level constraint." << '*' << endl
-		<< left << '*' << setw(38) << " U.Get logs for a process with a security level constraint." << '*' << endl
-		<< left << '*' << setw(38) << " V.Get currently logged in user information." << '*' << endl
-		<< left << '*' << setw(38) << " W.Get All user information." << '*' << endl
+		<< left << '*' << setw(38) << " Q.Get Logon failures." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " R.Get Logs for all processes." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " S.Get Logs for a process." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " T.Get logs for all processes with a security level constraint." << "*" << endl
+		<< left << '*' << setw(38) << " U.Get logs for a process with a security level constraint." << "\t*" << endl
+		<< left << '*' << setw(38) << " V.Get currently logged in user information." << "\t\t\t*" << endl
+		<< left << '*' << setw(38) << " W.Get All user information." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " Y.Get Login information." << "\t\t\t\t*" << endl
 
-
-		<< left << '*' << setw(38) << " X.Exit." << '*' << endl
-		<<"****************************************"<<endl
+		<< left << '*' << setw(38) << " X.Exit." << "\t\t\t\t*" << endl
+		<<"*****************************************************************"<<endl
 		<<endl<< "Insert the option then press ENTER: ";
 
 	c = getchar();
@@ -76,12 +78,12 @@ int main()
 		switch (Menu())
 		{
 		case 'a':
-			gotoxy(0, 15);
+			gotoxy(0, RESULT_POSITION2);
 			cout << "Total CPU usage: " << fixed << setprecision(2) << manage.GetTotalCPU() << " %";
 			getch();
 			break;
 		case 'b':
-			gotoxy(0, 15);
+			gotoxy(0, RESULT_POSITION2);
 			cout << "Total Memory usage: " << fixed << setprecision(0) << manage.GetTotalMemory() << " Kb";
 			getch();
 			break;
@@ -94,7 +96,7 @@ int main()
 			getch();
 			break;
 		case 'e':
-			gotoxy(0, 15);
+			gotoxy(0, RESULT_POSITION2);
 			p = manage.GetMaxCPU();
 			cout << "Maximum Cpu Process: " << endl
 				<< p.name << " " << p.value <<" %"<< endl;
@@ -104,7 +106,7 @@ int main()
 			getch();
 			break;
 		case 'f':
-			gotoxy(0, 15);
+			gotoxy(0, RESULT_POSITION2);
 			p = manage.GetMaxMemory();
 			cout << "Maximum Memory Process: " << endl
 				<< p.name << " " << p.value <<" Kb"<< endl;
@@ -114,7 +116,7 @@ int main()
 			getch();
 			break;
 		case 'g':
-			gotoxy(0, 15);
+			gotoxy(0, RESULT_POSITION2);
 			p = manage.GetMaxNetDownload();
 			cout << "Maximum NetDowload Process: " << endl
 				<< p.name << " " << p.value <<" Kbps"<< endl;
@@ -124,7 +126,7 @@ int main()
 			getch();
 			break;
 		case 'h':
-			gotoxy(0, 15);
+			gotoxy(0, RESULT_POSITION2);
 			p = manage.GetMaxNetUpload();
 			cout << "Maximum NetUpload Process: " << endl
 				<< p.name << " " << p.value << " Kbps"<<endl;
@@ -137,12 +139,12 @@ int main()
 			while (GetAsyncKeyState(VK_ESCAPE) != true)
 			{
 				system("cls");
-				cout << left << setw(25) << setprecision(2)<<"Process name" << "Usage" << endl;
+				cout << left << setw(RESULT_POSITION3) << setprecision(2) << "Process name" << "Usage" << endl;
 				proc = manage.GetAllCpuProc();
 
 				for (auto i : proc)
 				{
-					cout << left << setw(25) << i.name << i.value << " %" << endl;
+					cout << left << setw(RESULT_POSITION3) << i.name << i.value << " %" << endl;
 				}
 				gotoxy(0,0); Sleep(2000);
 			}
@@ -152,12 +154,12 @@ int main()
 			while (GetAsyncKeyState(VK_ESCAPE) != true)
 			{	
 				system("cls");
-				cout << left << setw(25) << "Process name" << "Usage" << endl;
+				cout << left << setw(RESULT_POSITION3) << "Process name" << "Usage" << endl;
 				proc = manage.GetAllMemProc();
 			
 				for (auto i : proc)
 				{
-					cout << left << setw(25) << i.name << i.value << " Kb" << endl;
+					cout << left << setw(RESULT_POSITION3) << i.name << i.value << " Kb" << endl;
 				}
 				gotoxy(0,0); Sleep(2000);
 			}
@@ -166,12 +168,12 @@ int main()
 			while (GetAsyncKeyState(VK_ESCAPE) != true)
 			{
 				system("cls");
-				cout << left << setw(25) << "Process name" << "Usage" << endl;
+				cout << left << setw(RESULT_POSITION3) << "Process name" << "Usage" << endl;
 				proc = manage.GetAllNetDownloadProc();
 				
 				for (auto i : proc)
 				{
-					cout << left << setw(25) << i.name << i.value << " Kbps" << endl;
+					cout << left << setw(RESULT_POSITION3) << i.name << i.value << " Kbps" << endl;
 				}
 				gotoxy(0,0); Sleep(2000);
 			}
@@ -180,7 +182,7 @@ int main()
 			while (GetAsyncKeyState(VK_ESCAPE) != true)
 			{
 				system("cls");
-				cout << left << setw(25) << "Process name" << "Usage" << endl;
+				cout << left << setw(RESULT_POSITION3) << "Process name" << "Usage" << endl;
 				proc = manage.GetAllNetUploadProc();
 	
 				for (auto i : proc)
@@ -199,22 +201,22 @@ int main()
 			{	
 				system("cls");
 
-				cout << setw(25) << left << "Process Name"
+				cout << setw(RESULT_POSITION3) << left << "Process Name"
 					<< right
-					<< setw(10) << left << "CPU"
-					<< setw(15) << "Mem"
-					<< setw(10) << "Down"
-					<< setw(10) << "Up" << endl;
+					<< setw(RESULT_POSITION1) << left << "CPU"
+					<< setw(RESULT_POSITION2) << "Mem"
+					<< setw(RESULT_POSITION1) << "Down"
+					<< setw(RESULT_POSITION1) << "Up" << endl;
 
 				procF = manage.FilterAllProcesses(cpu, mem, down, up);
 
 				for (auto i : procF)
 				{
-					cout << left << setw(25) << i.name
+					cout << left << setw(RESULT_POSITION3) << i.name
 						<< fixed << setprecision(1) << i.cpu << setw(5) << " %"
-						<< i.mem << setw(10) << " Kb"
-						<< i.down << setw(10) << " Kbps"
-						<< i.up << setw(10) << " Kbps"
+						<< i.mem << setw(RESULT_POSITION1) << " Kb"
+						<< i.down << setw(RESULT_POSITION1) << " Kbps"
+						<< i.up << setw(RESULT_POSITION1) << " Kbps"
 						<< endl;
 				}
 				gotoxy(0,0); Sleep(2000);
@@ -228,22 +230,22 @@ int main()
 			cout << "Enter the Network Upload usage: "; cin >> up; cout << endl;
 	
 				system("cls");
-				cout << setw(25) << left << "Process Name"
+				cout << setw(RESULT_POSITION3) << left << "Process Name"
 					<< right
-					<< setw(10) << left << "CPU"
-					<< setw(15) << "Mem"
-					<< setw(10) << "Down"
-					<< setw(10) << "Up" << endl;
+					<< setw(RESULT_POSITION1) << left << "CPU"
+					<< setw(RESULT_POSITION2) << "Mem"
+					<< setw(RESULT_POSITION1) << "Down"
+					<< setw(RESULT_POSITION1) << "Up" << endl;
 
 				procF = manage.FilterAllAvgProcesses(sample, cpu, mem, down, up);
 
 				for (auto i : procF)
 				{
-					cout << left << setw(25) << i.name
+					cout << left << setw(RESULT_POSITION3) << i.name
 						<< fixed << setprecision(1) << i.cpu << setw(5) << " %"
-						<< i.mem << setw(10) << " Kb"
-						<< i.down << setw(10) << " Kbps"
-						<< i.up << setw(10) << " Kbps"
+						<< i.mem << setw(RESULT_POSITION1) << " Kb"
+						<< i.down << setw(RESULT_POSITION1) << " Kbps"
+						<< i.up << setw(RESULT_POSITION1) << " Kbps"
 						<< endl;
 				}
 				gotoxy(0,0);
@@ -253,28 +255,28 @@ int main()
 			cout << "Enter the PID: "; cin >> PID; cout << endl;
 			cout << "Enter the samples: "; cin >> sample; cout << endl;
 
-				cout << setw(25) << left << "Process Name"
+			cout << setw(RESULT_POSITION3) << left << "Process Name"
 					<< right
-					<< setw(10) << left << "CPU"
-					<< setw(15) << "Mem"
-					<< setw(10) << "Down"
-					<< setw(10) << "Up" 
-					<< setw(10) << left << "AvgCPU"
-					<< setw(15) << "AvgMem"
-					<< setw(10) << "AvgDown"
-					<< setw(10) << "AvgUp" << endl;
+					<< setw(RESULT_POSITION1) << left << "CPU"
+					<< setw(RESULT_POSITION2) << "Mem"
+					<< setw(RESULT_POSITION1) << "Down"
+					<< setw(RESULT_POSITION1) << "Up"
+					<< setw(RESULT_POSITION1) << left << "AvgCPU"
+					<< setw(RESULT_POSITION2) << "AvgMem"
+					<< setw(RESULT_POSITION1) << "AvgDown"
+					<< setw(RESULT_POSITION1) << "AvgUp" << endl;
 
 				pF = manage.GetAvgProcess_PID(PID,sample);
 	
-					cout << left << setw(25) << pF.name
+				cout << left << setw(RESULT_POSITION3) << pF.name
 						<< fixed << setprecision(1) << pF.cpu << setw(5) << " %"
-						<< pF.mem << setw(10) << " Kb"
-						<< pF.down << setw(10) << " Kbps"
-						<< pF.up << setw(10) << " Kbps"
+						<< pF.mem << setw(RESULT_POSITION1) << " Kb"
+						<< pF.down << setw(RESULT_POSITION1) << " Kbps"
+						<< pF.up << setw(RESULT_POSITION1) << " Kbps"
 						<< pF.avgcpu << setw(5) << " %"
-						<< pF.avgmem << setw(10) << " Kb"
-						<< pF.avgdown << setw(10) << " Kbps"
-						<< pF.avgup << setw(10) << " Kbps"
+						<< pF.avgmem << setw(RESULT_POSITION1) << " Kb"
+						<< pF.avgdown << setw(RESULT_POSITION1) << " Kbps"
+						<< pF.avgup << setw(RESULT_POSITION1) << " Kbps"
 						<< endl;
 				getch();
 			break;
@@ -283,32 +285,32 @@ int main()
 			{
 				system("cls");
 				
-				cout << setw(25) << left << "Process Name"
+				cout << setw(RESULT_POSITION3) << left << "Process Name"
 					<< right
-					<< setw(10) << left << "CPU"
-					<< setw(10)  << "ID"
-					<< setw(15) << "Mem"
-					<< setw(10) << "Down"
-					<< setw(10) << "Up" 
-					<< setw(10) << "avgCPU"
-					<< setw(15) << "avgMem"
-					<< setw(10) << "avgDown"
-					<< setw(10) << "avgUp" << endl;
+					<< setw(RESULT_POSITION1) << left << "CPU"
+					<< setw(RESULT_POSITION1) << "ID"
+					<< setw(RESULT_POSITION2) << "Mem"
+					<< setw(RESULT_POSITION1) << "Down"
+					<< setw(RESULT_POSITION1) << "Up"
+					<< setw(RESULT_POSITION1) << "avgCPU"
+					<< setw(RESULT_POSITION2) << "avgMem"
+					<< setw(RESULT_POSITION1) << "avgDown"
+					<< setw(RESULT_POSITION1) << "avgUp" << endl;
 
 				procF = manage.GetAllProcesses();
 
 				for (auto i : procF)
 				{
-					cout << left << setw(25) << i.name
-						<< setw(10)<<setprecision(0)<<i.id
+					cout << left << setw(RESULT_POSITION3) << i.name
+						<< setw(RESULT_POSITION1) << setprecision(0) << i.id
 						<< fixed << setprecision(1) << i.cpu << setw(5) << " %"
-						<< i.mem << setw(10) << " Kb"
-						<< i.down << setw(10) << " Kbps"
-						<< i.up << setw(10) << " Kbps"
+						<< i.mem << setw(RESULT_POSITION1) << " Kb"
+						<< i.down << setw(RESULT_POSITION1) << " Kbps"
+						<< i.up << setw(RESULT_POSITION1) << " Kbps"
 						<< fixed << setprecision(1) << i.avgcpu << setw(5) << " %"
-						<< i.avgmem << setw(10) << " Kb"
-						<< i.avgdown << setw(10) << " Kbps"
-						<< i.avgup << setw(10) << " Kbps"
+						<< i.avgmem << setw(RESULT_POSITION1) << " Kb"
+						<< i.avgdown << setw(RESULT_POSITION1) << " Kbps"
+						<< i.avgup << setw(RESULT_POSITION1) << " Kbps"
 						<< endl;
 				}
 				gotoxy(0, 0); Sleep(2000);
@@ -318,6 +320,7 @@ int main()
 
 		case 'q':
 			manager.getLogonFailures();
+			//getch();
 			break;
 		case 'r':
 			manager.getLogsForAllProcesses();
@@ -333,9 +336,15 @@ int main()
 			break;
 		case 'v':
 			manager.getCurrentLoggedInUser();
+			getch();
 			break;
 		case 'w':
 			manager.getAllUserInformation();
+			getch();
+			break;
+		case 'y':
+			manager.getSuccessLoginInformation();
+			getch();
 			break;
 		case 'x':
 			return 0;

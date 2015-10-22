@@ -91,6 +91,14 @@ void MyLogManager::getLogsForAProcessWithSecurityConstraint()
 	myLogRetriever.handleLogs(logType, securityLevelConstraint, securityLevel, process_id, timePeriodInMilliSeconds);
 }
 
+void MyLogManager::getSuccessLoginInformation()
+{
+	MyLogRetriever myLogRetriever;
+	LPCWSTR pwsQuery = L"*";
+	DWORD eventIDs[] = { 4624 };
+	myLogRetriever.handleEventsOnEventIDs("Security", pwsQuery, eventIDs);
+}
+
 void MyLogManager::getLogonFailures()
 {
 	MyLogRetriever myLogRetriever;

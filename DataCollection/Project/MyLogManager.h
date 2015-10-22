@@ -24,6 +24,7 @@ public:
 	void getLogonFailures();
 	void getCurrentLoggedInUser();
 	void getAllUserInformation();
+	void getSuccessLoginInformation();
 
 
 	std::string logType;

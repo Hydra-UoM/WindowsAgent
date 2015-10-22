@@ -34,7 +34,7 @@ MyLogStructure::MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageStr
 		//processImageName = processImageName1;
 		initializeAvailableInformation();
 		//sid = "***";
-		extractEventMessageString();
+		//extractEventMessageString(); /** Need to fix */
 		//cout << sid << endl;
 		//mySubject.print();
 }
@@ -794,14 +794,14 @@ void MyLogStructure::print()
     //wprintf(L"Execution ThreadID: %lu\n",executionThreadID);
     //wprintf(L"Channel: %s\n",channel);
     //wprintf(L"Computer: %s\n",computer);
-	/**
+	
 	if (eventMessageString)
     {
         wprintf(L"Event message string: %s\n", eventMessageString);
         free(eventMessageString);
         eventMessageString = NULL;
     }
-	*/
+	
 	/**
 	// don't need to extract
     if (levelMessageString)

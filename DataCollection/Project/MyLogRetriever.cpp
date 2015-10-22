@@ -13,12 +13,12 @@ MyLogRetriever::MyLogRetriever()
 
 void MyLogRetriever::getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWORD eventIDs[])
 {
+	HANDLE aWaitHandles[2];
+	DWORD dwWait = 0;
 	DWORD status = ERROR_SUCCESS;
 	EVT_HANDLE hSubscription = NULL;
 	HANDLE hEventLog = NULL;
 
-	HANDLE aWaitHandles[2];
-	DWORD dwWait = 0;
 	DWORD dwLastRecordNumber = 0;
 
 	// Get a handle for console input, so you can break out of the loop.
@@ -54,7 +54,7 @@ void MyLogRetriever::getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWOR
 	}
 
 	// Loop until the user presses a key or there is an error && no more waits. Only the existing past events
-	while (true)
+	while (GetAsyncKeyState(VK_ESCAPE) != true) //??
 	{
 		dwWait = WaitForMultipleObjects(sizeof(aWaitHandles) / sizeof(HANDLE), aWaitHandles, FALSE, INFINITE);
 
@@ -216,7 +216,7 @@ void MyLogRetriever::getEvents(LPCWSTR pwsPath, LPCWSTR pwsQuery, int process_id
 	}
 
 	// Loop until the user presses a key or there is an error && no more waits. Only the existing past events
-	while (true)
+	while (GetAsyncKeyState(VK_ESCAPE) != true)
 	{
 		dwWait = WaitForMultipleObjects(sizeof(aWaitHandles) / sizeof(HANDLE), aWaitHandles, FALSE, INFINITE);
 
@@ -427,7 +427,7 @@ void MyLogRetriever::handleLogs(std::string logType, int securityLevelConstraint
 	//wcout << pwsQuery;
 
 	std::cout << "\n*********** Query Results *****************************\n";
-	while (true)
+	while (GetAsyncKeyState(VK_ESCAPE) != true)
 	{
 		getEvents(lpcwstrLogType, pwsQuery, process_id);
 		printResultedEvent(myLogStructures, numberOfAvailableEvents);
@@ -439,7 +439,7 @@ void MyLogRetriever::handleLogs(std::string logType, int securityLevelConstraint
 
 void MyLogRetriever::handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuery, DWORD eventIDs[])
 {
-	while (true)
+	while (GetAsyncKeyState(VK_ESCAPE) != true) //??
 	{
 		wstring wsLogType = stringToWidestring(logType);
 		LPCWSTR lpcwstrLogType = wsLogType.c_str();

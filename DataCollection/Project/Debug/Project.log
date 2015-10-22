@@ -1,8 +1,12 @@
-﻿Build started 9/10/2015 4:14:57 PM.
+﻿Build started 10/22/2015 8:41:33 PM.
      1>Project "E:\git_fyp\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=8 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MyUserAccountDetails.cpp
-         MyUserAccountDetails.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=8 /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt MyLogRetriever.cpp
+         MyLogRetriever.cpp
+     1>MyLogRetriever.cpp(57): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
+     1>MyLogRetriever.cpp(219): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
+     1>MyLogRetriever.cpp(430): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
+     1>MyLogRetriever.cpp(442): warning C4805: '!=' : unsafe mix of type 'SHORT' and type 'bool' in operation
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\git_fyp\DataCollection\Debug\Project.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\git_fyp\DataCollection\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\git_fyp\DataCollection\Debug\Project.lib" /MACHINE:X86 Debug\GetProcessImageNameFromPID.obj
          Debug\main.obj
@@ -39,4 +43,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.74
+Time Elapsed 00:00:02.76
