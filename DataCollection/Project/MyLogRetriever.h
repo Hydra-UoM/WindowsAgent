@@ -30,16 +30,19 @@ public:
 	void printResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
 	DWORD EnumerateResults(EVT_HANDLE hResults, int process_id);
 	void releaseMemory();
-	void handleLogs(std::string logType, int securityLevelConstraint,
-		int securityLevel, int process_id, int timePeriodInMilliSeconds);
+	/**void handleLogs(std::string logType, int securityLevelConstraint,
+		int securityLevel, int process_id, int timePeriodInMilliSeconds);*/
+	void handleLogs(std::string logType, std::string strSecurityLevelConstraint,
+		int process_id, int timePeriodInMilliSeconds);
 	std::wstring stringToWidestring(const std::string& s);
 
 	// need to test
 	void handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuery, DWORD eventIDs[]);
-	void getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWORD eventIDs[]);
 	DWORD EnumerateResultsOnEventIDs(EVT_HANDLE hResults, DWORD eventIDs[]);
-
+	void handleSuccessLoginEvents();
+	void handleFailedLoginEvents();
 	void handleEventsOnEventID(std::string logType, DWORD eventID);
+	//void getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWORD eventIDs[]);
 	~MyLogRetriever(void);
 };
 #endif

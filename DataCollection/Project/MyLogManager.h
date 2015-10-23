@@ -25,10 +25,13 @@ public:
 	void getCurrentLoggedInUser();
 	void getAllUserInformation();
 	void getSuccessLoginInformation();
-
+	void assignSecurityConstraint();
 
 	std::string logType;
+	int intLogType;
 	int securityLevelConstraint;
+	std::string strSecurityLevelConstraint;
+	int securityLevelUser;
 	int securityLevel = 0;
 	int timePeriodInMilliSeconds = 10000;
 	int process_id = -1;

@@ -44,7 +44,7 @@ char Menu()
 		<< left << '*' << setw(38) << " U.Get logs for a process with a security level constraint." << "\t*" << endl
 		<< left << '*' << setw(38) << " V.Get currently logged in user information." << "\t\t\t*" << endl
 		<< left << '*' << setw(38) << " W.Get All user information." << "\t\t\t\t*" << endl
-		<< left << '*' << setw(38) << " Y.Get Login information." << "\t\t\t\t*" << endl
+		<< left << '*' << setw(38) << " Y.Get Success Login information." << "\t\t\t\t*" << endl
 
 		<< left << '*' << setw(38) << " X.Exit." << "\t\t\t\t*" << endl
 		<<"*****************************************************************"<<endl
@@ -318,9 +318,9 @@ int main()
 			break;
 
 
-		case 'q':
+		case 'q': //??
 			manager.getLogonFailures();
-			//getch();
+			getch();
 			break;
 		case 'r':
 			manager.getLogsForAllProcesses();
@@ -336,11 +336,9 @@ int main()
 			break;
 		case 'v':
 			manager.getCurrentLoggedInUser();
-			getch();
 			break;
 		case 'w':
 			manager.getAllUserInformation();
-			getch();
 			break;
 		case 'y':
 			manager.getSuccessLoginInformation();
