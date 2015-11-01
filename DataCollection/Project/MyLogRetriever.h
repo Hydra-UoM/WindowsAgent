@@ -13,6 +13,7 @@
 #include <thread>
 #include <string>
 #include <sstream>
+#include <list>
 #include "WindowsAgentConstants.h"
 
 #include <sddl.h>
@@ -27,22 +28,42 @@ public:
 	MyLogRetriever();
 	BOOL IsKeyEvent(HANDLE hStdIn);
 	void getEvents(LPCWSTR pwsPath, LPCWSTR pwsQuery, int process_id);
-	void printResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
 	DWORD EnumerateResults(EVT_HANDLE hResults, int process_id);
 	void releaseMemory();
 	/**void handleLogs(std::string logType, int securityLevelConstraint,
 		int securityLevel, int process_id, int timePeriodInMilliSeconds);*/
-	void handleLogs(std::string logType, std::string strSecurityLevelConstraint,
-		int process_id, int timePeriodInMilliSeconds);
+	void handleLogRetrivalInfo(std::string logType, std::string strSecurityLevelConstraint,
+		int process_id1, int timePeriodInMilliSeconds1);
 	std::wstring stringToWidestring(const std::string& s);
 
-	// need to test
-	void handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuery, DWORD eventIDs[]);
+
 	DWORD EnumerateResultsOnEventIDs(EVT_HANDLE hResults, DWORD eventIDs[]);
-	void handleSuccessLoginEvents();
-	void handleFailedLoginEvents();
-	void handleEventsOnEventID(std::string logType, DWORD eventID);
+	list<string>handleSuccessLoginEvents();
+	list<string>handleFailedLoginEvents();
 	//void getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWORD eventIDs[]);
+	//void handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuery, DWORD eventIDs[]);
+	//void handleEventsOnEventID(std::string logType, DWORD eventID);
+	//void getLogs();
+
+	void printResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
+	list<string> returnResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
+	//list<string> next();
+	//bool isLogAvailable();
+
 	~MyLogRetriever(void);
+
+	string string_query;
+	boolean isLevelConstraintAvailable;
+	boolean isProcessIDConstraintAvailable;
+
+	wstring wsLogType;
+	LPCWSTR lpcwstrLogType;
+	wstring wsCons;
+	LPCWSTR pwsQuery;
+	int process_id;
+	int timePeriodInMilliSeconds;
+
+	MyLogStructure*myLogStructures[100];
+	int numberOfAvailableEvents = 0;
 };
 #endif

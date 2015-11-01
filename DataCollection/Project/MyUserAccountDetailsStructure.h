@@ -3,6 +3,11 @@
 #define MyUserAccountDetailsStructure_H
 
 #include <windows.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+
+using namespace std;
 
 class MyUserAccountDetailsStructure
 {
@@ -14,6 +19,7 @@ public:
 		DWORD usri4_primary_group_id1, LPWSTR usri4_profile1, DWORD usri4_password_expired1, DWORD usri4_auth_flags1);
 
 	void print();
+	list<string>toUserDetailsString();
 
 	~MyUserAccountDetailsStructure(void);
 

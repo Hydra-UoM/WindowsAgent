@@ -62,6 +62,31 @@ void MyUserAccountDetailsStructure::print()
 	wprintf(L"\tPassword expired information: %d\n", usri4_password_expired);
 }
 
+list<string> MyUserAccountDetailsStructure::toUserDetailsString()
+{
+	list<string> userString;
+	string str_usri4_name = CW2A(usri4_name);											userString.push_back(str_usri4_name);
+	string str_usri4_password_age = to_string(usri4_password_age);						userString.push_back(str_usri4_password_age);
+	string str_usri4_priv = to_string(usri4_priv);										userString.push_back(str_usri4_priv);
+	string str_usri4_flags = to_string(usri4_flags);									userString.push_back(str_usri4_flags);
+	string str_usri4_auth_flags = to_string(usri4_auth_flags);							userString.push_back(str_usri4_auth_flags);
+	string str_usri4_usr_comment = CW2A(usri4_usr_comment);								userString.push_back(str_usri4_usr_comment);
+	string str_usri4_parms = CW2A(usri4_parms);											userString.push_back(str_usri4_parms);
+	string str_usri4_last_logon = to_string(usri4_last_logon);							userString.push_back(str_usri4_last_logon);
+	string str_usri4_last_logoff = to_string(usri4_last_logoff);						userString.push_back(str_usri4_last_logoff);
+	string str_usri4_acct_expires = to_string(usri4_acct_expires);						userString.push_back(str_usri4_acct_expires);
+	string str_usri4_max_storage = to_string(usri4_max_storage);						userString.push_back(str_usri4_max_storage);
+	string str_usri4_units_per_week = to_string(usri4_units_per_week);					userString.push_back(str_usri4_units_per_week);
+	//string str_usri4_logon_hours(reinterpret_cast< char const* >(usri4_logon_hours));	userString.push_back(str_usri4_logon_hours);
+	string str_usri4_bad_pw_count = to_string(usri4_bad_pw_count);						userString.push_back(str_usri4_bad_pw_count);
+	string str_usri4_num_logons = to_string(usri4_num_logons);							userString.push_back(str_usri4_num_logons);
+	string str_usri4_country_code = to_string(usri4_country_code);						userString.push_back(str_usri4_country_code);
+	string str_usri4_code_page = to_string(usri4_code_page);							userString.push_back(str_usri4_code_page);
+	string str_usri4_primary_group_id = to_string(usri4_primary_group_id);				userString.push_back(str_usri4_primary_group_id);
+	string str_usri4_password_expired = to_string(usri4_password_expired);				userString.push_back(str_usri4_password_expired);
+	return userString;
+}
+
 MyUserAccountDetailsStructure::~MyUserAccountDetailsStructure(void)
 {
 

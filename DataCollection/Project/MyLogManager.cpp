@@ -199,9 +199,12 @@ void MyLogManager::getLogsForAllProcessesWithSecurityConstraint()
 	getTimePeriodToObserve();
 	getSecurityConstraint();
 	assignSecurityConstraint();
-	MyLogRetriever myLogRetriever;
 	process_id = -1;
-	myLogRetriever.handleLogs(logType, strSecurityLevelConstraint, process_id, timePeriodInMilliSeconds);
+	/**
+	MyLogRetriever myLogRetriever;
+	myLogRetriever.handleLogRetrivalInfo(logType, strSecurityLevelConstraint, process_id, timePeriodInMilliSeconds);
+	myLogRetriever.getLogs();
+	*/
 }
 
 void MyLogManager::getLogsForAProcessWithSecurityConstraint()
@@ -210,20 +213,26 @@ void MyLogManager::getLogsForAProcessWithSecurityConstraint()
 	getTimePeriodToObserve();
 	getSecurityConstraint();
 	assignSecurityConstraint();
-	MyLogRetriever myLogRetriever;
 	getProcessID();
-	myLogRetriever.handleLogs(logType, strSecurityLevelConstraint,process_id, timePeriodInMilliSeconds);
+	/**
+	MyLogRetriever myLogRetriever;
+	myLogRetriever.handleLogRetrivalInfo(logType, strSecurityLevelConstraint,process_id, timePeriodInMilliSeconds);
+	myLogRetriever.getLogs();
+	*/
 }
 
 void MyLogManager::getLogsForAllProcesses()
 {
 	getLogType();
 	getTimePeriodToObserve();
-	MyLogRetriever myLogRetriever;
 	process_id = -1;
 	strSecurityLevelConstraint = "ALL";
 	securityLevel = 0;
-	myLogRetriever.handleLogs(logType, strSecurityLevelConstraint, process_id, timePeriodInMilliSeconds);
+	/*
+	MyLogRetriever myLogRetriever;
+	myLogRetriever.handleLogRetrivalInfo(logType, strSecurityLevelConstraint, process_id, timePeriodInMilliSeconds);
+	myLogRetriever.getLogs();
+	*/
 }
 
 void MyLogManager::getLogsForAProcess()
@@ -231,24 +240,27 @@ void MyLogManager::getLogsForAProcess()
 	getLogType();
 	getTimePeriodToObserve();
 	getProcessID();
-	MyLogRetriever myLogRetriever;
 	strSecurityLevelConstraint = "ALL";
 	securityLevel = 0;
-	myLogRetriever.handleLogs(logType, strSecurityLevelConstraint, process_id, timePeriodInMilliSeconds);
+	/**
+	MyLogRetriever myLogRetriever;
+	myLogRetriever.handleLogRetrivalInfo(logType, strSecurityLevelConstraint, process_id, timePeriodInMilliSeconds);
+	myLogRetriever.getLogs();
+	*/
 }
 
-void MyLogManager::getSuccessLoginInformation()
+list<string>MyLogManager::getSuccessLoginInformation()
 {
 	MyLogRetriever myLogRetriever;
 	// success login: 4624
-	myLogRetriever.handleSuccessLoginEvents();
+	return myLogRetriever.handleSuccessLoginEvents();
 }
 
-void MyLogManager::getLogonFailures()
+list<string>MyLogManager::getLogonFailures()
 {
 	MyLogRetriever myLogRetriever;
 	//Failed login: 4625, 4648, 537
-	myLogRetriever.handleFailedLoginEvents();
+	return myLogRetriever.handleFailedLoginEvents();
 	/**
 		4625: An account failed to log on
 		Ref:
@@ -262,16 +274,16 @@ void MyLogManager::getLogonFailures()
 	*/
 }
 
-void MyLogManager::getCurrentLoggedInUser()
+list<string>MyLogManager::getCurrentLoggedInUser()
 {
 	MyUserAccountDetails details;
-	details.getCurrentLoggedOnUserInformation();
+	return details.getCurrentLoggedOnUserInformation();
 }
 
-void MyLogManager::getAllUserInformation()
+list<string>MyLogManager::getAllUserInformation()
 {
 	MyUserAccountDetails details;
-	details.getAllUserInformation();
+	return details.getAllUserInformation();
 }
 
 MyLogManager::~MyLogManager(void)

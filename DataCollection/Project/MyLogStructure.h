@@ -16,9 +16,11 @@ using namespace std;
 #include <stdio.h>
 #include <winevt.h>
 #include <iostream>
+#include <list>
 #include "MyTimeStamp.h"
 #include "MySubject.h"
 #include "MyObject.h"
+#include <atlstr.h>
 #include "MyProcessInformation.h"
 #include "MyApplicationInformation.h"
 #include "MyNetworkInformation.h"
@@ -43,16 +45,18 @@ class MyLogStructure
 		MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageString1,LPWSTR taskMessageString1,LPWSTR opCodeMessageString1,
 			LPWSTR channelMessageString1,LPWSTR providerMessageString1,int version1,int level1,int task1,int opCode1,UINT64 keywords1,
 			UINT64 eventRecordID1,UINT32 executionProcessID1,UINT32 executionThreadID1,const wchar_t* channel1,
-			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1/**,WCHAR* processImageName1*/);
+			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1/**,WCHAR* processImageName1,MySubject*mySubject1*/);
 			
 		~MyLogStructure(void);
 
 		void print();
 		void printExtractedEventMessageString();
-		void extractEventMessageString();
+		//void extractEventMessageString();
 		void initializeAvailableInformation();
-		std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
+		//std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
 		string wchar_t_pointerToString(const wchar_t*text);
+		list<string>toLogString();
+		list<string>addExtractedString(list<string>prepart);
 
 	//private:
 		LPWSTR eventMessageString;
@@ -91,7 +95,7 @@ class MyLogStructure
 		bool isAvailableMyRuleInformation;
 		bool isAvailableMyErrorInformation;
 
-		MySubject mySubject;
+		MySubject*mySubject;
 		const wchar_t*message;
 		//string sid;
 

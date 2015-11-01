@@ -27,7 +27,7 @@ MyUserAccountDetails::MyUserAccountDetails()
 {
 }
 
-void MyUserAccountDetails::getCurrentLoggedOnUserInformation()
+list<string> MyUserAccountDetails::getCurrentLoggedOnUserInformation()
 {
 	LPWSTR  computerName;
 	LPWSTR usri4_name;
@@ -60,7 +60,7 @@ void MyUserAccountDetails::getCurrentLoggedOnUserInformation()
 
 	LPTSTR sStringSid = NULL;
 
-	wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 	TCHAR  infoBuf[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
 	// Get and display the name of the computer. 
@@ -68,7 +68,7 @@ void MyUserAccountDetails::getCurrentLoggedOnUserInformation()
 	if (!GetComputerName(infoBuf, &bufCharCount))
 		printError(TEXT("GetComputerName"));
 	computerName = infoBuf;
-	_tprintf(TEXT("\tComputer name:      %s\n"), infoBuf);
+	//_tprintf(TEXT("\tComputer name:      %s\n"), infoBuf);
 
 	// Get and display the user name. 
 	bufCharCount = INFO_BUFFER_SIZE;
@@ -187,11 +187,12 @@ void MyUserAccountDetails::getCurrentLoggedOnUserInformation()
 		// Free the allocated memory.
 		//
 	}
-	myCurrentUserAccountStructure->print();
+	//myCurrentUserAccountStructure->print();
+	list<string>userString = myCurrentUserAccountStructure->toUserDetailsString();
 	if (pBuf != NULL)
 		NetApiBufferFree(pBuf);
-	wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-	getchar();
+	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+	return userString;
 }
 
 void MyUserAccountDetails::printError(TCHAR* msg)
@@ -218,8 +219,10 @@ void MyUserAccountDetails::printError(TCHAR* msg)
 	_tprintf(TEXT("\n\t%s failed with error %d (%s)"), msg, eNum, sysMsg);
 }
 
-void MyUserAccountDetails::getAllUserInformation()
+list<string> MyUserAccountDetails::getAllUserInformation()
 {
+	list<string>returnedResult;
+
 	TCHAR  infoBuf[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
 	LPWSTR  computerName;
@@ -229,7 +232,7 @@ void MyUserAccountDetails::getAllUserInformation()
 	if (!GetComputerName(infoBuf, &bufCharCount))
 		printError(TEXT("GetComputerName"));
 	computerName = infoBuf;
-	_tprintf(TEXT("\nComputer name:      %s"), infoBuf);
+	//_tprintf(TEXT("\nComputer name:      %s"), infoBuf);
 
 	LPUSER_INFO_2 pBuf = NULL;
 	LPUSER_INFO_2 pTmpBuf;
@@ -245,7 +248,7 @@ void MyUserAccountDetails::getAllUserInformation()
 
 	// The server is the default local computer.
 	pszServerName = NULL;
-	wprintf(L"\nUser account on %s: \n", pszServerName);
+	//wprintf(L"\nUser account on %s: \n", pszServerName);
 	//
 	// Call the NetUserEnum function, specifying level 0; 
 	//   enumerate global user account types only.
@@ -332,9 +335,15 @@ void MyUserAccountDetails::getAllUserInformation()
 						usri2_bad_pw_count, usri2_num_logons, usri2_country_code, usri2_code_page,
 						usri2_primary_group_id, usri2_profile, usri2_password_expired, usri2_auth_flags);
 
-					myCurrentUserAccountStructure->print();
-					wprintf(L"\n***************************************************");
-					wprintf(L"\n\n");
+					//myCurrentUserAccountStructure->print();
+					//wprintf(L"\n***************************************************");
+					//wprintf(L"\n\n");
+
+					returnedResult.push_back("start"); // start is inserted to indicate start of a log's details
+					list<string>local_returnedResult;
+					local_returnedResult = myCurrentUserAccountStructure->toUserDetailsString();
+					returnedResult.splice(returnedResult.end(), local_returnedResult);
+					returnedResult.push_back("end"); // end is inserted to indicate end of a log's details
 
 					pTmpBuf++;
 					dwTotalCount++;
@@ -367,9 +376,9 @@ void MyUserAccountDetails::getAllUserInformation()
 	//
 	// Print the final count of users enumerated.
 	//
-	fprintf(stderr, "\nTotal of %d entries enumerated\n", dwTotalCount);
-	wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-	getchar();
+	//fprintf(stderr, "\nTotal of %d entries enumerated\n", dwTotalCount);
+	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+	return returnedResult;
 }
 
 MyUserAccountDetails::~MyUserAccountDetails(void)

@@ -10,6 +10,10 @@
 #include <iostream>
 #include "MyLogStructure.h"
 #include "GetProcessImageNameFromPID.h"
+#include <string>
+#include <atlstr.h>
+
+using namespace std;
 
 #include <sddl.h>
 
@@ -25,10 +29,10 @@ class MyLogStructureMaker
 		DWORD getStatus(MyLogStructure*outputLogStructure);
 		BOOL IsKeyEvent(HANDLE hStdIn);
 		LPWSTR GetMessageString(EVT_HANDLE hMetadata, EVT_HANDLE hEvent, EVT_FORMAT_MESSAGE_FLAGS FormatId);
-
-	private:
-		EVT_HANDLE hEvent;
-		DWORD status;
+		void extractEventMessageString(MyLogStructure* outputLog);
+		std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
+		//bool splitString(string str_eventMessageString, char delimiters[], int *result, string*splitted);
+		//int findOneOfDelimitersFirstPosition(string remain, char delimiters[]);
 
 		LPWSTR eventMessageString;
 		LPWSTR levelMessageString;
@@ -53,5 +57,8 @@ class MyLogStructureMaker
 
 		FILETIME ft;
 		ULONGLONG ullNanoseconds;
+	private:
+		EVT_HANDLE hEvent;
+		DWORD status;
 };
 #endif

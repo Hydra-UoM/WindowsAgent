@@ -4,101 +4,16 @@
 #define ARRAY_SIZE 1 // earlier was 10, handle by 10 of blocks
 #define TIME_OUT INFINITE
 
-MyLogStructure*myLogStructures[100];
-int numberOfAvailableEvents = 0;
+//MyLogStructure*myLogStructures[100];
+//int numberOfAvailableEvents = 0;
+
+//list<string>logsList;
+//bool hasLogsListUpdated = false;
 
 MyLogRetriever::MyLogRetriever()
 {
+
 }
-
-/*
-void MyLogRetriever::getEventsOnEventIDs(LPCWSTR pwsPath, LPCWSTR pwsQuery, DWORD eventIDs[])
-{
-	HANDLE aWaitHandles[2];
-	DWORD dwWait = 0;
-	DWORD status = ERROR_SUCCESS;
-	EVT_HANDLE hSubscription = NULL;
-	HANDLE hEventLog = NULL;
-
-	DWORD dwLastRecordNumber = 0;
-
-	// Get a handle for console input, so you can break out of the loop.
-	aWaitHandles[0] = GetStdHandle(STD_INPUT_HANDLE);
-	if (INVALID_HANDLE_VALUE == aWaitHandles[0])
-	{
-		wprintf(L"GetStdHandle failed with %lu.\n", GetLastError());
-		goto cleanup;
-	}
-
-	// Get a handle to a manual reset event object that the subscription will signal
-	// when events become available that match your query criteria.
-	aWaitHandles[1] = CreateEvent(NULL, TRUE, TRUE, NULL);
-	if (NULL == aWaitHandles[1])
-	{
-		wprintf(L"CreateEvent failed with %lu.\n", GetLastError());
-		goto cleanup;
-	}
-
-	// Subscribe to events.
-	hSubscription = EvtSubscribe(NULL, aWaitHandles[1], pwsPath, pwsQuery, NULL, NULL, NULL, EvtSubscribeStartAtOldestRecord);
-	if (NULL == hSubscription)
-	{
-		status = GetLastError();
-
-		if (ERROR_EVT_CHANNEL_NOT_FOUND == status)
-			wprintf(L"Channel %s was not found.\n", pwsPath);
-		else if (ERROR_EVT_INVALID_QUERY == status)
-			wprintf(L"The query %s was not found.\n", pwsQuery);
-		else
-			wprintf(L"EvtSubscribe failed with %lu.\n", status);
-		goto cleanup;
-	}
-
-	// Loop until the user presses a key or there is an error && no more waits. Only the existing past events
-	while (GetAsyncKeyState(VK_ESCAPE) != true) //??
-	{
-		dwWait = WaitForMultipleObjects(sizeof(aWaitHandles) / sizeof(HANDLE), aWaitHandles, FALSE, INFINITE);
-
-		if (0 == dwWait - WAIT_OBJECT_0)  // Console input. If press key go out
-		{
-			if (IsKeyEvent(aWaitHandles[0]))
-				break;
-		}
-		else if (1 == dwWait - WAIT_OBJECT_0) // Query results
-		{
-			std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**\n";
-			status = EnumerateResultsOnEventIDs(hSubscription, eventIDs);
-			if (ERROR_NO_MORE_ITEMS != status)
-			{
-				std::cout << "***********End Before Break******************\n";
-				break;
-
-			}
-			break;// no more waits. Only the existing past events
-			ResetEvent(aWaitHandles[1]);
-		}
-		else
-		{
-			if (WAIT_FAILED == dwWait)
-			{
-				wprintf(L"WaitForSingleObject failed with %lu\n", GetLastError());
-			}
-			break;
-		}
-	}
-cleanup:
-
-	if (hSubscription)
-		EvtClose(hSubscription);
-
-	/** if (aWaitHandles[0])
-	CloseHandle(aWaitHandles[0]);*/
-	// it will close the cmd window
-/*
-	if (aWaitHandles[1])
-		CloseHandle(aWaitHandles[1]);
-}
-*/
 
 // Enumerate the events in the result set.
 DWORD MyLogRetriever::EnumerateResultsOnEventIDs(EVT_HANDLE hResults, DWORD eventIDs[])
@@ -146,9 +61,6 @@ DWORD MyLogRetriever::EnumerateResultsOnEventIDs(EVT_HANDLE hResults, DWORD even
 					// just leave the event
 				}
 			}
-			//std::cout << "*******************************************************************************\n";
-			//myLogStructures[numberOfAvailableEvents]->print();
-			//std::cout << "*******************************************************************************\n";
 			if (ERROR_SUCCESS == status) // PrintEvent
 			{
 				EvtClose(hEvents[i]);
@@ -262,15 +174,6 @@ cleanup:
 		CloseHandle(aWaitHandles[1]);
 }
 
-void MyLogRetriever::printResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents)
-{
-	for (int i = 0; i < numberOfFilteredEvents; i++)
-	{
-		myResultedLogStructures[i]->print();
-		std::cout << "*******************************************************************************\n";
-	}
-}
-
 // Enumerate the events in the result set.
 DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults, int process_id)
 {
@@ -321,9 +224,6 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults, int process_id)
 				myLogStructures[numberOfAvailableEvents] = outputLogStructure;
 				numberOfAvailableEvents++;
 			}
-			//std::cout << "*******************************************************************************\n";
-			//myLogStructures[numberOfAvailableEvents]->print();
-			//std::cout << "*******************************************************************************\n";
 			if (ERROR_SUCCESS == status) // PrintEvent
 			{
 				EvtClose(hEvents[i]);
@@ -392,15 +292,19 @@ void MyLogRetriever::releaseMemory()
 	}
 }
 
-void MyLogRetriever::handleLogs(std::string logType, std::string strSecurityLevelConstraint, int process_id, int timePeriodInMilliSeconds)
+void MyLogRetriever::handleLogRetrivalInfo(std::string logType, std::string strSecurityLevelConstraint, int process_id1, int timePeriodInMilliSeconds1)
 {
-	wstring wsLogType = stringToWidestring(logType);
-	LPCWSTR lpcwstrLogType = wsLogType.c_str();
+	process_id = process_id1;
+	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
+
+	wsLogType = stringToWidestring(logType);
+	lpcwstrLogType = wsLogType.c_str();
 	//wcout << lpcwstrLogType;
 
-	string string_query = "";
-	boolean isLevelConstraintAvailable = false;
-	boolean isProcessIDConstraintAvailable = false;
+	string_query = "";
+	isLevelConstraintAvailable = false;
+	isProcessIDConstraintAvailable = false;
+
 	if (strSecurityLevelConstraint.compare("ALL") != 0)	isLevelConstraintAvailable = true;
 	if (process_id != -1)				isProcessIDConstraintAvailable = true;
 
@@ -411,75 +315,48 @@ void MyLogRetriever::handleLogs(std::string logType, std::string strSecurityLeve
 	else
 	{
 		string_query = string_query + "*[System[";
-		string sec_lev_cons = "";
+		//string sec_lev_cons = "";
 		string_query = string_query + strSecurityLevelConstraint + " and TimeCreated[timediff(@SystemTime) <= " + to_string(timePeriodInMilliSeconds) + "]]]";
 	}
 
-	wstring wsCons = stringToWidestring(string_query);
-	LPCWSTR pwsQuery = wsCons.c_str();
-	wcout << pwsQuery;
-
-	std::cout << "\n*********** Query Results *****************************\n";
-	while (GetAsyncKeyState(VK_ESCAPE) != true)
-	{
-		getEvents(lpcwstrLogType, pwsQuery, process_id);
-		printResultedEvent(myLogStructures, numberOfAvailableEvents);
-		numberOfAvailableEvents = 0;
-		//releaseMemory();
-		Sleep(timePeriodInMilliSeconds);
-	}
+	wsCons = stringToWidestring(string_query);
+	pwsQuery = wsCons.c_str();
+	//wcout << pwsQuery;
 }
 
 /*
-void MyLogRetriever::handleLogs(std::string logType, int securityLevelConstraint,
-	int securityLevel, int process_id, int timePeriodInMilliSeconds)
+void MyLogRetriever::getLogs()
 {
-	wstring wsLogType = stringToWidestring(logType);
-	LPCWSTR lpcwstrLogType = wsLogType.c_str();
-	//wcout << lpcwstrLogType;
-
-	string string_query = "";
-	boolean isLevelConstraintAvailable = false;
-	boolean isProcessIDConstraintAvailable = false;
-	if (securityLevelConstraint != ALL)	isLevelConstraintAvailable = true;
-	if (process_id != -1)				isProcessIDConstraintAvailable = true;
-
-	if (!isLevelConstraintAvailable)
-	{
-		string_query = string_query + "*[System/TimeCreated[timediff(@SystemTime) <= " + to_string(timePeriodInMilliSeconds) + "]]";
-	}
-	else
-	{
-		string_query = string_query + "*[System[(Level ";
-		string sec_lev_cons = "";
-		switch (securityLevelConstraint)
-		{
-		case LESS_THAN:					sec_lev_cons = "< ";		break;
-		case LESS_THAN_OR_EQUAL_TO:		sec_lev_cons = "<= ";		break;
-		case GREATER_THAN:				sec_lev_cons = "> ";		break;
-		case GREATER_THAN_OR_EQUAL_TO:	sec_lev_cons = ">= ";		break;
-		case EQUAL_TO:					sec_lev_cons = "= ";		break;
-		}
-		string_query = string_query + sec_lev_cons + to_string(securityLevel) + ") and TimeCreated[timediff(@SystemTime) <= " + to_string(timePeriodInMilliSeconds) + "]]]";
-	}
-
-	wstring wsCons = stringToWidestring(string_query);
-	LPCWSTR pwsQuery = wsCons.c_str();
-	//wcout << pwsQuery;
-
 	std::cout << "\n*********** Query Results *****************************\n";
 	while (GetAsyncKeyState(VK_ESCAPE) != true)
 	{
+		//hasLogsListUpdated = false;
 		getEvents(lpcwstrLogType, pwsQuery, process_id);
 		printResultedEvent(myLogStructures, numberOfAvailableEvents);
+
+		//return logsList = returnResultedEvent(myLogStructures, numberOfAvailableEvents);
+		//hasLogsListUpdated = true;
 		numberOfAvailableEvents = 0;
 		//releaseMemory();
 		Sleep(timePeriodInMilliSeconds);
 	}
 }
 */
-void MyLogRetriever::handleSuccessLoginEvents()
+
+/**list<string> MyLogRetriever::next()
 {
+	return logsList;
+}
+
+bool MyLogRetriever::isLogAvailable()
+{
+	return hasLogsListUpdated;
+}
+*/
+
+list<string>MyLogRetriever::handleSuccessLoginEvents()
+{
+	numberOfAvailableEvents = 0;
 	wstring wsLogType = stringToWidestring("Security");
 	LPCWSTR lpcwstrLogType = wsLogType.c_str();
 
@@ -490,27 +367,31 @@ void MyLogRetriever::handleSuccessLoginEvents()
 	LPCWSTR pwsQuery = wsCons.c_str();
 
 	getEvents(lpcwstrLogType, pwsQuery, -1);
-	printResultedEvent(myLogStructures, numberOfAvailableEvents);
-	numberOfAvailableEvents = 0;
+	//printResultedEvent(myLogStructures, numberOfAvailableEvents);
+	return returnResultedEvent(myLogStructures, numberOfAvailableEvents);
+	//numberOfAvailableEvents = 0;
 }
 
-void MyLogRetriever::handleFailedLoginEvents()
+list<string>MyLogRetriever::handleFailedLoginEvents()
 {
+	numberOfAvailableEvents = 0;
 	wstring wsLogType = stringToWidestring("Security");
 	LPCWSTR lpcwstrLogType = wsLogType.c_str();
 
 	string string_query = "";
 	//Failed login: 4625, 4648, 537
 	string_query = string_query + "*[System/EventID= 4625 or EventID= 4648 or EventID= 537]";
-	cout << string_query << endl;
+	//cout << string_query << endl;
 	wstring wsCons = stringToWidestring(string_query);
 	LPCWSTR pwsQuery = wsCons.c_str();
 
 	getEvents(lpcwstrLogType, pwsQuery, -1);
-	printResultedEvent(myLogStructures, numberOfAvailableEvents);
-	numberOfAvailableEvents = 0;
+	//printResultedEvent(myLogStructures, numberOfAvailableEvents);
+	return returnResultedEvent(myLogStructures, numberOfAvailableEvents);
+	//numberOfAvailableEvents = 0;
 }
 
+/**
 void MyLogRetriever::handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuery, DWORD eventIDs[])
 {
 	while (GetAsyncKeyState(VK_ESCAPE) != true) //??
@@ -521,7 +402,7 @@ void MyLogRetriever::handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuer
 		string string_query = "*[System/";
 		for (int i = 0; i < (sizeof(eventIDs) / sizeof(*eventIDs)) - 1; i++)
 		{
-			string_query = string_query + "EventID= 4625 or ";//EventID= 4648 or EventID= 537]";
+			string_query = string_query + "EventID= " + to_string(eventIDs[i]) + " or ";//EventID= 4648 or EventID= 537]";
 		}
 		string_query = string_query + "EventID = " + to_string(eventIDs[(sizeof(eventIDs) / sizeof(*eventIDs)) - 1]) + "]";
 		wstring wsCons = stringToWidestring(string_query);
@@ -529,6 +410,7 @@ void MyLogRetriever::handleEventsOnEventIDs(std::string logType, LPCWSTR pwsQuer
 		getEvents(lpcwstrLogType, pwsQuery, -1);
 
 		printResultedEvent(myLogStructures, numberOfAvailableEvents);
+		list<string> MyLogRetriever::returnResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
 		numberOfAvailableEvents = 0;
 		//releaseMemory();
 	}
@@ -547,10 +429,36 @@ void MyLogRetriever::handleEventsOnEventID(std::string logType, DWORD eventID)
 		LPCWSTR pwsQuery = wsCons.c_str();
 
 		getEvents(lpcwstrLogType, pwsQuery, -1);
-		printResultedEvent(myLogStructures, numberOfAvailableEvents);
+		//printResultedEvent(myLogStructures, numberOfAvailableEvents);
+		list<string> MyLogRetriever::returnResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
 		numberOfAvailableEvents = 0;
 	}
 }
+*/
+
+void MyLogRetriever::printResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents)
+{
+	for (int i = 0; i < numberOfFilteredEvents; i++)
+	{
+		myResultedLogStructures[i]->print();
+		std::cout << "*******************************************************************************\n";
+	}
+}
+
+list<string> MyLogRetriever::returnResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents)
+{
+	list<string>returnedResult;
+	list<string>local_returnedResult;
+	for (int i = 0; i < numberOfFilteredEvents; i++)
+	{
+		returnedResult.push_back("start"); // start is inserted to indicate start of a log's details
+		local_returnedResult = myResultedLogStructures[i]->toLogString();
+		returnedResult.splice(returnedResult.end(), local_returnedResult);
+		returnedResult.push_back("end"); // end is inserted to indicate end of a log's details
+	}
+	return returnedResult;
+}
+
 
 MyLogRetriever::~MyLogRetriever(void)
 {

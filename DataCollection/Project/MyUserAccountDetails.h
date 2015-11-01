@@ -8,9 +8,9 @@ class MyUserAccountDetails
 {
 public:
 	MyUserAccountDetails();
-	void getCurrentLoggedOnUserInformation();
+	list<string>getCurrentLoggedOnUserInformation();
 	void printError(TCHAR* msg);
-	void getAllUserInformation();
+	list<string>getAllUserInformation();
 	~MyUserAccountDetails(void);
 };
 #endif

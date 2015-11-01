@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "MySubject.h"
 
-/**MySubject::MySubject(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1):
+MySubject::MySubject(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1):
 			Security_ID(Security_ID1),Account_Name(Account_Name1),Account_Domain(Account_Domain1),Logon_ID(Logon_ID1)
 {
 	    Security_ID = Security_ID1;
@@ -11,13 +11,14 @@
 		Account_Domain = Account_Domain1;
 		Logon_ID = Logon_ID1;
 }
-*/
 
+/*
 MySubject::MySubject()
 {
 
-}
+}*/
 
+/*
 void MySubject::setElements(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1)
 {
 		Security_ID = Security_ID1;
@@ -25,7 +26,7 @@ void MySubject::setElements(const wchar_t* Security_ID1,const wchar_t* Account_N
 		Account_Domain = Account_Domain1;
 		Logon_ID = Logon_ID1;
 }
-
+*/
 void MySubject::print()
 {
 	wprintf(L"Subject:\n");

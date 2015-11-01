@@ -21,10 +21,10 @@ public:
 	void getProcessID();
 	void getTimePeriodToObserve();
 	void getSecurityConstraint();
-	void getLogonFailures();
-	void getCurrentLoggedInUser();
-	void getAllUserInformation();
-	void getSuccessLoginInformation();
+	list<string>getLogonFailures();
+	list<string>getCurrentLoggedInUser();
+	list<string>getAllUserInformation();
+	list<string>getSuccessLoginInformation();
 	void assignSecurityConstraint();
 
 	std::string logType;

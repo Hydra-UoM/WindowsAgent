@@ -1,8 +1,13 @@
 #include "Manager.h"
 #include "MyLogManager.h"
+//#include "MyLogRetriever.h"
+
 #define RESULT_POSITION1 5
 #define RESULT_POSITION2 26
 #define RESULT_POSITION3 32
+
+list<string>logsList;
+list<string>userList;
 
 void gotoxy(int column, int line)
 {
@@ -70,12 +75,14 @@ int main()
 	vector<ProcessF> procF;
 	double cpu, mem, down, up;
 	int sample,PID;
+	list<string>::iterator i;
 
+	MyLogRetriever myLogRetriever;
 	while (true)
 	{
 	system("cls");
 		//press ESCAPE to exit the functions from i to o
-		switch (Menu())
+		switch(Menu())
 		{
 		case 'a':
 			gotoxy(0, RESULT_POSITION2);
@@ -318,31 +325,117 @@ int main()
 			break;
 
 
-		case 'q': //??
-			manager.getLogonFailures();
+		case 'q': // Need to test with manual logon failure
+			logsList = manager.getLogonFailures();				// return list<string>
+			for (i = logsList.begin(); i != logsList.end(); ++i)
+			cout << *i << "\n";
 			getch();
 			break;
 		case 'r':
 			manager.getLogsForAllProcesses();
+			myLogRetriever.handleLogRetrivalInfo(manager.logType, manager.strSecurityLevelConstraint, manager.process_id, manager.timePeriodInMilliSeconds);
+			//myLogRetriever.getLogs();
+			while (GetAsyncKeyState(VK_ESCAPE) != true)
+			{
+				//hasLogsListUpdated = false;
+				myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+				myLogRetriever.printResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+
+				//logsList = myLogRetriever.returnResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+				/*
+				for (i = logsList.begin(); i != logsList.end(); ++i)
+					cout << *i << "\n";
+				*/
+				// need to send event in this point
+				myLogRetriever.numberOfAvailableEvents = 0;
+				//releaseMemory();
+				Sleep(myLogRetriever.timePeriodInMilliSeconds);
+			}
 			break;
 		case 's':
 			manager.getLogsForAProcess();
+			myLogRetriever.handleLogRetrivalInfo(manager.logType, manager.strSecurityLevelConstraint, manager.process_id, manager.timePeriodInMilliSeconds);
+			while (GetAsyncKeyState(VK_ESCAPE) != true)
+			{
+				//hasLogsListUpdated = false;
+				myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+				myLogRetriever.printResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+
+				//logsList = myLogRetriever.returnResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+				/*
+				for (i = logsList.begin(); i != logsList.end(); ++i)
+				cout << *i << "\n";
+				*/
+				// need to send event in this point
+				myLogRetriever.numberOfAvailableEvents = 0;
+				//releaseMemory();
+				Sleep(myLogRetriever.timePeriodInMilliSeconds);
+			}
 			break;
 		case 't':
 			manager.getLogsForAllProcessesWithSecurityConstraint();
+			myLogRetriever.handleLogRetrivalInfo(manager.logType, manager.strSecurityLevelConstraint, manager.process_id, manager.timePeriodInMilliSeconds);
+			while (GetAsyncKeyState(VK_ESCAPE) != true)
+			{
+				//hasLogsListUpdated = false;
+				myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+				myLogRetriever.printResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+
+				//logsList = myLogRetriever.returnResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+				/*
+				list<string>::iterator i;
+				for (i = logsList.begin(); i != logsList.end(); ++i)
+				cout << *i << "\n";
+				*/
+				// need to send event in this point
+				myLogRetriever.numberOfAvailableEvents = 0;
+				//releaseMemory();
+				Sleep(myLogRetriever.timePeriodInMilliSeconds);
+			}
 			break;
 		case 'u':
 			manager.getLogsForAProcessWithSecurityConstraint();
+			myLogRetriever.handleLogRetrivalInfo(manager.logType, manager.strSecurityLevelConstraint, manager.process_id, manager.timePeriodInMilliSeconds);
+			while (GetAsyncKeyState(VK_ESCAPE) != true)
+			{
+				//hasLogsListUpdated = false;
+				myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+				myLogRetriever.printResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+
+				//logsList = myLogRetriever.returnResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+				/*
+				for (i = logsList.begin(); i != logsList.end(); ++i)
+				cout << *i << "\n";
+				*/
+				// need to send event in this point
+				myLogRetriever.numberOfAvailableEvents = 0;
+				//releaseMemory();
+				Sleep(myLogRetriever.timePeriodInMilliSeconds);
+			}
 			break;
 		case 'v':
-			manager.getCurrentLoggedInUser();
+			userList = manager.getCurrentLoggedInUser();  // return list<string>
+			/**
+			for (i = userList.begin(); i != userList.end(); ++i)
+				cout << *i << "\n";
+			getch();
+			*/
 			break;
 		case 'w':
-			manager.getAllUserInformation();
+			userList = manager.getAllUserInformation();	// return list<string>
+			/**
+			for (i = userList.begin(); i != userList.end(); ++i)
+				cout << *i << "\n";
+			getch();
+			*/
 			break;
 		case 'y':
-			manager.getSuccessLoginInformation();
+			logsList = manager.getSuccessLoginInformation(); // return list<string>
+			/**
+			for (i = logsList.begin(); i != logsList.end(); ++i)
+			cout << *i << "\n";
 			getch();
+			*/
 			break;
 		case 'x':
 			return 0;
