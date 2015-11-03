@@ -53,11 +53,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_VARIADIC_MAX=8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>C:\local\boost_1_59_0;C:\Users\Nirosh\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows;C:\Users\Nirosh\Documents\thrift-0.9.2\lib\cpp\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <AdditionalLibraryDirectories>C:\local\boost_1_59_0\stage\lib;C:\Users\Nirosh\Documents\thrift-0.9.2\lib\cpp\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libboost_thread-vc120-mt-gd-1_59.lib;libboost_chrono-vc120-mt-gd-1_59.lib;libthrift.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -106,6 +109,10 @@
     <ClInclude Include="MyTimeStamp.h" />
     <ClInclude Include="MyUserAccountDetails.h" />
     <ClInclude Include="MyUserAccountDetailsStructure.h" />
+    <ClInclude Include="Objects.h" />
+    <ClInclude Include="ProcessStats.h" />
+    <ClInclude Include="Process_constants.h" />
+    <ClInclude Include="Process_types.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="vld.h" />
@@ -114,7 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GetProcessImageNameFromPID.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="IO.cpp" />
@@ -142,6 +148,10 @@
     <ClCompile Include="MyTimeStamp.cpp" />
     <ClCompile Include="MyUserAccountDetails.cpp" />
     <ClCompile Include="MyUserAccountDetailsStructure.cpp" />
+    <ClCompile Include="ProcessStats.cpp" />
+    <ClCompile Include="ProcessStats_server.skeleton.cpp" />
+    <ClCompile Include="Process_constants.cpp" />
+    <ClCompile Include="Process_types.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
