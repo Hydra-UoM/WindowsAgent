@@ -3254,6 +3254,14 @@ uint32_t ProcessStats_filterAllProcesses_args::read(::apache::thrift::protocol::
           xfer += iprot->skip(ftype);
         }
         break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->processname);
+          this->__isset.processname = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -3287,6 +3295,10 @@ uint32_t ProcessStats_filterAllProcesses_args::write(::apache::thrift::protocol:
   xfer += oprot->writeDouble(this->up);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("processname", ::apache::thrift::protocol::T_STRING, 5);
+  xfer += oprot->writeString(this->processname);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   oprot->decrementRecursionDepth();
@@ -3317,6 +3329,10 @@ uint32_t ProcessStats_filterAllProcesses_pargs::write(::apache::thrift::protocol
 
   xfer += oprot->writeFieldBegin("up", ::apache::thrift::protocol::T_DOUBLE, 4);
   xfer += oprot->writeDouble((*(this->up)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("processname", ::apache::thrift::protocol::T_STRING, 5);
+  xfer += oprot->writeString((*(this->processname)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -4790,7 +4806,36 @@ uint32_t ProcessStats_getLogsForAllProcesses_args::read(::apache::thrift::protoc
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->logType);
+          this->__isset.logType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timeGapInMilliSeconds);
+          this->__isset.timeGapInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalTimePeriodInMilliSeconds);
+          this->__isset.totalTimePeriodInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -4803,6 +4848,18 @@ uint32_t ProcessStats_getLogsForAllProcesses_args::write(::apache::thrift::proto
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ProcessStats_getLogsForAllProcesses_args");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->logType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 2);
+  xfer += oprot->writeI64(this->timeGapInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeI64(this->totalTimePeriodInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -4819,6 +4876,18 @@ uint32_t ProcessStats_getLogsForAllProcesses_pargs::write(::apache::thrift::prot
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ProcessStats_getLogsForAllProcesses_pargs");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->logType)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 2);
+  xfer += oprot->writeI64((*(this->timeGapInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeI64((*(this->totalTimePeriodInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -4987,7 +5056,44 @@ uint32_t ProcessStats_getLogsForAProcess_args::read(::apache::thrift::protocol::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->logType);
+          this->__isset.logType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->process_name);
+          this->__isset.process_name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timeGapInMilliSeconds);
+          this->__isset.timeGapInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalTimePeriodInMilliSeconds);
+          this->__isset.totalTimePeriodInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -5000,6 +5106,22 @@ uint32_t ProcessStats_getLogsForAProcess_args::write(::apache::thrift::protocol:
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ProcessStats_getLogsForAProcess_args");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->logType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("process_name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->process_name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeI64(this->timeGapInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->totalTimePeriodInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -5016,6 +5138,22 @@ uint32_t ProcessStats_getLogsForAProcess_pargs::write(::apache::thrift::protocol
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ProcessStats_getLogsForAProcess_pargs");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->logType)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("process_name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->process_name)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeI64((*(this->timeGapInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64((*(this->totalTimePeriodInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -5184,7 +5322,44 @@ uint32_t ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args::read(::
     if (ftype == ::apache::thrift::protocol::T_STOP) {
       break;
     }
-    xfer += iprot->skip(ftype);
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->logType);
+          this->__isset.logType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->securityLevel);
+          this->__isset.securityLevel = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timeGapInMilliSeconds);
+          this->__isset.timeGapInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalTimePeriodInMilliSeconds);
+          this->__isset.totalTimePeriodInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
     xfer += iprot->readFieldEnd();
   }
 
@@ -5197,6 +5372,22 @@ uint32_t ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args::write(:
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->logType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("securityLevel", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->securityLevel);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeI64(this->timeGapInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->totalTimePeriodInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -5213,6 +5404,22 @@ uint32_t ProcessStats_getLogsForAllProcessesWithSecurityConstraint_pargs::write(
   uint32_t xfer = 0;
   oprot->incrementRecursionDepth();
   xfer += oprot->writeStructBegin("ProcessStats_getLogsForAllProcessesWithSecurityConstraint_pargs");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->logType)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("securityLevel", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->securityLevel)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 3);
+  xfer += oprot->writeI64((*(this->timeGapInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64((*(this->totalTimePeriodInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
@@ -5359,6 +5566,288 @@ uint32_t ProcessStats_getLogsForAllProcessesWithSecurityConstraint_presult::read
 }
 
 
+ProcessStats_getLogsForAProcessWithSecurityConstraint_args::~ProcessStats_getLogsForAProcessWithSecurityConstraint_args() throw() {
+}
+
+
+uint32_t ProcessStats_getLogsForAProcessWithSecurityConstraint_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->logType);
+          this->__isset.logType = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->securityLevel);
+          this->__isset.securityLevel = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->process_name);
+          this->__isset.process_name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->timeGapInMilliSeconds);
+          this->__isset.timeGapInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I64) {
+          xfer += iprot->readI64(this->totalTimePeriodInMilliSeconds);
+          this->__isset.totalTimePeriodInMilliSeconds = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t ProcessStats_getLogsForAProcessWithSecurityConstraint_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  oprot->incrementRecursionDepth();
+  xfer += oprot->writeStructBegin("ProcessStats_getLogsForAProcessWithSecurityConstraint_args");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->logType);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("securityLevel", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString(this->securityLevel);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("process_name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString(this->process_name);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64(this->timeGapInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 5);
+  xfer += oprot->writeI64(this->totalTimePeriodInMilliSeconds);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  oprot->decrementRecursionDepth();
+  return xfer;
+}
+
+
+ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs::~ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs() throw() {
+}
+
+
+uint32_t ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  oprot->incrementRecursionDepth();
+  xfer += oprot->writeStructBegin("ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs");
+
+  xfer += oprot->writeFieldBegin("logType", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString((*(this->logType)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("securityLevel", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeString((*(this->securityLevel)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("process_name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeString((*(this->process_name)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("timeGapInMilliSeconds", ::apache::thrift::protocol::T_I64, 4);
+  xfer += oprot->writeI64((*(this->timeGapInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("totalTimePeriodInMilliSeconds", ::apache::thrift::protocol::T_I64, 5);
+  xfer += oprot->writeI64((*(this->totalTimePeriodInMilliSeconds)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  oprot->decrementRecursionDepth();
+  return xfer;
+}
+
+
+ProcessStats_getLogsForAProcessWithSecurityConstraint_result::~ProcessStats_getLogsForAProcessWithSecurityConstraint_result() throw() {
+}
+
+
+uint32_t ProcessStats_getLogsForAProcessWithSecurityConstraint_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->success.clear();
+            uint32_t _size242;
+            ::apache::thrift::protocol::TType _etype245;
+            xfer += iprot->readListBegin(_etype245, _size242);
+            this->success.resize(_size242);
+            uint32_t _i246;
+            for (_i246 = 0; _i246 < _size242; ++_i246)
+            {
+              xfer += iprot->readString(this->success[_i246]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t ProcessStats_getLogsForAProcessWithSecurityConstraint_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("ProcessStats_getLogsForAProcessWithSecurityConstraint_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
+    {
+      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->success.size()));
+      std::vector<std::string> ::const_iterator _iter247;
+      for (_iter247 = this->success.begin(); _iter247 != this->success.end(); ++_iter247)
+      {
+        xfer += oprot->writeString((*_iter247));
+      }
+      xfer += oprot->writeListEnd();
+    }
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+ProcessStats_getLogsForAProcessWithSecurityConstraint_presult::~ProcessStats_getLogsForAProcessWithSecurityConstraint_presult() throw() {
+}
+
+
+uint32_t ProcessStats_getLogsForAProcessWithSecurityConstraint_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            (*(this->success)).clear();
+            uint32_t _size248;
+            ::apache::thrift::protocol::TType _etype251;
+            xfer += iprot->readListBegin(_etype251, _size248);
+            (*(this->success)).resize(_size248);
+            uint32_t _i252;
+            for (_i252 = 0; _i252 < _size248; ++_i252)
+            {
+              xfer += iprot->readString((*(this->success))[_i252]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
 ProcessStats_getCurrentLoggedInUser_args::~ProcessStats_getCurrentLoggedInUser_args() throw() {
 }
 
@@ -5446,14 +5935,14 @@ uint32_t ProcessStats_getCurrentLoggedInUser_result::read(::apache::thrift::prot
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size242;
-            ::apache::thrift::protocol::TType _etype245;
-            xfer += iprot->readListBegin(_etype245, _size242);
-            this->success.resize(_size242);
-            uint32_t _i246;
-            for (_i246 = 0; _i246 < _size242; ++_i246)
+            uint32_t _size253;
+            ::apache::thrift::protocol::TType _etype256;
+            xfer += iprot->readListBegin(_etype256, _size253);
+            this->success.resize(_size253);
+            uint32_t _i257;
+            for (_i257 = 0; _i257 < _size253; ++_i257)
             {
-              xfer += iprot->readString(this->success[_i246]);
+              xfer += iprot->readString(this->success[_i257]);
             }
             xfer += iprot->readListEnd();
           }
@@ -5484,10 +5973,10 @@ uint32_t ProcessStats_getCurrentLoggedInUser_result::write(::apache::thrift::pro
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->success.size()));
-      std::vector<std::string> ::const_iterator _iter247;
-      for (_iter247 = this->success.begin(); _iter247 != this->success.end(); ++_iter247)
+      std::vector<std::string> ::const_iterator _iter258;
+      for (_iter258 = this->success.begin(); _iter258 != this->success.end(); ++_iter258)
       {
-        xfer += oprot->writeString((*_iter247));
+        xfer += oprot->writeString((*_iter258));
       }
       xfer += oprot->writeListEnd();
     }
@@ -5527,14 +6016,14 @@ uint32_t ProcessStats_getCurrentLoggedInUser_presult::read(::apache::thrift::pro
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size248;
-            ::apache::thrift::protocol::TType _etype251;
-            xfer += iprot->readListBegin(_etype251, _size248);
-            (*(this->success)).resize(_size248);
-            uint32_t _i252;
-            for (_i252 = 0; _i252 < _size248; ++_i252)
+            uint32_t _size259;
+            ::apache::thrift::protocol::TType _etype262;
+            xfer += iprot->readListBegin(_etype262, _size259);
+            (*(this->success)).resize(_size259);
+            uint32_t _i263;
+            for (_i263 = 0; _i263 < _size259; ++_i263)
             {
-              xfer += iprot->readString((*(this->success))[_i252]);
+              xfer += iprot->readString((*(this->success))[_i263]);
             }
             xfer += iprot->readListEnd();
           }
@@ -5643,14 +6132,14 @@ uint32_t ProcessStats_getAllUserInformation_result::read(::apache::thrift::proto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size253;
-            ::apache::thrift::protocol::TType _etype256;
-            xfer += iprot->readListBegin(_etype256, _size253);
-            this->success.resize(_size253);
-            uint32_t _i257;
-            for (_i257 = 0; _i257 < _size253; ++_i257)
+            uint32_t _size264;
+            ::apache::thrift::protocol::TType _etype267;
+            xfer += iprot->readListBegin(_etype267, _size264);
+            this->success.resize(_size264);
+            uint32_t _i268;
+            for (_i268 = 0; _i268 < _size264; ++_i268)
             {
-              xfer += iprot->readString(this->success[_i257]);
+              xfer += iprot->readString(this->success[_i268]);
             }
             xfer += iprot->readListEnd();
           }
@@ -5681,10 +6170,10 @@ uint32_t ProcessStats_getAllUserInformation_result::write(::apache::thrift::prot
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->success.size()));
-      std::vector<std::string> ::const_iterator _iter258;
-      for (_iter258 = this->success.begin(); _iter258 != this->success.end(); ++_iter258)
+      std::vector<std::string> ::const_iterator _iter269;
+      for (_iter269 = this->success.begin(); _iter269 != this->success.end(); ++_iter269)
       {
-        xfer += oprot->writeString((*_iter258));
+        xfer += oprot->writeString((*_iter269));
       }
       xfer += oprot->writeListEnd();
     }
@@ -5724,14 +6213,14 @@ uint32_t ProcessStats_getAllUserInformation_presult::read(::apache::thrift::prot
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size259;
-            ::apache::thrift::protocol::TType _etype262;
-            xfer += iprot->readListBegin(_etype262, _size259);
-            (*(this->success)).resize(_size259);
-            uint32_t _i263;
-            for (_i263 = 0; _i263 < _size259; ++_i263)
+            uint32_t _size270;
+            ::apache::thrift::protocol::TType _etype273;
+            xfer += iprot->readListBegin(_etype273, _size270);
+            (*(this->success)).resize(_size270);
+            uint32_t _i274;
+            for (_i274 = 0; _i274 < _size270; ++_i274)
             {
-              xfer += iprot->readString((*(this->success))[_i263]);
+              xfer += iprot->readString((*(this->success))[_i274]);
             }
             xfer += iprot->readListEnd();
           }
@@ -5840,14 +6329,14 @@ uint32_t ProcessStats_getSuccessLoginInformation_result::read(::apache::thrift::
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size264;
-            ::apache::thrift::protocol::TType _etype267;
-            xfer += iprot->readListBegin(_etype267, _size264);
-            this->success.resize(_size264);
-            uint32_t _i268;
-            for (_i268 = 0; _i268 < _size264; ++_i268)
+            uint32_t _size275;
+            ::apache::thrift::protocol::TType _etype278;
+            xfer += iprot->readListBegin(_etype278, _size275);
+            this->success.resize(_size275);
+            uint32_t _i279;
+            for (_i279 = 0; _i279 < _size275; ++_i279)
             {
-              xfer += iprot->readString(this->success[_i268]);
+              xfer += iprot->readString(this->success[_i279]);
             }
             xfer += iprot->readListEnd();
           }
@@ -5878,10 +6367,10 @@ uint32_t ProcessStats_getSuccessLoginInformation_result::write(::apache::thrift:
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->success.size()));
-      std::vector<std::string> ::const_iterator _iter269;
-      for (_iter269 = this->success.begin(); _iter269 != this->success.end(); ++_iter269)
+      std::vector<std::string> ::const_iterator _iter280;
+      for (_iter280 = this->success.begin(); _iter280 != this->success.end(); ++_iter280)
       {
-        xfer += oprot->writeString((*_iter269));
+        xfer += oprot->writeString((*_iter280));
       }
       xfer += oprot->writeListEnd();
     }
@@ -5921,14 +6410,14 @@ uint32_t ProcessStats_getSuccessLoginInformation_presult::read(::apache::thrift:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size270;
-            ::apache::thrift::protocol::TType _etype273;
-            xfer += iprot->readListBegin(_etype273, _size270);
-            (*(this->success)).resize(_size270);
-            uint32_t _i274;
-            for (_i274 = 0; _i274 < _size270; ++_i274)
+            uint32_t _size281;
+            ::apache::thrift::protocol::TType _etype284;
+            xfer += iprot->readListBegin(_etype284, _size281);
+            (*(this->success)).resize(_size281);
+            uint32_t _i285;
+            for (_i285 = 0; _i285 < _size281; ++_i285)
             {
-              xfer += iprot->readString((*(this->success))[_i274]);
+              xfer += iprot->readString((*(this->success))[_i285]);
             }
             xfer += iprot->readListEnd();
           }
@@ -6918,13 +7407,13 @@ void ProcessStatsClient::recv_getAllNetUploadProc(std::vector<std::string> & _re
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getAllNetUploadProc failed: unknown result");
 }
 
-void ProcessStatsClient::filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up)
+void ProcessStatsClient::filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up, const std::string& processname)
 {
-  send_filterAllProcesses(cpu, mem, down, up);
+  send_filterAllProcesses(cpu, mem, down, up, processname);
   recv_filterAllProcesses(_return);
 }
 
-void ProcessStatsClient::send_filterAllProcesses(const double cpu, const double mem, const double down, const double up)
+void ProcessStatsClient::send_filterAllProcesses(const double cpu, const double mem, const double down, const double up, const std::string& processname)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("filterAllProcesses", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -6934,6 +7423,7 @@ void ProcessStatsClient::send_filterAllProcesses(const double cpu, const double 
   args.mem = &mem;
   args.down = &down;
   args.up = &up;
+  args.processname = &processname;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7328,18 +7818,21 @@ void ProcessStatsClient::recv_getLogonFailures(std::vector<std::string> & _retur
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getLogonFailures failed: unknown result");
 }
 
-void ProcessStatsClient::getLogsForAllProcesses(std::vector<std::string> & _return)
+void ProcessStatsClient::getLogsForAllProcesses(std::vector<std::string> & _return, const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
 {
-  send_getLogsForAllProcesses();
+  send_getLogsForAllProcesses(logType, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
   recv_getLogsForAllProcesses(_return);
 }
 
-void ProcessStatsClient::send_getLogsForAllProcesses()
+void ProcessStatsClient::send_getLogsForAllProcesses(const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("getLogsForAllProcesses", ::apache::thrift::protocol::T_CALL, cseqid);
 
   ProcessStats_getLogsForAllProcesses_pargs args;
+  args.logType = &logType;
+  args.timeGapInMilliSeconds = &timeGapInMilliSeconds;
+  args.totalTimePeriodInMilliSeconds = &totalTimePeriodInMilliSeconds;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7385,18 +7878,22 @@ void ProcessStatsClient::recv_getLogsForAllProcesses(std::vector<std::string> & 
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getLogsForAllProcesses failed: unknown result");
 }
 
-void ProcessStatsClient::getLogsForAProcess(std::vector<std::string> & _return)
+void ProcessStatsClient::getLogsForAProcess(std::vector<std::string> & _return, const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
 {
-  send_getLogsForAProcess();
+  send_getLogsForAProcess(logType, process_name, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
   recv_getLogsForAProcess(_return);
 }
 
-void ProcessStatsClient::send_getLogsForAProcess()
+void ProcessStatsClient::send_getLogsForAProcess(const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("getLogsForAProcess", ::apache::thrift::protocol::T_CALL, cseqid);
 
   ProcessStats_getLogsForAProcess_pargs args;
+  args.logType = &logType;
+  args.process_name = &process_name;
+  args.timeGapInMilliSeconds = &timeGapInMilliSeconds;
+  args.totalTimePeriodInMilliSeconds = &totalTimePeriodInMilliSeconds;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7442,18 +7939,22 @@ void ProcessStatsClient::recv_getLogsForAProcess(std::vector<std::string> & _ret
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getLogsForAProcess failed: unknown result");
 }
 
-void ProcessStatsClient::getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return)
+void ProcessStatsClient::getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
 {
-  send_getLogsForAllProcessesWithSecurityConstraint();
+  send_getLogsForAllProcessesWithSecurityConstraint(logType, securityLevel, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
   recv_getLogsForAllProcessesWithSecurityConstraint(_return);
 }
 
-void ProcessStatsClient::send_getLogsForAllProcessesWithSecurityConstraint()
+void ProcessStatsClient::send_getLogsForAllProcessesWithSecurityConstraint(const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("getLogsForAllProcessesWithSecurityConstraint", ::apache::thrift::protocol::T_CALL, cseqid);
 
   ProcessStats_getLogsForAllProcessesWithSecurityConstraint_pargs args;
+  args.logType = &logType;
+  args.securityLevel = &securityLevel;
+  args.timeGapInMilliSeconds = &timeGapInMilliSeconds;
+  args.totalTimePeriodInMilliSeconds = &totalTimePeriodInMilliSeconds;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -7497,6 +7998,68 @@ void ProcessStatsClient::recv_getLogsForAllProcessesWithSecurityConstraint(std::
     return;
   }
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getLogsForAllProcessesWithSecurityConstraint failed: unknown result");
+}
+
+void ProcessStatsClient::getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
+{
+  send_getLogsForAProcessWithSecurityConstraint(logType, securityLevel, process_name, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
+  recv_getLogsForAProcessWithSecurityConstraint(_return);
+}
+
+void ProcessStatsClient::send_getLogsForAProcessWithSecurityConstraint(const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("getLogsForAProcessWithSecurityConstraint", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs args;
+  args.logType = &logType;
+  args.securityLevel = &securityLevel;
+  args.process_name = &process_name;
+  args.timeGapInMilliSeconds = &timeGapInMilliSeconds;
+  args.totalTimePeriodInMilliSeconds = &totalTimePeriodInMilliSeconds;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+void ProcessStatsClient::recv_getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("getLogsForAProcessWithSecurityConstraint") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "getLogsForAProcessWithSecurityConstraint failed: unknown result");
 }
 
 void ProcessStatsClient::getCurrentLoggedInUser(std::vector<std::string> & _return)
@@ -8630,7 +9193,7 @@ void ProcessStatsProcessor::process_filterAllProcesses(int32_t seqid, ::apache::
 
   ProcessStats_filterAllProcesses_result result;
   try {
-    iface_->filterAllProcesses(result.success, args.cpu, args.mem, args.down, args.up);
+    iface_->filterAllProcesses(result.success, args.cpu, args.mem, args.down, args.up, args.processname);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9008,7 +9571,7 @@ void ProcessStatsProcessor::process_getLogsForAllProcesses(int32_t seqid, ::apac
 
   ProcessStats_getLogsForAllProcesses_result result;
   try {
-    iface_->getLogsForAllProcesses(result.success);
+    iface_->getLogsForAllProcesses(result.success, args.logType, args.timeGapInMilliSeconds, args.totalTimePeriodInMilliSeconds);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9062,7 +9625,7 @@ void ProcessStatsProcessor::process_getLogsForAProcess(int32_t seqid, ::apache::
 
   ProcessStats_getLogsForAProcess_result result;
   try {
-    iface_->getLogsForAProcess(result.success);
+    iface_->getLogsForAProcess(result.success, args.logType, args.process_name, args.timeGapInMilliSeconds, args.totalTimePeriodInMilliSeconds);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9116,7 +9679,7 @@ void ProcessStatsProcessor::process_getLogsForAllProcessesWithSecurityConstraint
 
   ProcessStats_getLogsForAllProcessesWithSecurityConstraint_result result;
   try {
-    iface_->getLogsForAllProcessesWithSecurityConstraint(result.success);
+    iface_->getLogsForAllProcessesWithSecurityConstraint(result.success, args.logType, args.securityLevel, args.timeGapInMilliSeconds, args.totalTimePeriodInMilliSeconds);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -9144,6 +9707,60 @@ void ProcessStatsProcessor::process_getLogsForAllProcessesWithSecurityConstraint
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "ProcessStats.getLogsForAllProcessesWithSecurityConstraint", bytes);
+  }
+}
+
+void ProcessStatsProcessor::process_getLogsForAProcessWithSecurityConstraint(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("ProcessStats.getLogsForAProcessWithSecurityConstraint", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "ProcessStats.getLogsForAProcessWithSecurityConstraint");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "ProcessStats.getLogsForAProcessWithSecurityConstraint");
+  }
+
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "ProcessStats.getLogsForAProcessWithSecurityConstraint", bytes);
+  }
+
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_result result;
+  try {
+    iface_->getLogsForAProcessWithSecurityConstraint(result.success, args.logType, args.securityLevel, args.process_name, args.timeGapInMilliSeconds, args.totalTimePeriodInMilliSeconds);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "ProcessStats.getLogsForAProcessWithSecurityConstraint");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("getLogsForAProcessWithSecurityConstraint", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "ProcessStats.getLogsForAProcessWithSecurityConstraint");
+  }
+
+  oprot->writeMessageBegin("getLogsForAProcessWithSecurityConstraint", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "ProcessStats.getLogsForAProcessWithSecurityConstraint", bytes);
   }
 }
 

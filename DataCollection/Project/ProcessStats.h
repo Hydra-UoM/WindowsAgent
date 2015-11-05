@@ -32,16 +32,17 @@ class ProcessStatsIf {
   virtual void getAllMemProc(std::vector<std::string> & _return) = 0;
   virtual void getAllNetDownloadProc(std::vector<std::string> & _return) = 0;
   virtual void getAllNetUploadProc(std::vector<std::string> & _return) = 0;
-  virtual void filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up) = 0;
+  virtual void filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up, const std::string& processname) = 0;
   virtual void filterAllAvgProcesses(std::vector<std::string> & _return, const int64_t sample, const double cpu, const double mem, const double down, const double up) = 0;
   virtual void getAvgProcess_PID(std::vector<std::string> & _return, const int64_t PID, const int64_t sample) = 0;
   virtual void getAllProcesses(std::vector<std::string> & _return) = 0;
   virtual void getNetwork(std::vector<std::string> & _return) = 0;
   virtual void getTCP(std::vector<std::string> & _return) = 0;
   virtual void getLogonFailures(std::vector<std::string> & _return) = 0;
-  virtual void getLogsForAllProcesses(std::vector<std::string> & _return) = 0;
-  virtual void getLogsForAProcess(std::vector<std::string> & _return) = 0;
-  virtual void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return) = 0;
+  virtual void getLogsForAllProcesses(std::vector<std::string> & _return, const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) = 0;
+  virtual void getLogsForAProcess(std::vector<std::string> & _return, const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) = 0;
+  virtual void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) = 0;
+  virtual void getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) = 0;
   virtual void getCurrentLoggedInUser(std::vector<std::string> & _return) = 0;
   virtual void getAllUserInformation(std::vector<std::string> & _return) = 0;
   virtual void getSuccessLoginInformation(std::vector<std::string> & _return) = 0;
@@ -130,7 +131,7 @@ class ProcessStatsNull : virtual public ProcessStatsIf {
   void getAllNetUploadProc(std::vector<std::string> & /* _return */) {
     return;
   }
-  void filterAllProcesses(std::vector<std::string> & /* _return */, const double /* cpu */, const double /* mem */, const double /* down */, const double /* up */) {
+  void filterAllProcesses(std::vector<std::string> & /* _return */, const double /* cpu */, const double /* mem */, const double /* down */, const double /* up */, const std::string& /* processname */) {
     return;
   }
   void filterAllAvgProcesses(std::vector<std::string> & /* _return */, const int64_t /* sample */, const double /* cpu */, const double /* mem */, const double /* down */, const double /* up */) {
@@ -151,13 +152,16 @@ class ProcessStatsNull : virtual public ProcessStatsIf {
   void getLogonFailures(std::vector<std::string> & /* _return */) {
     return;
   }
-  void getLogsForAllProcesses(std::vector<std::string> & /* _return */) {
+  void getLogsForAllProcesses(std::vector<std::string> & /* _return */, const std::string& /* logType */, const int64_t /* timeGapInMilliSeconds */, const int64_t /* totalTimePeriodInMilliSeconds */) {
     return;
   }
-  void getLogsForAProcess(std::vector<std::string> & /* _return */) {
+  void getLogsForAProcess(std::vector<std::string> & /* _return */, const std::string& /* logType */, const std::string& /* process_name */, const int64_t /* timeGapInMilliSeconds */, const int64_t /* totalTimePeriodInMilliSeconds */) {
     return;
   }
-  void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & /* _return */) {
+  void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & /* _return */, const std::string& /* logType */, const std::string& /* securityLevel */, const int64_t /* timeGapInMilliSeconds */, const int64_t /* totalTimePeriodInMilliSeconds */) {
+    return;
+  }
+  void getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & /* _return */, const std::string& /* logType */, const std::string& /* securityLevel */, const std::string& /* process_name */, const int64_t /* timeGapInMilliSeconds */, const int64_t /* totalTimePeriodInMilliSeconds */) {
     return;
   }
   void getCurrentLoggedInUser(std::vector<std::string> & /* _return */) {
@@ -2008,22 +2012,23 @@ class ProcessStats_getAllNetUploadProc_presult {
 };
 
 typedef struct _ProcessStats_filterAllProcesses_args__isset {
-  _ProcessStats_filterAllProcesses_args__isset() : cpu(false), mem(false), down(false), up(false) {}
+  _ProcessStats_filterAllProcesses_args__isset() : cpu(false), mem(false), down(false), up(false), processname(false) {}
   bool cpu :1;
   bool mem :1;
   bool down :1;
   bool up :1;
+  bool processname :1;
 } _ProcessStats_filterAllProcesses_args__isset;
 
 class ProcessStats_filterAllProcesses_args {
  public:
 
-  static const char* ascii_fingerprint; // = "D40B774F31F5CC6330E604960421B6CB";
-  static const uint8_t binary_fingerprint[16]; // = {0xD4,0x0B,0x77,0x4F,0x31,0xF5,0xCC,0x63,0x30,0xE6,0x04,0x96,0x04,0x21,0xB6,0xCB};
+  static const char* ascii_fingerprint; // = "FFA73AAC7A65B82E14220C8C816F1C7E";
+  static const uint8_t binary_fingerprint[16]; // = {0xFF,0xA7,0x3A,0xAC,0x7A,0x65,0xB8,0x2E,0x14,0x22,0x0C,0x8C,0x81,0x6F,0x1C,0x7E};
 
   ProcessStats_filterAllProcesses_args(const ProcessStats_filterAllProcesses_args&);
   ProcessStats_filterAllProcesses_args& operator=(const ProcessStats_filterAllProcesses_args&);
-  ProcessStats_filterAllProcesses_args() : cpu(0), mem(0), down(0), up(0) {
+  ProcessStats_filterAllProcesses_args() : cpu(0), mem(0), down(0), up(0), processname() {
   }
 
   virtual ~ProcessStats_filterAllProcesses_args() throw();
@@ -2031,6 +2036,7 @@ class ProcessStats_filterAllProcesses_args {
   double mem;
   double down;
   double up;
+  std::string processname;
 
   _ProcessStats_filterAllProcesses_args__isset __isset;
 
@@ -2042,6 +2048,8 @@ class ProcessStats_filterAllProcesses_args {
 
   void __set_up(const double val);
 
+  void __set_processname(const std::string& val);
+
   bool operator == (const ProcessStats_filterAllProcesses_args & rhs) const
   {
     if (!(cpu == rhs.cpu))
@@ -2051,6 +2059,8 @@ class ProcessStats_filterAllProcesses_args {
     if (!(down == rhs.down))
       return false;
     if (!(up == rhs.up))
+      return false;
+    if (!(processname == rhs.processname))
       return false;
     return true;
   }
@@ -2070,8 +2080,8 @@ class ProcessStats_filterAllProcesses_args {
 class ProcessStats_filterAllProcesses_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "D40B774F31F5CC6330E604960421B6CB";
-  static const uint8_t binary_fingerprint[16]; // = {0xD4,0x0B,0x77,0x4F,0x31,0xF5,0xCC,0x63,0x30,0xE6,0x04,0x96,0x04,0x21,0xB6,0xCB};
+  static const char* ascii_fingerprint; // = "FFA73AAC7A65B82E14220C8C816F1C7E";
+  static const uint8_t binary_fingerprint[16]; // = {0xFF,0xA7,0x3A,0xAC,0x7A,0x65,0xB8,0x2E,0x14,0x22,0x0C,0x8C,0x81,0x6F,0x1C,0x7E};
 
 
   virtual ~ProcessStats_filterAllProcesses_pargs() throw();
@@ -2079,6 +2089,7 @@ class ProcessStats_filterAllProcesses_pargs {
   const double* mem;
   const double* down;
   const double* up;
+  const std::string* processname;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -2855,22 +2866,45 @@ class ProcessStats_getLogonFailures_presult {
   friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogonFailures_presult& obj);
 };
 
+typedef struct _ProcessStats_getLogsForAllProcesses_args__isset {
+  _ProcessStats_getLogsForAllProcesses_args__isset() : logType(false), timeGapInMilliSeconds(false), totalTimePeriodInMilliSeconds(false) {}
+  bool logType :1;
+  bool timeGapInMilliSeconds :1;
+  bool totalTimePeriodInMilliSeconds :1;
+} _ProcessStats_getLogsForAllProcesses_args__isset;
 
 class ProcessStats_getLogsForAllProcesses_args {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "A4B0EC7D8E2C91B205150169F789382C";
+  static const uint8_t binary_fingerprint[16]; // = {0xA4,0xB0,0xEC,0x7D,0x8E,0x2C,0x91,0xB2,0x05,0x15,0x01,0x69,0xF7,0x89,0x38,0x2C};
 
   ProcessStats_getLogsForAllProcesses_args(const ProcessStats_getLogsForAllProcesses_args&);
   ProcessStats_getLogsForAllProcesses_args& operator=(const ProcessStats_getLogsForAllProcesses_args&);
-  ProcessStats_getLogsForAllProcesses_args() {
+  ProcessStats_getLogsForAllProcesses_args() : logType(), timeGapInMilliSeconds(0), totalTimePeriodInMilliSeconds(0) {
   }
 
   virtual ~ProcessStats_getLogsForAllProcesses_args() throw();
+  std::string logType;
+  int64_t timeGapInMilliSeconds;
+  int64_t totalTimePeriodInMilliSeconds;
 
-  bool operator == (const ProcessStats_getLogsForAllProcesses_args & /* rhs */) const
+  _ProcessStats_getLogsForAllProcesses_args__isset __isset;
+
+  void __set_logType(const std::string& val);
+
+  void __set_timeGapInMilliSeconds(const int64_t val);
+
+  void __set_totalTimePeriodInMilliSeconds(const int64_t val);
+
+  bool operator == (const ProcessStats_getLogsForAllProcesses_args & rhs) const
   {
+    if (!(logType == rhs.logType))
+      return false;
+    if (!(timeGapInMilliSeconds == rhs.timeGapInMilliSeconds))
+      return false;
+    if (!(totalTimePeriodInMilliSeconds == rhs.totalTimePeriodInMilliSeconds))
+      return false;
     return true;
   }
   bool operator != (const ProcessStats_getLogsForAllProcesses_args &rhs) const {
@@ -2889,11 +2923,14 @@ class ProcessStats_getLogsForAllProcesses_args {
 class ProcessStats_getLogsForAllProcesses_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "A4B0EC7D8E2C91B205150169F789382C";
+  static const uint8_t binary_fingerprint[16]; // = {0xA4,0xB0,0xEC,0x7D,0x8E,0x2C,0x91,0xB2,0x05,0x15,0x01,0x69,0xF7,0x89,0x38,0x2C};
 
 
   virtual ~ProcessStats_getLogsForAllProcesses_pargs() throw();
+  const std::string* logType;
+  const int64_t* timeGapInMilliSeconds;
+  const int64_t* totalTimePeriodInMilliSeconds;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -2963,22 +3000,51 @@ class ProcessStats_getLogsForAllProcesses_presult {
   friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAllProcesses_presult& obj);
 };
 
+typedef struct _ProcessStats_getLogsForAProcess_args__isset {
+  _ProcessStats_getLogsForAProcess_args__isset() : logType(false), process_name(false), timeGapInMilliSeconds(false), totalTimePeriodInMilliSeconds(false) {}
+  bool logType :1;
+  bool process_name :1;
+  bool timeGapInMilliSeconds :1;
+  bool totalTimePeriodInMilliSeconds :1;
+} _ProcessStats_getLogsForAProcess_args__isset;
 
 class ProcessStats_getLogsForAProcess_args {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "50272E49E7C02012722B8F62131C940B";
+  static const uint8_t binary_fingerprint[16]; // = {0x50,0x27,0x2E,0x49,0xE7,0xC0,0x20,0x12,0x72,0x2B,0x8F,0x62,0x13,0x1C,0x94,0x0B};
 
   ProcessStats_getLogsForAProcess_args(const ProcessStats_getLogsForAProcess_args&);
   ProcessStats_getLogsForAProcess_args& operator=(const ProcessStats_getLogsForAProcess_args&);
-  ProcessStats_getLogsForAProcess_args() {
+  ProcessStats_getLogsForAProcess_args() : logType(), process_name(), timeGapInMilliSeconds(0), totalTimePeriodInMilliSeconds(0) {
   }
 
   virtual ~ProcessStats_getLogsForAProcess_args() throw();
+  std::string logType;
+  std::string process_name;
+  int64_t timeGapInMilliSeconds;
+  int64_t totalTimePeriodInMilliSeconds;
 
-  bool operator == (const ProcessStats_getLogsForAProcess_args & /* rhs */) const
+  _ProcessStats_getLogsForAProcess_args__isset __isset;
+
+  void __set_logType(const std::string& val);
+
+  void __set_process_name(const std::string& val);
+
+  void __set_timeGapInMilliSeconds(const int64_t val);
+
+  void __set_totalTimePeriodInMilliSeconds(const int64_t val);
+
+  bool operator == (const ProcessStats_getLogsForAProcess_args & rhs) const
   {
+    if (!(logType == rhs.logType))
+      return false;
+    if (!(process_name == rhs.process_name))
+      return false;
+    if (!(timeGapInMilliSeconds == rhs.timeGapInMilliSeconds))
+      return false;
+    if (!(totalTimePeriodInMilliSeconds == rhs.totalTimePeriodInMilliSeconds))
+      return false;
     return true;
   }
   bool operator != (const ProcessStats_getLogsForAProcess_args &rhs) const {
@@ -2997,11 +3063,15 @@ class ProcessStats_getLogsForAProcess_args {
 class ProcessStats_getLogsForAProcess_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "50272E49E7C02012722B8F62131C940B";
+  static const uint8_t binary_fingerprint[16]; // = {0x50,0x27,0x2E,0x49,0xE7,0xC0,0x20,0x12,0x72,0x2B,0x8F,0x62,0x13,0x1C,0x94,0x0B};
 
 
   virtual ~ProcessStats_getLogsForAProcess_pargs() throw();
+  const std::string* logType;
+  const std::string* process_name;
+  const int64_t* timeGapInMilliSeconds;
+  const int64_t* totalTimePeriodInMilliSeconds;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -3071,22 +3141,51 @@ class ProcessStats_getLogsForAProcess_presult {
   friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAProcess_presult& obj);
 };
 
+typedef struct _ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args__isset {
+  _ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args__isset() : logType(false), securityLevel(false), timeGapInMilliSeconds(false), totalTimePeriodInMilliSeconds(false) {}
+  bool logType :1;
+  bool securityLevel :1;
+  bool timeGapInMilliSeconds :1;
+  bool totalTimePeriodInMilliSeconds :1;
+} _ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args__isset;
 
 class ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "50272E49E7C02012722B8F62131C940B";
+  static const uint8_t binary_fingerprint[16]; // = {0x50,0x27,0x2E,0x49,0xE7,0xC0,0x20,0x12,0x72,0x2B,0x8F,0x62,0x13,0x1C,0x94,0x0B};
 
   ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args(const ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args&);
   ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args& operator=(const ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args&);
-  ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args() {
+  ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args() : logType(), securityLevel(), timeGapInMilliSeconds(0), totalTimePeriodInMilliSeconds(0) {
   }
 
   virtual ~ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args() throw();
+  std::string logType;
+  std::string securityLevel;
+  int64_t timeGapInMilliSeconds;
+  int64_t totalTimePeriodInMilliSeconds;
 
-  bool operator == (const ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args & /* rhs */) const
+  _ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args__isset __isset;
+
+  void __set_logType(const std::string& val);
+
+  void __set_securityLevel(const std::string& val);
+
+  void __set_timeGapInMilliSeconds(const int64_t val);
+
+  void __set_totalTimePeriodInMilliSeconds(const int64_t val);
+
+  bool operator == (const ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args & rhs) const
   {
+    if (!(logType == rhs.logType))
+      return false;
+    if (!(securityLevel == rhs.securityLevel))
+      return false;
+    if (!(timeGapInMilliSeconds == rhs.timeGapInMilliSeconds))
+      return false;
+    if (!(totalTimePeriodInMilliSeconds == rhs.totalTimePeriodInMilliSeconds))
+      return false;
     return true;
   }
   bool operator != (const ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args &rhs) const {
@@ -3105,11 +3204,15 @@ class ProcessStats_getLogsForAllProcessesWithSecurityConstraint_args {
 class ProcessStats_getLogsForAllProcessesWithSecurityConstraint_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
-  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+  static const char* ascii_fingerprint; // = "50272E49E7C02012722B8F62131C940B";
+  static const uint8_t binary_fingerprint[16]; // = {0x50,0x27,0x2E,0x49,0xE7,0xC0,0x20,0x12,0x72,0x2B,0x8F,0x62,0x13,0x1C,0x94,0x0B};
 
 
   virtual ~ProcessStats_getLogsForAllProcessesWithSecurityConstraint_pargs() throw();
+  const std::string* logType;
+  const std::string* securityLevel;
+  const int64_t* timeGapInMilliSeconds;
+  const int64_t* totalTimePeriodInMilliSeconds;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -3177,6 +3280,154 @@ class ProcessStats_getLogsForAllProcessesWithSecurityConstraint_presult {
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
   friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAllProcessesWithSecurityConstraint_presult& obj);
+};
+
+typedef struct _ProcessStats_getLogsForAProcessWithSecurityConstraint_args__isset {
+  _ProcessStats_getLogsForAProcessWithSecurityConstraint_args__isset() : logType(false), securityLevel(false), process_name(false), timeGapInMilliSeconds(false), totalTimePeriodInMilliSeconds(false) {}
+  bool logType :1;
+  bool securityLevel :1;
+  bool process_name :1;
+  bool timeGapInMilliSeconds :1;
+  bool totalTimePeriodInMilliSeconds :1;
+} _ProcessStats_getLogsForAProcessWithSecurityConstraint_args__isset;
+
+class ProcessStats_getLogsForAProcessWithSecurityConstraint_args {
+ public:
+
+  static const char* ascii_fingerprint; // = "E2396C406CD75CE894E195C727905C26";
+  static const uint8_t binary_fingerprint[16]; // = {0xE2,0x39,0x6C,0x40,0x6C,0xD7,0x5C,0xE8,0x94,0xE1,0x95,0xC7,0x27,0x90,0x5C,0x26};
+
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_args(const ProcessStats_getLogsForAProcessWithSecurityConstraint_args&);
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_args& operator=(const ProcessStats_getLogsForAProcessWithSecurityConstraint_args&);
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_args() : logType(), securityLevel(), process_name(), timeGapInMilliSeconds(0), totalTimePeriodInMilliSeconds(0) {
+  }
+
+  virtual ~ProcessStats_getLogsForAProcessWithSecurityConstraint_args() throw();
+  std::string logType;
+  std::string securityLevel;
+  std::string process_name;
+  int64_t timeGapInMilliSeconds;
+  int64_t totalTimePeriodInMilliSeconds;
+
+  _ProcessStats_getLogsForAProcessWithSecurityConstraint_args__isset __isset;
+
+  void __set_logType(const std::string& val);
+
+  void __set_securityLevel(const std::string& val);
+
+  void __set_process_name(const std::string& val);
+
+  void __set_timeGapInMilliSeconds(const int64_t val);
+
+  void __set_totalTimePeriodInMilliSeconds(const int64_t val);
+
+  bool operator == (const ProcessStats_getLogsForAProcessWithSecurityConstraint_args & rhs) const
+  {
+    if (!(logType == rhs.logType))
+      return false;
+    if (!(securityLevel == rhs.securityLevel))
+      return false;
+    if (!(process_name == rhs.process_name))
+      return false;
+    if (!(timeGapInMilliSeconds == rhs.timeGapInMilliSeconds))
+      return false;
+    if (!(totalTimePeriodInMilliSeconds == rhs.totalTimePeriodInMilliSeconds))
+      return false;
+    return true;
+  }
+  bool operator != (const ProcessStats_getLogsForAProcessWithSecurityConstraint_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ProcessStats_getLogsForAProcessWithSecurityConstraint_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAProcessWithSecurityConstraint_args& obj);
+};
+
+
+class ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs {
+ public:
+
+  static const char* ascii_fingerprint; // = "E2396C406CD75CE894E195C727905C26";
+  static const uint8_t binary_fingerprint[16]; // = {0xE2,0x39,0x6C,0x40,0x6C,0xD7,0x5C,0xE8,0x94,0xE1,0x95,0xC7,0x27,0x90,0x5C,0x26};
+
+
+  virtual ~ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs() throw();
+  const std::string* logType;
+  const std::string* securityLevel;
+  const std::string* process_name;
+  const int64_t* timeGapInMilliSeconds;
+  const int64_t* totalTimePeriodInMilliSeconds;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAProcessWithSecurityConstraint_pargs& obj);
+};
+
+typedef struct _ProcessStats_getLogsForAProcessWithSecurityConstraint_result__isset {
+  _ProcessStats_getLogsForAProcessWithSecurityConstraint_result__isset() : success(false) {}
+  bool success :1;
+} _ProcessStats_getLogsForAProcessWithSecurityConstraint_result__isset;
+
+class ProcessStats_getLogsForAProcessWithSecurityConstraint_result {
+ public:
+
+  static const char* ascii_fingerprint; // = "C844643081B14EA3A81E57199FB2B504";
+  static const uint8_t binary_fingerprint[16]; // = {0xC8,0x44,0x64,0x30,0x81,0xB1,0x4E,0xA3,0xA8,0x1E,0x57,0x19,0x9F,0xB2,0xB5,0x04};
+
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_result(const ProcessStats_getLogsForAProcessWithSecurityConstraint_result&);
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_result& operator=(const ProcessStats_getLogsForAProcessWithSecurityConstraint_result&);
+  ProcessStats_getLogsForAProcessWithSecurityConstraint_result() {
+  }
+
+  virtual ~ProcessStats_getLogsForAProcessWithSecurityConstraint_result() throw();
+  std::vector<std::string>  success;
+
+  _ProcessStats_getLogsForAProcessWithSecurityConstraint_result__isset __isset;
+
+  void __set_success(const std::vector<std::string> & val);
+
+  bool operator == (const ProcessStats_getLogsForAProcessWithSecurityConstraint_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const ProcessStats_getLogsForAProcessWithSecurityConstraint_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ProcessStats_getLogsForAProcessWithSecurityConstraint_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAProcessWithSecurityConstraint_result& obj);
+};
+
+typedef struct _ProcessStats_getLogsForAProcessWithSecurityConstraint_presult__isset {
+  _ProcessStats_getLogsForAProcessWithSecurityConstraint_presult__isset() : success(false) {}
+  bool success :1;
+} _ProcessStats_getLogsForAProcessWithSecurityConstraint_presult__isset;
+
+class ProcessStats_getLogsForAProcessWithSecurityConstraint_presult {
+ public:
+
+  static const char* ascii_fingerprint; // = "C844643081B14EA3A81E57199FB2B504";
+  static const uint8_t binary_fingerprint[16]; // = {0xC8,0x44,0x64,0x30,0x81,0xB1,0x4E,0xA3,0xA8,0x1E,0x57,0x19,0x9F,0xB2,0xB5,0x04};
+
+
+  virtual ~ProcessStats_getLogsForAProcessWithSecurityConstraint_presult() throw();
+  std::vector<std::string> * success;
+
+  _ProcessStats_getLogsForAProcessWithSecurityConstraint_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getLogsForAProcessWithSecurityConstraint_presult& obj);
 };
 
 
@@ -3579,8 +3830,8 @@ class ProcessStatsClient : virtual public ProcessStatsIf {
   void getAllNetUploadProc(std::vector<std::string> & _return);
   void send_getAllNetUploadProc();
   void recv_getAllNetUploadProc(std::vector<std::string> & _return);
-  void filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up);
-  void send_filterAllProcesses(const double cpu, const double mem, const double down, const double up);
+  void filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up, const std::string& processname);
+  void send_filterAllProcesses(const double cpu, const double mem, const double down, const double up, const std::string& processname);
   void recv_filterAllProcesses(std::vector<std::string> & _return);
   void filterAllAvgProcesses(std::vector<std::string> & _return, const int64_t sample, const double cpu, const double mem, const double down, const double up);
   void send_filterAllAvgProcesses(const int64_t sample, const double cpu, const double mem, const double down, const double up);
@@ -3600,15 +3851,18 @@ class ProcessStatsClient : virtual public ProcessStatsIf {
   void getLogonFailures(std::vector<std::string> & _return);
   void send_getLogonFailures();
   void recv_getLogonFailures(std::vector<std::string> & _return);
-  void getLogsForAllProcesses(std::vector<std::string> & _return);
-  void send_getLogsForAllProcesses();
+  void getLogsForAllProcesses(std::vector<std::string> & _return, const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
+  void send_getLogsForAllProcesses(const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
   void recv_getLogsForAllProcesses(std::vector<std::string> & _return);
-  void getLogsForAProcess(std::vector<std::string> & _return);
-  void send_getLogsForAProcess();
+  void getLogsForAProcess(std::vector<std::string> & _return, const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
+  void send_getLogsForAProcess(const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
   void recv_getLogsForAProcess(std::vector<std::string> & _return);
-  void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return);
-  void send_getLogsForAllProcessesWithSecurityConstraint();
+  void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
+  void send_getLogsForAllProcessesWithSecurityConstraint(const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
   void recv_getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return);
+  void getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
+  void send_getLogsForAProcessWithSecurityConstraint(const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds);
+  void recv_getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return);
   void getCurrentLoggedInUser(std::vector<std::string> & _return);
   void send_getCurrentLoggedInUser();
   void recv_getCurrentLoggedInUser(std::vector<std::string> & _return);
@@ -3660,6 +3914,7 @@ class ProcessStatsProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_getLogsForAllProcesses(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getLogsForAProcess(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getLogsForAllProcessesWithSecurityConstraint(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_getLogsForAProcessWithSecurityConstraint(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getCurrentLoggedInUser(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getAllUserInformation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getSuccessLoginInformation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -3693,6 +3948,7 @@ class ProcessStatsProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["getLogsForAllProcesses"] = &ProcessStatsProcessor::process_getLogsForAllProcesses;
     processMap_["getLogsForAProcess"] = &ProcessStatsProcessor::process_getLogsForAProcess;
     processMap_["getLogsForAllProcessesWithSecurityConstraint"] = &ProcessStatsProcessor::process_getLogsForAllProcessesWithSecurityConstraint;
+    processMap_["getLogsForAProcessWithSecurityConstraint"] = &ProcessStatsProcessor::process_getLogsForAProcessWithSecurityConstraint;
     processMap_["getCurrentLoggedInUser"] = &ProcessStatsProcessor::process_getCurrentLoggedInUser;
     processMap_["getAllUserInformation"] = &ProcessStatsProcessor::process_getAllUserInformation;
     processMap_["getSuccessLoginInformation"] = &ProcessStatsProcessor::process_getSuccessLoginInformation;
@@ -3889,13 +4145,13 @@ class ProcessStatsMultiface : virtual public ProcessStatsIf {
     return;
   }
 
-  void filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up) {
+  void filterAllProcesses(std::vector<std::string> & _return, const double cpu, const double mem, const double down, const double up, const std::string& processname) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->filterAllProcesses(_return, cpu, mem, down, up);
+      ifaces_[i]->filterAllProcesses(_return, cpu, mem, down, up, processname);
     }
-    ifaces_[i]->filterAllProcesses(_return, cpu, mem, down, up);
+    ifaces_[i]->filterAllProcesses(_return, cpu, mem, down, up, processname);
     return;
   }
 
@@ -3959,33 +4215,43 @@ class ProcessStatsMultiface : virtual public ProcessStatsIf {
     return;
   }
 
-  void getLogsForAllProcesses(std::vector<std::string> & _return) {
+  void getLogsForAllProcesses(std::vector<std::string> & _return, const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->getLogsForAllProcesses(_return);
+      ifaces_[i]->getLogsForAllProcesses(_return, logType, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
     }
-    ifaces_[i]->getLogsForAllProcesses(_return);
+    ifaces_[i]->getLogsForAllProcesses(_return, logType, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
     return;
   }
 
-  void getLogsForAProcess(std::vector<std::string> & _return) {
+  void getLogsForAProcess(std::vector<std::string> & _return, const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->getLogsForAProcess(_return);
+      ifaces_[i]->getLogsForAProcess(_return, logType, process_name, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
     }
-    ifaces_[i]->getLogsForAProcess(_return);
+    ifaces_[i]->getLogsForAProcess(_return, logType, process_name, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
     return;
   }
 
-  void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return) {
+  void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->getLogsForAllProcessesWithSecurityConstraint(_return);
+      ifaces_[i]->getLogsForAllProcessesWithSecurityConstraint(_return, logType, securityLevel, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
     }
-    ifaces_[i]->getLogsForAllProcessesWithSecurityConstraint(_return);
+    ifaces_[i]->getLogsForAllProcessesWithSecurityConstraint(_return, logType, securityLevel, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
+    return;
+  }
+
+  void getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->getLogsForAProcessWithSecurityConstraint(_return, logType, securityLevel, process_name, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
+    }
+    ifaces_[i]->getLogsForAProcessWithSecurityConstraint(_return, logType, securityLevel, process_name, timeGapInMilliSeconds, totalTimePeriodInMilliSeconds);
     return;
   }
 

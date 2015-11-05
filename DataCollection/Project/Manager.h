@@ -15,6 +15,7 @@ public:
 	vector<ProcessF> FilterAllProcesses(double value1, double value2, double value3,double value4);
 	vector<ProcessF> FilterAllAvgProcesses(int samples, double value1, double value2, double value3, double value4);
 	ProcessF GetAvgProcess_PID(int PID,int sample);
+	void deviceClient();
 	vector<ProcessF> GetAllProcesses();
 };
 
