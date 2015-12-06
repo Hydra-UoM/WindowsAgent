@@ -122,18 +122,20 @@ vector<ProcessF> Manager::GetAllProcesses()
 
 	for (auto i : d.myData)
 	{
-			p.name = get<0>(i);
-			p.cpu = get<3>(i);
-			p.mem = get<2>(i);
-			p.down = get<6>(i);
-			p.up = get<7>(i);
-			p.id = get<1>(i);
-			p.avgcpu = get<5>(i);
-			p.avgmem = get<4>(i);
-			p.avgdown = get<8>(i);
-			p.avgup = get<9>(i);
+		if (get<2>(i) >= 0){
+		p.name = get<0>(i);
+		p.cpu = get<3>(i);
+		p.mem = get<2>(i);
+		p.down = get<6>(i);
+		p.up = get<7>(i);
+		p.id = get<1>(i);
+		p.avgcpu = get<5>(i);
+		p.avgmem = get<4>(i);
+		p.avgdown = get<8>(i);
+		p.avgup = get<9>(i);
 
-			temp.push_back(p);
+		temp.push_back(p);
+	}
 	}
 
 	return temp;

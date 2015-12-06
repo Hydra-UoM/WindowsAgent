@@ -4,6 +4,9 @@
 #include "Objects.h"
 #include "ProcessStats.h"
 #include "Manager.h"
+#include "MyLogRetriever.h"
+#include "MyUserAccountDetails.h"
+#include "MyTimer.h"
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/transport/TServerSocket.h>
@@ -36,6 +39,12 @@ class ProcessStatsHandler : virtual public ProcessStatsIf {
   list<string>::iterator i;
   list<string> logsList;
   list<string> userList;
+  string logType;
+  string strSecurityLevelConstraint;
+  MyUserAccountDetails details;
+  MyTimer timer;
+  MyLogRetriever myLogRetriever;
+ 
 
 
 
@@ -288,24 +297,68 @@ class ProcessStatsHandler : virtual public ProcessStatsIf {
   }
 
   void getLogonFailures(std::vector<std::string> & _return) {
-    // Your implementation goes here
-    printf("getLogonFailures\n");
+	  // Your implementation goes here
+	  printf("getLogonFailures\n");
+	  logsList = myLogRetriever.handleFailedLoginEvents();
+	  for (i = logsList.begin(); i != logsList.end(); ++i){
+		  _return.push_back(*i);
 
+	  }
   }
 
   void getLogsForAllProcesses(std::vector<std::string> & _return, const std::string& logType, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
     // Your implementation goes here
     printf("getLogsForAllProcesses\n");
+	timer.start();
+	//myLogRetriever.handleLogRetrivalInfo("Security", "ALL", -1, timeGapInMilliSeconds);
+	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", -1, timeGapInMilliSeconds);
+	while (timer.isOver(totalTimePeriodInMilliSeconds))//GetAsyncKeyState(VK_ESCAPE) != true
+	{
+		myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, -1);
+		logsList = myLogRetriever.returnResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+		for (i = logsList.begin(); i != logsList.end(); ++i)
+		{
+			_return.push_back(*i);
+		}
+		// need to send event in this point
+		myLogRetriever.numberOfAvailableEvents = 0;
+		//releaseMemory();
+		Sleep(timeGapInMilliSeconds);
+	}
+	timer.stop();
   }
 
   void getLogsForAProcess(std::vector<std::string> & _return, const std::string& logType, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
     // Your implementation goes here
     printf("getLogsForAProcess\n");
+
   }
 
   void getLogsForAllProcessesWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
     // Your implementation goes here
     printf("getLogsForAllProcessesWithSecurityConstraint\n");
+	printf("getLogsForAllProcessesWithSecurityConstraint\n");
+	/*0. Information 1. Warning 2. Error 3. Critical " 4. Warning & Error & Critical5. Error & Critical*/
+	// log type: 1. Security 2. Application 3. System 4. Setup 5. Operational
+	timer.start();
+	//myLogRetriever.handleLogRetrivalInfo("Security", "Information", -1, timeGapInMilliSeconds);
+	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, -1, timeGapInMilliSeconds);
+	while (timer.isOver(totalTimePeriodInMilliSeconds))//GetAsyncKeyState(VK_ESCAPE) != true
+	{
+		myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, -1);
+		//myLogRetriever.printResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+		logsList = myLogRetriever.returnResultedEvent(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents);
+
+		for (i = logsList.begin(); i != logsList.end(); ++i)
+		{
+			_return.push_back(*i);
+		}
+		// need to send event in this point
+		myLogRetriever.numberOfAvailableEvents = 0;
+		//releaseMemory();
+		Sleep(timeGapInMilliSeconds);
+	}
+	timer.stop();
   }
 
   void getLogsForAProcessWithSecurityConstraint(std::vector<std::string> & _return, const std::string& logType, const std::string& securityLevel, const std::string& process_name, const int64_t timeGapInMilliSeconds, const int64_t totalTimePeriodInMilliSeconds) {
@@ -316,16 +369,25 @@ class ProcessStatsHandler : virtual public ProcessStatsIf {
   void getCurrentLoggedInUser(std::vector<std::string> & _return) {
     // Your implementation goes here
     printf("getCurrentLoggedInUser\n");
+	userList = details.getCurrentLoggedOnUserInformation();
+	for (i = userList.begin(); i != userList.end(); ++i)
+		_return.push_back(*i);
   }
 
   void getAllUserInformation(std::vector<std::string> & _return) {
     // Your implementation goes here
     printf("getAllUserInformation\n");
+	userList = details.getAllUserInformation();
+	for (i = userList.begin(); i != userList.end(); ++i)
+		_return.push_back(*i);
   }
 
   void getSuccessLoginInformation(std::vector<std::string> & _return) {
     // Your implementation goes here
     printf("getSuccessLoginInformation\n");
+	logsList = myLogRetriever.handleSuccessLoginEvents();
+	for (i = logsList.begin(); i != logsList.end(); ++i)
+		_return.push_back(*i);
   }
 
 };

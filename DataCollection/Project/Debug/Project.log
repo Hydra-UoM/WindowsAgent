@@ -1,0 +1,81 @@
+﻿Build started 11/27/2015 8:27:36 AM.
+     1>Project "C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\local\boost_1_59_0 /I"C:\Users\Nirosh\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows" /I"C:\Users\Nirosh\Documents\thrift-0.9.2\lib\cpp\src" /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=8 /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt ProcessStats_server.skeleton.cpp
+         ProcessStats_server.skeleton.cpp
+     1>c:\users\nirosh\documents\visual studio 2013\projects\windowsagent\datacollection\project\Objects.h(219): warning C4244: '=' : conversion from 'DWORD' to 'float', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(229): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(243): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(314): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(315): warning C4244: 'argument' : conversion from 'const int64_t' to 'unsigned long', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(326): warning C4244: 'argument' : conversion from 'const int64_t' to 'DWORD', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(345): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(346): warning C4244: 'argument' : conversion from 'const int64_t' to 'unsigned long', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(359): warning C4244: 'argument' : conversion from 'const int64_t' to 'DWORD', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Debug\Project.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Project\sqlite3.lib" sqlite3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Debug\Project.lib" /MACHINE:X86 Debug\centralnodeService_constants.obj
+         Debug\centralnodeService_types.obj
+         Debug\CPU.obj
+         Debug\Data.obj
+         Debug\GetProcessImageNameFromPID.obj
+         Debug\IO.obj
+         Debug\Manager.obj
+         Debug\Memory.obj
+         Debug\MyAccessRequestInformation.obj
+         Debug\MyAdditionalInformation.obj
+         Debug\MyApplicationInformation.obj
+         Debug\MyCalloutInformation.obj
+         Debug\MyChangeInformation.obj
+         Debug\MyErrorInformation.obj
+         Debug\MyFilterInformation.obj
+         Debug\MyLayerInformation.obj
+         Debug\MyLogManager.obj
+         Debug\MyLogRetriever.obj
+         Debug\MyLogStructure.obj
+         Debug\MyLogStructureMaker.obj
+         Debug\MyNetworkInformation.obj
+         Debug\MyObject.obj
+         Debug\MyProcessInformation.obj
+         Debug\MyProviderInformation.obj
+         Debug\MyRuleInformation.obj
+         Debug\MySubject.obj
+         Debug\MyTimeCreated.obj
+         Debug\MyTimer.obj
+         Debug\MyTimeStamp.obj
+         Debug\MyUserAccountDetails.obj
+         Debug\MyUserAccountDetailsStructure.obj
+         Debug\ProcessStats.obj
+         Debug\ProcessStats_server.skeleton.obj
+         Debug\Process_constants.obj
+         Debug\Process_types.obj
+         Debug\RegisterDeviceService.obj
+         Debug\stdafx.obj
+     1>Manager.obj : error LNK2001: unresolved external symbol "public: virtual char const * __thiscall apache::thrift::transport::TTransportException::what(void)const " (?what@TTransportException@transport@thrift@apache@@UBEPBDXZ)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "public: virtual char const * __thiscall apache::thrift::transport::TTransportException::what(void)const " (?what@TTransportException@transport@thrift@apache@@UBEPBDXZ)
+     1>Manager.obj : error LNK2019: unresolved external symbol "public: __thiscall apache::thrift::transport::TSocket::TSocket(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int)" (??0TSocket@transport@thrift@apache@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) referenced in function "public: void __thiscall Manager::deviceClient(void)" (?deviceClient@Manager@@QAEXXZ)
+     1>Manager.obj : error LNK2001: unresolved external symbol "public: virtual unsigned int __thiscall apache::thrift::transport::TBufferedTransport::readSlow(unsigned char *,unsigned int)" (?readSlow@TBufferedTransport@transport@thrift@apache@@UAEIPAEI@Z)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "public: virtual unsigned int __thiscall apache::thrift::transport::TBufferedTransport::readSlow(unsigned char *,unsigned int)" (?readSlow@TBufferedTransport@transport@thrift@apache@@UAEIPAEI@Z)
+     1>Manager.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall apache::thrift::transport::TBufferedTransport::writeSlow(unsigned char const *,unsigned int)" (?writeSlow@TBufferedTransport@transport@thrift@apache@@UAEXPBEI@Z)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall apache::thrift::transport::TBufferedTransport::writeSlow(unsigned char const *,unsigned int)" (?writeSlow@TBufferedTransport@transport@thrift@apache@@UAEXPBEI@Z)
+     1>Manager.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall apache::thrift::transport::TBufferedTransport::flush(void)" (?flush@TBufferedTransport@transport@thrift@apache@@UAEXXZ)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall apache::thrift::transport::TBufferedTransport::flush(void)" (?flush@TBufferedTransport@transport@thrift@apache@@UAEXXZ)
+     1>Manager.obj : error LNK2001: unresolved external symbol "public: virtual unsigned char const * __thiscall apache::thrift::transport::TBufferedTransport::borrowSlow(unsigned char *,unsigned int *)" (?borrowSlow@TBufferedTransport@transport@thrift@apache@@UAEPBEPAEPAI@Z)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "public: virtual unsigned char const * __thiscall apache::thrift::transport::TBufferedTransport::borrowSlow(unsigned char *,unsigned int *)" (?borrowSlow@TBufferedTransport@transport@thrift@apache@@UAEPBEPAEPAI@Z)
+     1>ProcessStats.obj : error LNK2019: unresolved external symbol "public: void __cdecl apache::thrift::TOutput::printf(char const *,...)" (?printf@TOutput@thrift@apache@@QAAXPBDZZ) referenced in function "public: virtual bool __thiscall apache::thrift::TDispatchProcessor::process(class boost::shared_ptr<class apache::thrift::protocol::TProtocol>,class boost::shared_ptr<class apache::thrift::protocol::TProtocol>,void *)" (?process@TDispatchProcessor@thrift@apache@@UAE_NV?$shared_ptr@VTProtocol@protocol@thrift@apache@@@boost@@0PAX@Z)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "public: void __cdecl apache::thrift::TOutput::printf(char const *,...)" (?printf@TOutput@thrift@apache@@QAAXPBDZZ)
+     1>RegisterDeviceService.obj : error LNK2001: unresolved external symbol "public: void __cdecl apache::thrift::TOutput::printf(char const *,...)" (?printf@TOutput@thrift@apache@@QAAXPBDZZ)
+     1>ProcessStats.obj : error LNK2019: unresolved external symbol "public: unsigned int __thiscall apache::thrift::TApplicationException::read(class apache::thrift::protocol::TProtocol *)" (?read@TApplicationException@thrift@apache@@QAEIPAVTProtocol@protocol@23@@Z) referenced in function "public: double __thiscall ProcessStatsClient::recv_getTotalCPU(void)" (?recv_getTotalCPU@ProcessStatsClient@@QAENXZ)
+     1>RegisterDeviceService.obj : error LNK2001: unresolved external symbol "public: unsigned int __thiscall apache::thrift::TApplicationException::read(class apache::thrift::protocol::TProtocol *)" (?read@TApplicationException@thrift@apache@@QAEIPAVTProtocol@protocol@23@@Z)
+     1>ProcessStats.obj : error LNK2019: unresolved external symbol "public: unsigned int __thiscall apache::thrift::TApplicationException::write(class apache::thrift::protocol::TProtocol *)const " (?write@TApplicationException@thrift@apache@@QBEIPAVTProtocol@protocol@23@@Z) referenced in function "protected: virtual bool __thiscall ProcessStatsProcessor::dispatchCall(class apache::thrift::protocol::TProtocol *,class apache::thrift::protocol::TProtocol *,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,void *)" (?dispatchCall@ProcessStatsProcessor@@MAE_NPAVTProtocol@protocol@thrift@apache@@0ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HPAX@Z)
+     1>RegisterDeviceService.obj : error LNK2001: unresolved external symbol "public: unsigned int __thiscall apache::thrift::TApplicationException::write(class apache::thrift::protocol::TProtocol *)const " (?write@TApplicationException@thrift@apache@@QBEIPAVTProtocol@protocol@23@@Z)
+     1>ProcessStats.obj : error LNK2001: unresolved external symbol "class apache::thrift::TOutput apache::thrift::GlobalOutput" (?GlobalOutput@thrift@apache@@3VTOutput@12@A)
+     1>ProcessStats_server.skeleton.obj : error LNK2001: unresolved external symbol "class apache::thrift::TOutput apache::thrift::GlobalOutput" (?GlobalOutput@thrift@apache@@3VTOutput@12@A)
+     1>RegisterDeviceService.obj : error LNK2001: unresolved external symbol "class apache::thrift::TOutput apache::thrift::GlobalOutput" (?GlobalOutput@thrift@apache@@3VTOutput@12@A)
+     1>ProcessStats_server.skeleton.obj : error LNK2019: unresolved external symbol "public: virtual void __thiscall apache::thrift::server::TSimpleServer::serve(void)" (?serve@TSimpleServer@server@thrift@apache@@UAEXXZ) referenced in function _main
+     1>ProcessStats_server.skeleton.obj : error LNK2019: unresolved external symbol "public: __thiscall apache::thrift::transport::TServerSocket::TServerSocket(int)" (??0TServerSocket@transport@thrift@apache@@QAE@H@Z) referenced in function _main
+     1>C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Debug\Project.exe : fatal error LNK1120: 12 unresolved externals
+     1>Done Building Project "C:\Users\Nirosh\Documents\Visual Studio 2013\Projects\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.68
