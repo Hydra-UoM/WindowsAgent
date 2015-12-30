@@ -9,7 +9,7 @@
 
 #include "Process_types.h"
 
-
+namespace HydraWindows {
 
 class ProcessConstants {
  public:
@@ -19,6 +19,6 @@ class ProcessConstants {
 
 extern const ProcessConstants g_Process_constants;
 
-
+} // namespace
 
 #endif

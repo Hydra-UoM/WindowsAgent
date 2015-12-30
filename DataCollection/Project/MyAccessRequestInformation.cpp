@@ -14,6 +14,30 @@ MyAccessRequestInformation::MyAccessRequestInformation(const wchar_t* Transactio
 		Restricted_SID_Count = Restricted_SID_Count1;
 }
 
+myAccessRequestInformation MyAccessRequestInformation::toLogStruct(int summarizationLevel)
+{
+	myAccessRequestInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Transaction_ID = CW2A(Transaction_ID);										
+		m.Accesses = CW2A(Accesses);													
+		m.Access_Reasons = CW2A(Access_Reasons);										
+		m.Access_Mask = CW2A(Access_Mask);												
+		m.Privileges_Used_For_Access_Check = CW2A(Privileges_Used_For_Access_Check);	
+		m.Restricted_SID_Count = CW2A(Restricted_SID_Count);							
+	}
+	else
+	{
+		//m.Transaction_ID = CW2A(Transaction_ID);
+		m.Accesses = CW2A(Accesses);
+		m.Access_Reasons = CW2A(Access_Reasons);
+		//m.Access_Mask = CW2A(Access_Mask);
+		m.Privileges_Used_For_Access_Check = CW2A(Privileges_Used_For_Access_Check);
+		//m.Restricted_SID_Count = CW2A(Restricted_SID_Count);
+	}
+	return m;
+}
+
 void MyAccessRequestInformation::print()
 {
 	wprintf(L"Access_Request_Information:\n");

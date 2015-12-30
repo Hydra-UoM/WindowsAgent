@@ -9,15 +9,12 @@
 #include <winevt.h>
 #include <iostream>
 #include "MyLogStructure.h"
-#include "GetProcessImageNameFromPID.h"
 #include <string>
 #include <atlstr.h>
-
-using namespace std;
-
+#include<memory> // unique_ptr
 #include <sddl.h>
 
-
+using namespace std;
 #pragma comment(lib, "wevtapi.lib")
 
 class MyLogStructureMaker
@@ -29,7 +26,7 @@ class MyLogStructureMaker
 		DWORD getStatus(MyLogStructure*outputLogStructure);
 		BOOL IsKeyEvent(HANDLE hStdIn);
 		LPWSTR GetMessageString(EVT_HANDLE hMetadata, EVT_HANDLE hEvent, EVT_FORMAT_MESSAGE_FLAGS FormatId);
-		void extractEventMessageString(MyLogStructure* outputLog);
+		void extractEventMessageString(std::unique_ptr<MyLogStructure> & outputLog);
 		std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
 		//bool splitString(string str_eventMessageString, char delimiters[], int *result, string*splitted);
 		//int findOneOfDelimitersFirstPosition(string remain, char delimiters[]);
@@ -40,6 +37,7 @@ class MyLogStructureMaker
 		LPWSTR opCodeMessageString;
 		LPWSTR channelMessageString;
 		LPWSTR providerMessageString;
+		//wstring arrayOfSplitted[200];
 
 		int version;
 		int level;

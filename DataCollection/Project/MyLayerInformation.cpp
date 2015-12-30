@@ -9,6 +9,24 @@ MyLayerInformation::MyLayerInformation(const wchar_t* Layer_ID1,const wchar_t* L
 		Layer_Runtime_ID = Layer_Runtime_ID1;
 }
 
+myLayerInformation MyLayerInformation::toLogStruct(int summarizationLevel)
+{
+	myLayerInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Layer_ID = CW2A(Layer_ID);							
+		m.Layer_Name = CW2A(Layer_Name);						
+		m.Layer_Runtime_ID = CW2A(Layer_Runtime_ID);			
+	}
+	else
+	{
+		//m.Layer_ID = CW2A(Layer_ID);
+		m.Layer_Name = CW2A(Layer_Name);
+		//m.Layer_Runtime_ID = CW2A(Layer_Runtime_ID);
+	}
+	return m;
+}
+
 void MyLayerInformation::print()
 {
 	wprintf(L"Layer_Information:\n");

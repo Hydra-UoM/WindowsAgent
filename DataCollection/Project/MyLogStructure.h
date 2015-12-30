@@ -12,15 +12,12 @@
 using namespace std;
 
 #include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <list>
 #include "MyTimeStamp.h"
 #include "MySubject.h"
 #include "MyObject.h"
-#include <atlstr.h>
+#include <atlstr.h> // CW2A
+#include <winevt.h>
 #include "MyProcessInformation.h"
 #include "MyApplicationInformation.h"
 #include "MyNetworkInformation.h"
@@ -32,88 +29,103 @@ using namespace std;
 #include "MyCalloutInformation.h"
 #include "MyRuleInformation.h"
 #include "MyErrorInformation.h"
-#include "MyAdditionalInformation.h" // haven't implemented in extracting part. condition value, id needs to be defined as arrays
-
+#include "MyLogonType.h"
+#include "MyImpersonationLevel.h"
+#include "MyAccountForWhichLogonFailed.h"
+#include "MyFailureInformation.h"
+#include "MyNewLogon.h"
+#include "MyDetailedAuthenticationInformation.h"
+#include "MyAdditionalInformation.h"
+#include "MyLogStruct.h"
 #include <sddl.h>
-
 
 #pragma comment(lib, "wevtapi.lib")
 
 class MyLogStructure
 {
-	public:
-		MyLogStructure(LPWSTR eventMessageString1,LPWSTR levelMessageString1,LPWSTR taskMessageString1,LPWSTR opCodeMessageString1,
-			LPWSTR channelMessageString1,LPWSTR providerMessageString1,int version1,int level1,int task1,int opCode1,UINT64 keywords1,
-			UINT64 eventRecordID1,UINT32 executionProcessID1,UINT32 executionThreadID1,const wchar_t* channel1,
-			LPCWSTR computer1,DWORD EventID1,MyTimeStamp& timeStamp1/**,WCHAR* processImageName1,MySubject*mySubject1*/);
-			
-		~MyLogStructure(void);
+public:
+	MyLogStructure(/**LPWSTR eventMessageString1, */LPWSTR levelMessageString1, LPWSTR taskMessageString1, LPWSTR opCodeMessageString1,
+		LPWSTR channelMessageString1, LPWSTR providerMessageString1, int version1, int level1, int task1, int opCode1, UINT64 keywords1,
+		UINT64 eventRecordID1, UINT32 executionProcessID1, UINT32 executionThreadID1, const wchar_t* channel1,
+		LPCWSTR computer1, DWORD EventID1, MyTimeStamp& timeStamp1/*MySubject*mySubject1*/);
+	void releaseMemory();
+	~MyLogStructure(void);
 
-		void print();
-		void printExtractedEventMessageString();
-		//void extractEventMessageString();
-		void initializeAvailableInformation();
-		//std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
-		string wchar_t_pointerToString(const wchar_t*text);
-		list<string>toLogString();
-		list<string>addExtractedString(list<string>prepart);
+	void print();
+	void printExtractedEventMessageString();
+	//void extractEventMessageString();
+	void initializeAvailableInformation();
+	//std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
+	string wchar_t_pointerToString(const wchar_t*text);
+	myStruct::myLogStructure toStruct(int summarizationLevel);
 
 	//private:
-		LPWSTR eventMessageString;
-		LPWSTR levelMessageString;
-		LPWSTR taskMessageString;
-		LPWSTR opCodeMessageString;
-		LPWSTR channelMessageString;
-		LPWSTR providerMessageString;
+	const wchar_t* message; // change it into wstring from const wchar_t* makes exception
+	//LPWSTR eventMessageString;
+	LPWSTR levelMessageString;
+	LPWSTR taskMessageString;
+	LPWSTR opCodeMessageString;
+	LPWSTR channelMessageString;
+	LPWSTR providerMessageString;
 
-		int version;
-		int level;
-		int task;
-		int opCode;
-		UINT64 keywords;
-		UINT64 eventRecordID;
-		UINT32 executionProcessID;
-		UINT32 executionThreadID;
-		const wchar_t* channel;
-		LPCWSTR computer;
-		DWORD EventID;
-		MyTimeStamp timeStamp;
-		//WCHAR* processImageName;
+	int version;
+	int level;
+	int task;
+	int opCode;
+	UINT64 keywords;
+	UINT64 eventRecordID;
+	UINT32 executionProcessID;
+	UINT32 executionThreadID;
+	const wchar_t* channel;
+	LPCWSTR computer;
+	DWORD EventID;
+	MyTimeStamp timeStamp;
+	//WCHAR* processImageName;
 
-		bool isAvailableMySubject;
-		bool isAvailableMyProviderInformation;
-		bool isAvailableMyProcessInformation;
-		bool isAvailableMyObject;
-		bool isAvailableMyNetworkInformation;
-		bool isAvailableMyLayerInformation;
-		bool isAvailableMyFilterInformation;
-		bool isAvailableMyChangeInformation;
-		bool isAvailableMyCalloutInformation;
-		bool isAvailableMyApplicationInformation;
-		bool isAvailableMyAdditionalInformation;
-		bool isAvailableMyAccessRequestInformation;
-		bool isAvailableMyRuleInformation;
-		bool isAvailableMyErrorInformation;
+	bool isAvailableMySubject;
+	bool isAvailableMyProviderInformation;
+	bool isAvailableMyProcessInformation;
+	bool isAvailableMyObject;
+	bool isAvailableMyNetworkInformation;
+	bool isAvailableMyLayerInformation;
+	bool isAvailableMyFilterInformation;
+	bool isAvailableMyChangeInformation;
+	bool isAvailableMyCalloutInformation;
+	bool isAvailableMyApplicationInformation;
+	bool isAvailableMyAdditionalInformation;
+	bool isAvailableMyAccessRequestInformation;
+	bool isAvailableMyRuleInformation;
+	bool isAvailableMyErrorInformation;
 
-		MySubject*mySubject;
-		const wchar_t*message;
-		//string sid;
+	bool isAvailableMyLogonType;
+	bool isAvailableMyImpersonationLevel;
+	bool isAvailableMyAccountForWhichLogonFailed;
+	bool isAvailableMyFailureInformation;
+	bool isAvailableMyNewLogon;
+	bool isAvailableMyDetailedAuthenticationInformation;
 
-		
-		/**
-		MyProviderInformation myProviderInformation;
-		MyProcessInformation myProcessInformation;
-		MyObject myObject;
-		MyNetworkInformation myNetworkInformation;
-		MyLayerInformation myLayerInformation;
-		MyFilterInformation myFilterInformation;
-		MyChangeInformation myChangeInformation;
-		MyCalloutInformation myCalloutInformation;
-		MyApplicationInformation myApplicationInformation;
-		MyAdditionalInformation myAdditionalInformation;
-		MyAccessRequestInformation myAccessRequestInformation;
-		MyRuleInformation myRuleInformation;
-		MyErrorInformation myErrorInformation;
-		*/
+	int sizeOfEvent = 0;
+
+	MySubject*mySubject;
+	MyProviderInformation*myProviderInformation;
+	MyObject*myObject;
+	MyNetworkInformation*myNetworkInformation;
+	MyLayerInformation*myLayerInformation;
+	MyFilterInformation*myFilterInformation;
+	MyChangeInformation*myChangeInformation;
+	MyCalloutInformation*myCalloutInformation;
+	MyApplicationInformation*myApplicationInformation;
+	MyAdditionalInformation*myAdditionalInformation;
+	MyAccessRequestInformation*myAccessRequestInformation;
+	MyRuleInformation*myRuleInformation;
+	MyErrorInformation*myErrorInformation;
+	MyProcessInformation*myProcessInformation;
+
+	MyLogonType*myLogonType;
+	MyImpersonationLevel*myImpersonationLevel;
+	MyAccountForWhichLogonFailed*myAccountForWhichLogonFailed;
+	MyFailureInformation*myFailureInformation;
+	MyNewLogon*myNewLogon;
+	MyDetailedAuthenticationInformation*myDetailedAuthenticationInformation;
 };
 #endif

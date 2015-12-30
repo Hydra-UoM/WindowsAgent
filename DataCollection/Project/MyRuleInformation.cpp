@@ -10,6 +10,22 @@ MyRuleInformation::MyRuleInformation(const wchar_t* ID1,const wchar_t* Name1):
 	    Name = Name1;
 }
 
+myRuleInformation MyRuleInformation::toLogStruct(int summarizationLevel)
+{
+	myRuleInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.ID = CW2A(ID);						
+		m.Name = CW2A(Name);					
+	}
+	else
+	{
+		//m.ID = CW2A(ID);
+		m.Name = CW2A(Name);
+	}
+	return m;
+}
+
 void MyRuleInformation::print()
 {
 	wprintf(L"MyRuleInformation:\n");

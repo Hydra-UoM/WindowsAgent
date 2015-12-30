@@ -76,6 +76,7 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
     }
 
 	eventMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageEvent);
+
 	levelMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageLevel);
 	taskMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageTask);
 	opCodeMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageOpcode);
@@ -102,12 +103,23 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
     FileTimeToSystemTime(&ft, &st);
     ullNanoseconds = (ullTimeStamp % 10000000) * 100; // Display nanoseconds instead of milliseconds for higher resolution
 	{
+		/**
 		MyTimeStamp timeStamp(ullTimeStamp, st, ft);
+		const wchar_t* message = extractEventMessageString();
 		MyLogStructure outputLog(eventMessageString, levelMessageString, taskMessageString, opCodeMessageString, channelMessageString,
-			providerMessageString, version, level, task, opCode, keywords, eventRecordID, executionProcessID, executionThreadID,
-			channel, computer, EventID, timeStamp/**,processName*/);
+		providerMessageString, version, level, task, opCode, keywords, eventRecordID, executionProcessID, executionThreadID,
+		channel, computer, EventID, timeStamp, message);
 		*outputLogStructure = outputLog;
-		//extractEventMessageString(outputLogStructure); /** Need to fix */
+		return status;
+		*/
+		MyTimeStamp timeStamp(ullTimeStamp, st, ft);
+		auto outputLog = std::make_unique<MyLogStructure>(/**eventMessageString, */levelMessageString, taskMessageString, opCodeMessageString, channelMessageString,
+			providerMessageString, version, level, task, opCode, keywords, eventRecordID, executionProcessID, executionThreadID,
+			channel, computer, EventID, timeStamp);
+		extractEventMessageString(outputLog);
+
+		*outputLogStructure = *(outputLog.get());
+		//wprintf(L"Message: %ls\n", outputLog->message);
 		return status;
 	}
 
@@ -217,9 +229,14 @@ std::vector<wstring> MyLogStructureMaker::splitLPWSTRWithManyDelimiters(const ws
 	return wordVector;
 }
 
-void MyLogStructureMaker::extractEventMessageString(MyLogStructure* outputLog)
+MyLogStructureMaker::~MyLogStructureMaker(void)
 {
-	LPWSTR separators = L":\n\t";
+
+}
+
+void MyLogStructureMaker::extractEventMessageString(std::unique_ptr<MyLogStructure> & outputLog)
+{
+	LPWSTR separators = L"\n\t";
 	vector<wstring> results = splitLPWSTRWithManyDelimiters(eventMessageString, separators);
 	int noOfSplitedStrings = 0;
 	enum attributeName{
@@ -227,16 +244,32 @@ void MyLogStructureMaker::extractEventMessageString(MyLogStructure* outputLog)
 		Source_Handle_Information, Source_Handle_ID, Source_Process_ID,
 		New_Handle_Information, Target_Handle_ID, Target_Process_ID
 	};
-	const wchar_t*arrayOfSplitted[200];
+	wstring*arrayOfSplitted;
+	arrayOfSplitted = new wstring[200];
 	for (auto const& w : results)
 	{
 		const wchar_t* st = w.c_str();
-		//wprintf(L"Splitted: %ls\n", st);
 		arrayOfSplitted[noOfSplitedStrings] = st;
-		noOfSplitedStrings++;
+		wstring temp = arrayOfSplitted[noOfSplitedStrings];
+		int length = arrayOfSplitted[noOfSplitedStrings].length();
+
+		int colonPosition = arrayOfSplitted[noOfSplitedStrings].find_last_of(':'); // if ':' is not exists it will result -1
+		if (colonPosition != 1 && colonPosition != -1) // if 1 - process name, if -1 - not exists
+		{
+			temp = arrayOfSplitted[noOfSplitedStrings].substr(0, colonPosition);
+		}
+		if (temp.compare(L"\r") != 0)
+		{
+			arrayOfSplitted[noOfSplitedStrings] = temp;
+			//wprintf(L"Splitted: %ls\n", arrayOfSplitted[noOfSplitedStrings].c_str());
+			noOfSplitedStrings++;
+		}
 	}
-	//wprintf(L"Message: %ls\n", arrayOfSplitted[0]);
-	outputLog->message = arrayOfSplitted[0];
+	outputLog->message = arrayOfSplitted[0].c_str();
+	//wprintf(L"Splitted: %ls\n", arrayOfSplitted[2].c_str());
+	//wprintf(L"Splitted: %d\n", wcscmp(arrayOfSplitted[1].c_str(), L"Subject"));
+	//wprintf(L"Splitted: %d\n", arrayOfSplitted[1].compare(L"Subject")); // same - 0 // Appl : -1
+
 	// Setup logs contains Client id
 	int i = 1;
 
@@ -253,7 +286,7 @@ void MyLogStructureMaker::extractEventMessageString(MyLogStructure* outputLog)
 	const wchar_t* Application_Process_ID;	const wchar_t* Application_Name;
 
 	// Network Information type
-	const wchar_t* Direction;	const wchar_t* Source_Address;	const wchar_t* Source_Port;	const wchar_t* Destination_Address;	const wchar_t* Destination_Port;	const wchar_t* Protocol;
+	const wchar_t* Workstation_Name;	const wchar_t* Direction;	const wchar_t* Source_Address;	const wchar_t* Source_Port;	const wchar_t* Destination_Address;	const wchar_t* Destination_Port;	const wchar_t* Protocol;
 
 	// Provider Information type
 	const wchar_t* Provider_ID;	const wchar_t* Provider_Name;
@@ -279,604 +312,810 @@ void MyLogStructureMaker::extractEventMessageString(MyLogStructure* outputLog)
 	// Error Information type
 	const wchar_t* Error_Reason;
 
+	// LogonType
+	const wchar_t* Logon_Type;
+
+	// ImpersonationLevel
+	const wchar_t* Impersonation_Level;
+
+	// AccountForWhichLogonFailed
+	const wchar_t* AccountForWhichLogonFailed_Security_ID;	const wchar_t* AccountForWhichLogonFailed_Account_Name;	const wchar_t* AccountForWhichLogonFailed_Account_Domain;
+
+	// FailureInformation
+	const wchar_t* Failure_Reason;	const wchar_t* Status;	const wchar_t* Sub_Status;
+
+	// NewLogon
+	const wchar_t* NewLogon_Security_ID;	const wchar_t* NewLogon_Account_Name;	const wchar_t* NewLogon_Account_Domain;
+	const wchar_t* NewLogon_Logon_ID;	const wchar_t* NewLogon_Logon_GUID;
+
+	// DetailedAuthenticationInformation
+	const wchar_t* Logon_Process;	const wchar_t* Authentication_Package;	const wchar_t* Transited_Services;	const wchar_t* Package_Name;	const wchar_t* Key_Length;
+
 	while (i < noOfSplitedStrings)
 	{
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Subject") == 0)// There is Subject type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Subject") == 0)// There is Subject type
 		{
 			outputLog->isAvailableMySubject = true;
-			i = i + 2;
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Security ID") == 0)
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Security ID") == 0)
 			{
 				i++;
-				Security_ID = arrayOfSplitted[i];
-				//sid = wchar_t_pointerToString(Security_ID);
-				//wprintf(L"Security_ID: %ls\n", Security_ID);
+				Security_ID = arrayOfSplitted[i].c_str();
 				i++;
 			}
 			else
 			{
-				Security_ID = L"Unavailable for this event";
+				Security_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Account Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account Name") == 0)
 			{
 				i++;
-				Account_Name = arrayOfSplitted[i];
+				Account_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Account_Name = L"Unavailable for this event";
+				Account_Name = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Account Domain") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account Domain") == 0)
 			{
 				i++;
-				Account_Domain = arrayOfSplitted[i];
+				Account_Domain = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Domain: %ls\n", Account_Domain);
 				i++;
 			}
 			else
 			{
-				Account_Domain = L"Unavailable for this event";
+				Account_Domain = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Logon ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Logon ID") == 0)
 			{
 				i++;
-				Logon_ID = arrayOfSplitted[i];
+				Logon_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Logon_ID: %ls\n", Logon_ID);
 				i++;
 			}
 			else
 			{
-				Logon_ID = L"Unavailable for this event";
+				Logon_ID = L"";
 			}
+			outputLog->mySubject = new MySubject(Security_ID, Account_Name, Account_Domain, Logon_ID);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Object") == 0)// There is Object type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Logon Type") == 0)
+		{
+			outputLog->isAvailableMyLogonType = true;
+			i++;
+			Logon_Type = arrayOfSplitted[i].c_str();
+			i++;
+			outputLog->myLogonType = new MyLogonType(Logon_Type);
+		}
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Impersonation Level") == 0)
+		{
+			outputLog->isAvailableMyImpersonationLevel = true;
+			i++;
+			Impersonation_Level = arrayOfSplitted[i].c_str();
+			i++;
+			outputLog->myImpersonationLevel = new MyImpersonationLevel(Impersonation_Level);
+		}
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account For Which Logon Failed") == 0)
+		{
+			outputLog->isAvailableMyAccountForWhichLogonFailed = true;
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Security ID") == 0)
+			{
+				i++;
+				AccountForWhichLogonFailed_Security_ID = arrayOfSplitted[i].c_str();
+				//wprintf(L"Security_ID: %ls\n", Security_ID);
+				i++;
+			}
+			else
+			{
+				AccountForWhichLogonFailed_Security_ID = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account Name") == 0)
+			{
+				i++;
+				AccountForWhichLogonFailed_Account_Name = arrayOfSplitted[i].c_str();
+				i++;
+			}
+			else
+			{
+				AccountForWhichLogonFailed_Account_Name = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account Domain") == 0)
+			{
+				i++;
+				AccountForWhichLogonFailed_Account_Domain = arrayOfSplitted[i].c_str();
+				//wprintf(L"Account_Domain: %ls\n", Account_Domain);
+				i++;
+			}
+			else
+			{
+				AccountForWhichLogonFailed_Account_Domain = L"";
+			}
+			outputLog->myAccountForWhichLogonFailed = new MyAccountForWhichLogonFailed(AccountForWhichLogonFailed_Security_ID, AccountForWhichLogonFailed_Account_Name, AccountForWhichLogonFailed_Account_Domain);
+		}
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Failure Information") == 0)
+		{
+			outputLog->isAvailableMyFailureInformation = true;
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Failure Reason") == 0)
+			{
+				i++;
+				Failure_Reason = arrayOfSplitted[i].c_str();
+				i++;
+			}
+			else
+			{
+				Failure_Reason = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Status") == 0)
+			{
+				i++;
+				Status = arrayOfSplitted[i].c_str();
+				i++;
+			}
+			else
+			{
+				Status = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Sub Status") == 0)
+			{
+				i++;
+				Sub_Status = arrayOfSplitted[i].c_str();
+				//wprintf(L"Account_Domain: %ls\n", Account_Domain);
+				i++;
+			}
+			else
+			{
+				Sub_Status = L"";
+			}
+			outputLog->myFailureInformation = new MyFailureInformation(Failure_Reason, Status, Sub_Status);
+		}
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"New Logon") == 0)
+		{
+			outputLog->isAvailableMyNewLogon = true;
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Security ID") == 0)
+			{
+				i++;
+				NewLogon_Security_ID = arrayOfSplitted[i].c_str();
+				i++;
+			}
+			else
+			{
+				NewLogon_Security_ID = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account Name") == 0)
+			{
+				i++;
+				NewLogon_Account_Name = arrayOfSplitted[i].c_str();
+				i++;
+			}
+			else
+			{
+				NewLogon_Account_Name = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Account Domain") == 0)
+			{
+				i++;
+				NewLogon_Account_Domain = arrayOfSplitted[i].c_str();
+				//wprintf(L"Account_Domain: %ls\n", Account_Domain);
+				i++;
+			}
+			else
+			{
+				NewLogon_Account_Domain = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Logon ID") == 0)
+			{
+				i++;
+				NewLogon_Logon_ID = arrayOfSplitted[i].c_str();
+				i++;
+			}
+			else
+			{
+				NewLogon_Logon_ID = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Logon GUID") == 0)
+			{
+				i++;
+				NewLogon_Logon_GUID = arrayOfSplitted[i].c_str();
+				//wprintf(L"Account_Domain: %ls\n", Account_Domain);
+				i++;
+			}
+			else
+			{
+				NewLogon_Logon_GUID = L"";
+			}
+			outputLog->myNewLogon = new MyNewLogon(NewLogon_Security_ID, NewLogon_Account_Name, NewLogon_Account_Domain, NewLogon_Logon_ID, NewLogon_Logon_GUID);
+		}
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Object") == 0)// There is Object type
 		{
 			outputLog->isAvailableMyObject = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Object Server") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Object Server") == 0)
 			{
 				i++;
-				Object_Server = arrayOfSplitted[i];
+				Object_Server = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Object_Server = L"Unavailable for this event";
+				Object_Server = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Object Type") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Object Type") == 0)
 			{
 				i++;
-				Object_Type = arrayOfSplitted[i];
+				Object_Type = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Object_Type = L"Unavailable for this event";
+				Object_Type = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Object Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Object Name") == 0)
 			{
 				i++;
-				Object_Name = arrayOfSplitted[i];
+				Object_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Domain: %ls\n", Account_Domain);
 				i++;
 			}
 			else
 			{
-				Object_Name = L"Unavailable for this event";
+				Object_Name = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Handle ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Handle ID") == 0)
 			{
 				i++;
-				Handle_ID = arrayOfSplitted[i];
+				Handle_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Logon_ID: %ls\n", Logon_ID);
 				i++;
 			}
 			else
 			{
-				Handle_ID = L"Unavailable for this event";
+				Handle_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Resource Attributes") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Resource Attributes") == 0)
 			{
 				i++;
-				Resource_Attributes = arrayOfSplitted[i];
+				Resource_Attributes = arrayOfSplitted[i].c_str();
 				//wprintf(L"Logon_ID: %ls\n", Logon_ID);
 				i++;
 			}
 			else
 			{
-				Resource_Attributes = L"Unavailable for this event";
+				Resource_Attributes = L"";
 			}
-			MyObject myObject1(Object_Server, Object_Type, Object_Name, Handle_ID, Resource_Attributes);
-			//*myObject1 = myObject;
-			//myObject1.print();
+			outputLog->myObject = new MyObject(Object_Server, Object_Type, Object_Name, Handle_ID, Resource_Attributes);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Process Information") == 0)// There is Process Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Process Information") == 0)// There is Process Information type
 		{
 			outputLog->isAvailableMyProcessInformation = true;
-			i = i + 2;
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Process ID") == 0)
+			i = i++;
+			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Process ID") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Caller Process ID") == 0))
 			{
 				i++;
-				Process_ID = arrayOfSplitted[i];
+				Process_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Process_ID = L"Unavailable for this event";
+				Process_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Process Name") == 0)
+			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Process Name") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Caller Process Name") == 0))
 			{
 				i++;
-				Process_Name = arrayOfSplitted[i];
+				Process_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Process_Name = L"Unavailable for this event";
+				Process_Name = L"";
 			}
-			MyProcessInformation myProcessInformation1(Process_ID, Process_Name);
-			//*myProcessInformation1 = myProcessInformation;
-			//myProcessInformation1.print();
+			outputLog->myProcessInformation = new MyProcessInformation(Process_ID, Process_Name);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Application Information") == 0)// There is Application Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Application Information") == 0)// There is Application Information type
 		{
 			outputLog->isAvailableMyApplicationInformation = true;
-			i = i + 2;
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Process ID") == 0)
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Process ID") == 0)
 			{
 				i++;
-				Application_Process_ID = arrayOfSplitted[i];
+				Application_Process_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Application_Process_ID: %ls\n", Application_Process_ID);
 				i++;
 			}
 			else
 			{
-				Application_Process_ID = L"Unavailable for this event";
+				Application_Process_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Application Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Application Name") == 0)
 			{
 				i++;
-				Application_Name = arrayOfSplitted[i];
+				Application_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Application_Name: %ls\n", Application_Name);
 				i++;
 			}
 			else
 			{
-				Application_Name = L"Unavailable for this event";
+				Application_Name = L"";
 			}
-			MyApplicationInformation myApplicationInformation(Application_Process_ID, Application_Name);
-			//*mySubject = mySubject1;
-			//myApplicationInformation.print();
+			outputLog->myApplicationInformation = new MyApplicationInformation(Application_Process_ID, Application_Name);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Network Information") == 0)// There is Network Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Network Information") == 0)// There is Network Information type
 		{
 			outputLog->isAvailableMyNetworkInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Direction") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Workstation Name") == 0)
 			{
 				i++;
-				Direction = arrayOfSplitted[i];
+				Workstation_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Direction: %ls\n", Direction);
 				i++;
 			}
 			else
 			{
-				Direction = L"Unavailable for this event";
+				Workstation_Name = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Source Address") == 0)
+
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Direction") == 0)
 			{
 				i++;
-				Source_Address = arrayOfSplitted[i];
+				Direction = arrayOfSplitted[i].c_str();
+				//wprintf(L"Direction: %ls\n", Direction);
+				i++;
+			}
+			else
+			{
+				Direction = L"";
+			}
+			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Source Address") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Source Network Address") == 0))
+			{
+				i++;
+				Source_Address = arrayOfSplitted[i].c_str();
 				//wprintf(L"Source_Address: %ls\n", Source_Address);
 				i++;
 			}
 			else
 			{
-				Source_Address = L"Unavailable for this event";
+				Source_Address = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Source Port") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Source Port") == 0)
 			{
 				i++;
-				Source_Port = arrayOfSplitted[i];
+				Source_Port = arrayOfSplitted[i].c_str();
 				//wprintf(L"Source_Port: %ls\n", Source_Port);
 				i++;
 			}
 			else
 			{
-				Source_Port = L"Unavailable for this event";
+				Source_Port = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Destination Address") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Destination Address") == 0)
 			{
 				i++;
-				Destination_Address = arrayOfSplitted[i];
+				Destination_Address = arrayOfSplitted[i].c_str();
 				//wprintf(L"Destination_Address: %ls\n", Destination_Address);
 				i++;
 			}
 			else
 			{
-				Destination_Address = L"Unavailable for this event";
+				Destination_Address = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Destination Port") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Destination Port") == 0)
 			{
 				i++;
-				Destination_Port = arrayOfSplitted[i];
+				Destination_Port = arrayOfSplitted[i].c_str();
 				//wprintf(L"Destination_Port: %ls\n", Destination_Port);
 				i++;
 			}
 			else
 			{
-				Destination_Port = L"Unavailable for this event";
+				Destination_Port = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Protocol") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Protocol") == 0)
 			{
 				i++;
-				Protocol = arrayOfSplitted[i];
+				Protocol = arrayOfSplitted[i].c_str();
 				//wprintf(L"Protocol: %ls\n", Protocol);
 				i++;
 			}
 			else
 			{
-				Protocol = L"Unavailable for this event";
+				Protocol = L"";
 			}
-			MyNetworkInformation myNetworkInformation(Direction, Source_Address, Source_Port, Destination_Address, Destination_Port, Protocol);
-			//*mySubject = mySubject1;
-			//myNetworkInformation.print();
+			outputLog->myNetworkInformation = new MyNetworkInformation(Workstation_Name,Direction, Source_Address, Source_Port, Destination_Address, Destination_Port, Protocol);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Provider Information") == 0)// There is Provider Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Detailed Authentication Information") == 0)// There is Network Information type
+		{
+			outputLog->isAvailableMyDetailedAuthenticationInformation = true;
+			i++;
+
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Logon Process") == 0)
+			{
+				i++;
+				Logon_Process = arrayOfSplitted[i].c_str();
+				//wprintf(L"Direction: %ls\n", Direction);
+				i++;
+			}
+			else
+			{
+				Logon_Process = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Authentication Package") == 0)
+			{
+				i++;
+				Authentication_Package = arrayOfSplitted[i].c_str();
+				//wprintf(L"Source_Address: %ls\n", Source_Address);
+				i++;
+			}
+			else
+			{
+				Authentication_Package = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Transited Services") == 0)
+			{
+				i++;
+				Transited_Services = arrayOfSplitted[i].c_str();
+				//wprintf(L"Source_Port: %ls\n", Source_Port);
+				i++;
+			}
+			else
+			{
+				Transited_Services = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Package Name (NTLM only)") == 0)
+			{
+				i++;
+				Package_Name = arrayOfSplitted[i].c_str();
+				//wprintf(L"Destination_Address: %ls\n", Destination_Address);
+				i++;
+			}
+			else
+			{
+				Package_Name = L"";
+			}
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Key Length") == 0)
+			{
+				i++;
+				Key_Length = arrayOfSplitted[i].c_str();
+				//wprintf(L"Destination_Port: %ls\n", Destination_Port);
+				i++;
+			}
+			else
+			{
+				Key_Length = L"";
+			}
+			outputLog->myDetailedAuthenticationInformation = new MyDetailedAuthenticationInformation(Logon_Process, Authentication_Package, Transited_Services, Package_Name, Key_Length);
+		}
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Provider Information") == 0)// There is Provider Information type
 		{
 			outputLog->isAvailableMyProviderInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"ID") == 0)
 			{
 				i++;
-				Provider_ID = arrayOfSplitted[i];
+				Provider_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Provider_ID = L"Unavailable for this event";
+				Provider_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Name") == 0)
 			{
 				i++;
-				Provider_Name = arrayOfSplitted[i];
+				Provider_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Provider_Name = L"Unavailable for this event";
+				Provider_Name = L"";
 			}
-			MyProviderInformation myProviderInformation(Provider_ID, Provider_Name);
-			//*mySubject = mySubject1;
-			//myProviderInformation.print();
+			outputLog->myProviderInformation = new MyProviderInformation(Provider_ID, Provider_Name);
 		}
-		if (wcscmp(arrayOfSplitted[i], L"Change Information") == 0)// There is Change Information type
+		if (wcscmp(arrayOfSplitted[i].c_str(), L"Change Information") == 0)// There is Change Information type
 		{
 			outputLog->isAvailableMyChangeInformation = true;
-			i = i + 2;
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Change Type") == 0)
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Change Type") == 0)
 			{
 				i++;
-				Change_Type = arrayOfSplitted[i];
+				Change_Type = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Change_Type = L"Unavailable for this event";
+				Change_Type = L"";
 			}
-			MyChangeInformation myChangeInformation(Change_Type);
-			//*mySubject = mySubject1;
-			//myChangeInformation.print();
+			outputLog->myChangeInformation = new MyChangeInformation(Change_Type);
 		}
-		if (wcscmp(arrayOfSplitted[i], L"Access Request Information") == 0)// There is Access Request Information type
+		if (wcscmp(arrayOfSplitted[i].c_str(), L"Access Request Information") == 0)// There is Access Request Information type
 		{
 			outputLog->isAvailableMyAccessRequestInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Transaction ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Transaction ID") == 0)
 			{
 				i++;
-				Transaction_ID = arrayOfSplitted[i];
+				Transaction_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Transaction_ID = L"Unavailable for this event";
+				Transaction_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Accesses") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Accesses") == 0)
 			{
 				i++;
-				Accesses = arrayOfSplitted[i];
+				Accesses = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Accesses = L"Unavailable for this event";
+				Accesses = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Access Reasons") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Access Reasons") == 0)
 			{
 				i++;
-				Access_Reasons = arrayOfSplitted[i];
+				Access_Reasons = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Access_Reasons = L"Unavailable for this event";
+				Access_Reasons = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Access Mask") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Access Mask") == 0)
 			{
 				i++;
-				Access_Mask = arrayOfSplitted[i];
+				Access_Mask = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Access_Mask = L"Unavailable for this event";
+				Access_Mask = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Privileges Used for Access Check") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Privileges Used for Access Check") == 0)
 			{
 				i++;
-				Privileges_Used_For_Access_Check = arrayOfSplitted[i];
+				Privileges_Used_For_Access_Check = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Privileges_Used_For_Access_Check = L"Unavailable for this event";
+				Privileges_Used_For_Access_Check = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Restricted SID Count") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Restricted SID Count") == 0)
 			{
 				i++;
-				Restricted_SID_Count = arrayOfSplitted[i];
+				Restricted_SID_Count = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Restricted_SID_Count = L"Unavailable for this event";
+				Restricted_SID_Count = L"";
 			}
-			MyAccessRequestInformation myAccessRequestInformation(Transaction_ID, Accesses, Access_Reasons, Access_Mask,
+			outputLog->myAccessRequestInformation = new MyAccessRequestInformation(Transaction_ID, Accesses, Access_Reasons, Access_Mask,
 				Privileges_Used_For_Access_Check, Restricted_SID_Count);
-			//*mySubject = mySubject1;
-			//myAccessRequestInformation.print();
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Filter Information") == 0)// There is Filter Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Filter Information") == 0)// There is Filter Information type
 		{
 			outputLog->isAvailableMyFilterInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"ID") == 0)
 			{
 				i++;
-				Filter_ID = arrayOfSplitted[i];
+				Filter_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Filter_ID: %ls\n", Filter_ID);
 				i++;
 			}
 			else
 			{
-				Filter_ID = L"Unavailable for this event";
+				Filter_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Name") == 0)
 			{
 				i++;
-				Filter_Name = arrayOfSplitted[i];
+				Filter_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Filter_Name: %ls\n", Filter_Name);
 				i++;
 			}
 			else
 			{
-				Filter_Name = L"Unavailable for this event";
+				Filter_Name = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Type") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Type") == 0)
 			{
 				i++;
-				Filter_Type = arrayOfSplitted[i];
+				Filter_Type = arrayOfSplitted[i].c_str();
 				//wprintf(L"Filter_Type: %ls\n", Filter_Type);
 				i++;
 			}
 			else
 			{
-				Filter_Type = L"Unavailable for this event";
+				Filter_Type = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Run-Time ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Run-Time ID") == 0)
 			{
 				i++;
-				Runtime_ID = arrayOfSplitted[i];
+				Runtime_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Runtime_ID: %ls\n", Runtime_ID);
 				i++;
 			}
 			else
 			{
-				Runtime_ID = L"Unavailable for this event";
+				Runtime_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Filter Run-Time ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Filter Run-Time ID") == 0)
 			{
 				i++;
-				Filter_Runtime_ID = arrayOfSplitted[i];
+				Filter_Runtime_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Filter_Runtime_ID: %ls\n", Filter_Runtime_ID);
 				i++;
 			}
 			else
 			{
-				Filter_Runtime_ID = L"Unavailable for this event";
+				Filter_Runtime_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Layer Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Layer Name") == 0)
 			{
 				i++;
-				Filter_Layer_Name = arrayOfSplitted[i];
+				Filter_Layer_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Filter_Layer_Name: %ls\n", Filter_Layer_Name);
 				i++;
 			}
 			else
 			{
-				Filter_Layer_Name = L"Unavailable for this event";
+				Filter_Layer_Name = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Layer Run-Time ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Layer Run-Time ID") == 0)
 			{
 				i++;
-				Filter_Layer_Runtime_ID = arrayOfSplitted[i];
+				Filter_Layer_Runtime_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Filter_Layer_Runtime_ID: %ls\n", Filter_Layer_Runtime_ID);
 				i++;
 			}
 			else
 			{
-				Filter_Layer_Runtime_ID = L"Unavailable for this event";
+				Filter_Layer_Runtime_ID = L"";
 			}
-			MyFilterInformation myFilterInformation(Filter_ID, Filter_Name, Filter_Type, Runtime_ID, Filter_Runtime_ID, Filter_Layer_Name,
+			outputLog->myFilterInformation = new MyFilterInformation(Filter_ID, Filter_Name, Filter_Type, Runtime_ID, Filter_Runtime_ID, Filter_Layer_Name,
 				Filter_Layer_Runtime_ID);
-			//*mySubject = mySubject1;
-			//myFilterInformation.print();
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Layer Information") == 0)// There is Layer Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Layer Information") == 0)// There is Layer Information type
 		{
 			outputLog->isAvailableMyLayerInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"ID") == 0)
 			{
 				i++;
-				Layer_ID = arrayOfSplitted[i];
+				Layer_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Layer_ID = L"Unavailable for this event";
+				Layer_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Name") == 0)
 			{
 				i++;
-				Layer_Name = arrayOfSplitted[i];
+				Layer_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Layer_Name = L"Unavailable for this event";
+				Layer_Name = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Run-Time ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Run-Time ID") == 0)
 			{
 				i++;
-				Layer_Runtime_ID = arrayOfSplitted[i];
+				Layer_Runtime_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Layer_Runtime_ID = L"Unavailable for this event";
+				Layer_Runtime_ID = L"";
 			}
-			MyLayerInformation myLayerInformation(Layer_ID, Layer_Name, Layer_Runtime_ID);
-			//*mySubject = mySubject1;
-			//myLayerInformation.print();
+			outputLog->myLayerInformation = new MyLayerInformation(Layer_ID, Layer_Name, Layer_Runtime_ID);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Callout Information") == 0)// There is Callout Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Callout Information") == 0)// There is Callout Information type
 		{
 			outputLog->isAvailableMyCalloutInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"ID") == 0)
 			{
 				i++;
-				Callout_ID = arrayOfSplitted[i];
+				Callout_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Callout_ID = L"Unavailable for this event";
+				Callout_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Name") == 0)
 			{
 				i++;
-				Callout_Name = arrayOfSplitted[i];
+				Callout_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Callout_Name = L"Unavailable for this event";
+				Callout_Name = L"";
 			}
-			MyCalloutInformation myCalloutInformation(Callout_ID, Callout_Name);
-			//*mySubject = mySubject1;
-			//myCalloutInformation.print();
+			outputLog->myCalloutInformation = new MyCalloutInformation(Callout_ID, Callout_Name);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Rule Information") == 0)// There is Rule Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Rule Information") == 0)// There is Rule Information type
 		{
 			outputLog->isAvailableMyRuleInformation = true;
-			i = i + 2;
+			i++;
 
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"ID") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"ID") == 0)
 			{
 				i++;
-				Rule_ID = arrayOfSplitted[i];
+				Rule_ID = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Rule_ID = L"Unavailable for this event";
+				Rule_ID = L"";
 			}
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Name") == 0)
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Name") == 0)
 			{
 				i++;
-				Rule_Name = arrayOfSplitted[i];
+				Rule_Name = arrayOfSplitted[i].c_str();
 				//wprintf(L"Account_Name: %ls\n", Account_Name);
 				i++;
 			}
 			else
 			{
-				Rule_Name = L"Unavailable for this event";
+				Rule_Name = L"";
 			}
-			MyRuleInformation myRuleInformation(Rule_ID, Rule_Name);
-			//*mySubject = mySubject1;
-			//myRuleInformation.print();
+			outputLog->myRuleInformation = new MyRuleInformation(Rule_ID, Rule_Name);
 		}
-		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Error Information") == 0)// There is Error Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Error Information") == 0)// There is Error Information type
 		{
 			outputLog->isAvailableMyErrorInformation = true;
-			i = i + 2;
-			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i], L"Reason") == 0)
+			i++;
+			if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Reason") == 0)
 			{
 				i++;
-				Error_Reason = arrayOfSplitted[i];
+				Error_Reason = arrayOfSplitted[i].c_str();
 				//wprintf(L"Security_ID: %ls\n", Security_ID);
 				i++;
 			}
 			else
 			{
-				Error_Reason = L"Unavailable for this event";
+				Error_Reason = L"";
 			}
-			MyErrorInformation myErrorInformation(Error_Reason);
-			//*mySubject = mySubject1;
-			//myErrorInformation.print();
+			outputLog->myErrorInformation = new MyErrorInformation(Error_Reason);
 		}
 		i++;
 	}
-	MySubject*mySubject;
-	if ((outputLog->isAvailableMySubject))
-	{
-		mySubject = new MySubject(Security_ID, Account_Name, Account_Domain, Logon_ID);
-		//mySubject1->setElements(Security_ID, Account_Name, Account_Domain, Logon_ID);
-	}
-}
-
-MyLogStructureMaker::~MyLogStructureMaker(void)
-{
-
 }

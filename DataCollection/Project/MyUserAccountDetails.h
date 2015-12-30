@@ -8,9 +8,9 @@ class MyUserAccountDetails
 {
 public:
 	MyUserAccountDetails();
-	list<string>getCurrentLoggedOnUserInformation();
+	myStruct::myUserAccountDetailsStruct getCurrentLoggedOnUserInformation(int summarizationLevel);
 	void printError(TCHAR* msg);
-	list<string>getAllUserInformation();
+	std::vector<myStruct::myUserAccountDetailsStruct>getAllUserInformation(int summarizationLevel);
 	~MyUserAccountDetails(void);
 };
 #endif

@@ -15,6 +15,10 @@
 #include <sddl.h>               /* for ConvertSidToStringSid function */
 #include <Lmcons.h>
 #include <tchar.h>
+
+using namespace myStruct;
+using namespace std;
+
 #define INFO_BUFFER_SIZE 32767
 
 #define ARRAY_SIZE 1 // earlier was 10, handle by 10 of blocks
@@ -27,7 +31,7 @@ MyUserAccountDetails::MyUserAccountDetails()
 {
 }
 
-list<string> MyUserAccountDetails::getCurrentLoggedOnUserInformation()
+myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUserInformation(int summarizationLevel)
 {
 	LPWSTR  computerName;
 	LPWSTR usri4_name;
@@ -96,30 +100,6 @@ list<string> MyUserAccountDetails::getCurrentLoggedOnUserInformation()
 			//wprintf(L"\tHome directory: %s\n", pBuf4->usri4_home_dir);
 			//wprintf(L"\tComment: %s\n", pBuf4->usri4_comment);
 			usri4_flags = pBuf4->usri4_flags;
-			
-			/**
-			UF_TRUSTED_TO_AUTHENTICATE_FOR_DELEGATION - 16777216
-			UF_SCRIPT - 1
-			UF_ACCOUNTDISABLE - 2
-			UF_HOMEDIR_REQUIRED - 8
-			UF_PASSWD_NOTREQD - 32
-			UF_PASSWD_CANT_CHANGE - 64
-			UF_LOCKOUT - 16
-			UF_DONT_EXPIRE_PASSWD - 65536
-			UF_ENCRYPTED_TEXT_PASSWORD_ALLOWED - 128
-			UF_NOT_DELEGATED - 1048576
-			UF_SMARTCARD_REQUIRED - 262144
-			UF_USE_DES_KEY_ONLY - 2097152
-			UF_DONT_REQUIRE_PREAUTH - 4194304
-			UF_TRUSTED_FOR_DELEGATION - 524288
-			UF_PASSWORD_EXPIRED - 8388608
-
-			UF_INTERDOMAIN_TRUST_ACCOUNT - 2048
-			UF_SERVER_TRUST_ACCOUNT - 8192
-			UF_WORKSTATION_TRUST_ACCOUNT - 4096
-			UF_TEMP_DUPLICATE_ACCOUNT - 256
-			UF_NORMAL_ACCOUNT - 512
-			*/
 		
 			//wprintf(L"\tScript path: %s\n", pBuf4->usri4_script_path);
 			
@@ -188,7 +168,7 @@ list<string> MyUserAccountDetails::getCurrentLoggedOnUserInformation()
 		//
 	}
 	//myCurrentUserAccountStructure->print();
-	list<string>userString = myCurrentUserAccountStructure->toUserDetailsString();
+	myUserAccountDetailsStruct userString = myCurrentUserAccountStructure->toUserDetailsStruct(summarizationLevel);
 	if (pBuf != NULL)
 		NetApiBufferFree(pBuf);
 	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
@@ -219,9 +199,9 @@ void MyUserAccountDetails::printError(TCHAR* msg)
 	_tprintf(TEXT("\n\t%s failed with error %d (%s)"), msg, eNum, sysMsg);
 }
 
-list<string> MyUserAccountDetails::getAllUserInformation()
+vector<myStruct::myUserAccountDetailsStruct> MyUserAccountDetails::getAllUserInformation(int summarizationLevel)
 {
-	list<string>returnedResult;
+	vector<myStruct::myUserAccountDetailsStruct>returnedResult;
 
 	TCHAR  infoBuf[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
@@ -336,15 +316,11 @@ list<string> MyUserAccountDetails::getAllUserInformation()
 						usri2_primary_group_id, usri2_profile, usri2_password_expired, usri2_auth_flags);
 
 					//myCurrentUserAccountStructure->print();
-					//wprintf(L"\n***************************************************");
 					//wprintf(L"\n\n");
 
-					returnedResult.push_back("start"); // start is inserted to indicate start of a log's details
-					list<string>local_returnedResult;
-					local_returnedResult = myCurrentUserAccountStructure->toUserDetailsString();
-					returnedResult.splice(returnedResult.end(), local_returnedResult);
-					returnedResult.push_back("end"); // end is inserted to indicate end of a log's details
-
+					myUserAccountDetailsStruct local_returnedResult;
+					local_returnedResult = myCurrentUserAccountStructure->toUserDetailsStruct(summarizationLevel);
+					returnedResult.push_back(local_returnedResult);
 					pTmpBuf++;
 					dwTotalCount++;
 				}

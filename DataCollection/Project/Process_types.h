@@ -17,8 +17,8 @@
 #include <thrift/cxxfunctional.h>
 
 
+namespace HydraWindows {
 
-
-
+} // namespace
 
 #endif

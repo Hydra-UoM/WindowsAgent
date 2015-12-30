@@ -8,6 +8,22 @@ MyProviderInformation::MyProviderInformation(const wchar_t* Provider_ID1,const w
 	    Provider_Name = Provider_Name1;
 }
 
+myProviderInformation MyProviderInformation::toLogStruct(int summarizationLevel)
+{
+	myProviderInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Provider_ID = CW2A(Provider_ID);						
+		m.Provider_Name = CW2A(Provider_Name);					
+	}
+	else
+	{
+		//m.Provider_ID = CW2A(Provider_ID);
+		m.Provider_Name = CW2A(Provider_Name);
+	}
+	return m;
+}
+
 void MyProviderInformation::print()
 {
 	wprintf(L"MyProviderInformation:\n");

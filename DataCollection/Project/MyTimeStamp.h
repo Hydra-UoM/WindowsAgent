@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <winevt.h>
 #include <iostream>
-
+#include "MyLogStruct.h"
 #include <sddl.h>
 
 
@@ -19,6 +19,7 @@ class MyTimeStamp
 		MyTimeStamp(ULONGLONG ullTimeStamp1,SYSTEMTIME& st1,FILETIME& ft1);
 		~MyTimeStamp(void);
 		void ToPrintTimeStamp();
+		myStruct::myTimeStamp toTimeStampStruct();
 
 	private:
 		SYSTEMTIME st;

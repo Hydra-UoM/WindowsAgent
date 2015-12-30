@@ -10,6 +10,22 @@ MyApplicationInformation::MyApplicationInformation(const wchar_t* Application_Pr
 	    Application_Name = Application_Name1;
 }
 
+myApplicationInformation MyApplicationInformation::toLogStruct(int summarizationLevel)
+{
+	myApplicationInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Application_Process_ID = CW2A(Application_Process_ID);						
+		m.Application_Name = CW2A(Application_Name);									
+	}
+	else
+	{
+		//m.Application_Process_ID = CW2A(Application_Process_ID);
+		m.Application_Name = CW2A(Application_Name);
+	}
+	return m;
+}
+
 void MyApplicationInformation::print()
 {
 	wprintf(L"Application_Information:\n");

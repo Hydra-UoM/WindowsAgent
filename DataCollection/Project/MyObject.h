@@ -2,21 +2,21 @@
 #ifndef MyObject_H
 #define MyObject_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyObject
 {
 	public:
 		MyObject(const wchar_t* Object_Server1,const wchar_t* Object_Type1,const wchar_t* Object_Name1,const wchar_t* Handle_ID1,
 			const wchar_t* Resource_Attributes1);
+		myObject toLogStruct(int summarizationLevel);
 		~MyObject(void);
 
 		void print();

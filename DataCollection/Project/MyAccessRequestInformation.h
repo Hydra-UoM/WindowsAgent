@@ -2,21 +2,21 @@
 #ifndef MyAccessRequestInformation_H
 #define MyAccessRequestInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyAccessRequestInformation
 {
 	public:
 		MyAccessRequestInformation(const wchar_t* Transaction_ID1,const wchar_t* Accesses1,const wchar_t* Access_Reasons1,const wchar_t* Access_Mask1,
 					const wchar_t* Privileges_Used_For_Access_Check1,const wchar_t* Restricted_SID_Count1);
+		myAccessRequestInformation toLogStruct(int summarizationLevel);
 		~MyAccessRequestInformation(void);
 
 		void print();

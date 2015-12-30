@@ -2,15 +2,14 @@
 #ifndef MyFilterInformation_H
 #define MyFilterInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyFilterInformation
 {
@@ -18,6 +17,7 @@ class MyFilterInformation
 		MyFilterInformation(const wchar_t* Filter_ID1,const wchar_t* Filter_Name1,const wchar_t* Filter_Type1,
 			const wchar_t* Runtime_ID1, const wchar_t* Filter_Runtime_ID1,
 			const wchar_t* Filter_Layer_Name1,const wchar_t* Filter_Layer_Runtime_ID1);
+		myFilterInformation toLogStruct(int summarizationLevel);
 		~MyFilterInformation(void);
 
 		void print();

@@ -13,6 +13,28 @@ MyObject::MyObject(const wchar_t* Object_Server1,const wchar_t* Object_Type1,con
 		Resource_Attributes = Resource_Attributes1;
 }
 
+myObject MyObject::toLogStruct(int summarizationLevel)
+{
+	myObject m;
+	if (summarizationLevel == 0)
+	{
+		m.Object_Server = CW2A(Object_Server);				
+		m.Object_Type = CW2A(Object_Type);					
+		m.Object_Name = CW2A(Object_Name);					
+		m.Handle_ID = CW2A(Handle_ID);						
+		m.Resource_Attributes = CW2A(Resource_Attributes);
+	}
+	else// if(summarizationLevel == 1)
+	{
+		m.Object_Server = CW2A(Object_Server);
+		m.Object_Type = CW2A(Object_Type);
+		m.Object_Name = CW2A(Object_Name);
+		//m.Handle_ID = CW2A(Handle_ID);
+		//m.Resource_Attributes = CW2A(Resource_Attributes);
+	}
+	return m;
+}
+
 void MyObject::print()
 {
 	wprintf(L"Object:\n");

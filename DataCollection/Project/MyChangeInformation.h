@@ -2,20 +2,20 @@
 #ifndef MyChangeInformation_H
 #define MyChangeInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyChangeInformation
 {
 	public:
 		MyChangeInformation(const wchar_t* Change_Type1);
+		myChangeInformation toLogStruct(int summarizationLevel);
 		~MyChangeInformation(void);
 
 		void print();

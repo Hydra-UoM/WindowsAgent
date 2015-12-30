@@ -4,10 +4,14 @@
 
 #include <windows.h>
 #include <string>
-#include <list>
+#include <vector>
 #include <atlstr.h>
+#include <Lmaccess.h>
+#include <iostream>
 
-using namespace std;
+#include "MyLogStruct.h"
+
+//using namespace std;
 
 class MyUserAccountDetailsStructure
 {
@@ -19,7 +23,7 @@ public:
 		DWORD usri4_primary_group_id1, LPWSTR usri4_profile1, DWORD usri4_password_expired1, DWORD usri4_auth_flags1);
 
 	void print();
-	list<string>toUserDetailsString();
+	myStruct::myUserAccountDetailsStruct toUserDetailsStruct(int summarizationLevel);
 
 	~MyUserAccountDetailsStructure(void);
 
@@ -41,9 +45,9 @@ public:
 	DWORD usri4_country_code;
 	DWORD usri4_code_page;
 	DWORD usri4_primary_group_id = -10000;
-	LPWSTR usri4_profile = L"Not Set";
+	LPWSTR usri4_profile = L"";
 	DWORD usri4_password_expired = -10000;
-	DWORD usri4_auth_flags;
+	DWORD usri4_auth_flags = 0;
 
 	/** not available in LPUSER_INFO_2; Following are the default values
 	DWORD usri2_primary_group_id = -10000;

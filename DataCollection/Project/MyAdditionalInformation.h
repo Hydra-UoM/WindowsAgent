@@ -2,15 +2,14 @@
 #ifndef MyAdditionalInformation_H
 #define MyAdditionalInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyAdditionalInformation
 {
@@ -20,6 +19,7 @@ class MyAdditionalInformation
 								const wchar_t* Condition_ID21,const wchar_t* Match_Value21,const wchar_t* Condition_Value21,
 								const wchar_t* Condition_ID31,const wchar_t* Match_Value31,const wchar_t* Condition_Value31,
 								const wchar_t* Filter_Action1);
+		//myAdditionalInformation toLogStruct(int summarizationLevel);
 		~MyAdditionalInformation(void);
 
 		void print();

@@ -16,6 +16,32 @@ MyFilterInformation::MyFilterInformation(const wchar_t* Filter_ID1,const wchar_t
 		Filter_Layer_Runtime_ID = Filter_Layer_Runtime_ID1;
 }
 
+myFilterInformation MyFilterInformation::toLogStruct(int summarizationLevel)
+{
+	myFilterInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Filter_ID = CW2A(Filter_ID);								
+		m.Filter_Name = CW2A(Filter_Name);							
+		m.Filter_Type = CW2A(Filter_Type);							
+		m.Runtime_ID = CW2A(Runtime_ID);							
+		m.Filter_Runtime_ID = CW2A(Filter_Runtime_ID);				
+		m.Filter_Layer_Name = CW2A(Filter_Layer_Name);				
+		m.Filter_Layer_Runtime_ID = CW2A(Filter_Layer_Runtime_ID);	
+	}
+	else
+	{
+		//m.Filter_ID = CW2A(Filter_ID);
+		m.Filter_Name = CW2A(Filter_Name);
+		m.Filter_Type = CW2A(Filter_Type);
+		//m.Runtime_ID = CW2A(Runtime_ID);
+		//m.Filter_Runtime_ID = CW2A(Filter_Runtime_ID);
+		m.Filter_Layer_Name = CW2A(Filter_Layer_Name);
+		//m.Filter_Layer_Runtime_ID = CW2A(Filter_Layer_Runtime_ID);
+	}
+	return m;
+}
+
 void MyFilterInformation::print()
 {
 	wprintf(L"Filter_Information:\n");

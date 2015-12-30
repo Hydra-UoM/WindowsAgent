@@ -2,20 +2,21 @@
 #ifndef MyCalloutInformation_H
 #define MyCalloutInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
+using namespace std;
 
-#pragma comment(lib, "wevtapi.lib")
 
 class MyCalloutInformation
 {
 	public:
 		MyCalloutInformation(const wchar_t* Callout_ID1,const wchar_t* Callout_Name1);
+		myCalloutInformation toLogStruct(int summarizationLevel);
 		~MyCalloutInformation(void);
 
 		void print();

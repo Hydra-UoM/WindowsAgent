@@ -2,20 +2,20 @@
 #ifndef MyRuleInformation_H
 #define MyRuleInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyRuleInformation
 {
 	public:
 		MyRuleInformation(const wchar_t* ID1,const wchar_t* Name1);
+		myRuleInformation toLogStruct(int summarizationLevel);
 		~MyRuleInformation(void);
 
 		void print();

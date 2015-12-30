@@ -2,20 +2,20 @@
 #ifndef MyProviderInformation_H
 #define MyProviderInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyProviderInformation
 {
 	public:
 		MyProviderInformation(const wchar_t* Provider_ID1,const wchar_t* Provider_Name1);
+		myProviderInformation toLogStruct(int summarizationLevel);
 		~MyProviderInformation(void);
 
 		void print();

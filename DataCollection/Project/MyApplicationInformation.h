@@ -2,20 +2,20 @@
 #ifndef MyApplicationInformation_H
 #define MyApplicationInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyApplicationInformation
 {
 	public:
 		MyApplicationInformation(const wchar_t* Application_Process_ID1,const wchar_t* Application_Name1);
+		myApplicationInformation toLogStruct(int summarizationLevel);
 		~MyApplicationInformation(void);
 
 		void print();

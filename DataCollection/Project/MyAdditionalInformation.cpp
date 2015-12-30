@@ -27,7 +27,43 @@ MyAdditionalInformation::MyAdditionalInformation(const wchar_t* Weight1,const wc
 		Condition_Value3 = Condition_Value31;
 		Filter_Action = Filter_Action1;
 }
-
+/**
+myAdditionalInformation MyAdditionalInformation::toLogStruct(int summarizationLevel)
+{
+	myAdditionalInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Weight = CW2A(Weight);							
+		m.Conditions = CW2A(Conditions);					
+		m.Condition_ID1 = CW2A(Condition_ID1);				
+		m.Match_Value1 = CW2A(Match_Value1);				
+		m.Condition_Value1 = CW2A(Condition_Value1);		
+		m.Condition_ID2 = CW2A(Condition_ID2);				
+		m.Match_Value2 = CW2A(Match_Value2);				
+		m.Condition_Value2 = CW2A(Condition_Value2);		
+		m.Condition_ID3 = CW2A(Condition_ID3);				
+		m.Match_Value3 = CW2A(Match_Value3);				
+		m.Condition_Value3 = CW2A(Condition_Value3);		
+		m.Filter_Action = CW2A(Filter_Action);				
+	}
+	else
+	{
+		m.Weight = CW2A(Weight);
+		m.Conditions = CW2A(Conditions);
+		m.Condition_ID1 = CW2A(Condition_ID1);
+		m.Match_Value1 = CW2A(Match_Value1);
+		m.Condition_Value1 = CW2A(Condition_Value1);
+		m.Condition_ID2 = CW2A(Condition_ID2);
+		m.Match_Value2 = CW2A(Match_Value2);
+		m.Condition_Value2 = CW2A(Condition_Value2);
+		m.Condition_ID3 = CW2A(Condition_ID3);
+		m.Match_Value3 = CW2A(Match_Value3);
+		m.Condition_Value3 = CW2A(Condition_Value3);
+		m.Filter_Action = CW2A(Filter_Action);
+	}
+	return m;
+}
+*/
 void MyAdditionalInformation::print()
 {
 	wprintf(L"Additional_Information:\n");

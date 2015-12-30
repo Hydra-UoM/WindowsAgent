@@ -2,20 +2,20 @@
 #ifndef MyErrorInformation_H
 #define MyErrorInformation_H
 
-#include <windows.h>
-#include <conio.h>
 #include <stdio.h>
-#include <winevt.h>
-#include <iostream>
-#include <sddl.h>
+#include <string>
+#include <list>
+#include <atlstr.h>
+#include "MyLogStruct.h"
+using namespace myStruct;
 
-
-#pragma comment(lib, "wevtapi.lib")
+using namespace std;
 
 class MyErrorInformation
 {
 	public:
 		MyErrorInformation(const wchar_t* Reason1);
+		myErrorInformation toLogStruct(int summarizationLevel);
 		~MyErrorInformation(void);
 
 		void print();

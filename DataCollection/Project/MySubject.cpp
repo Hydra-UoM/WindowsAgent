@@ -12,21 +12,26 @@ MySubject::MySubject(const wchar_t* Security_ID1,const wchar_t* Account_Name1,co
 		Logon_ID = Logon_ID1;
 }
 
-/*
-MySubject::MySubject()
+mySubject MySubject::toLogStruct(int summarizationLevel)
 {
-
-}*/
-
-/*
-void MySubject::setElements(const wchar_t* Security_ID1,const wchar_t* Account_Name1,const wchar_t* Account_Domain1,const wchar_t* Logon_ID1)
-{
-		Security_ID = Security_ID1;
-	    Account_Name = Account_Name1;
-		Account_Domain = Account_Domain1;
-		Logon_ID = Logon_ID1;
+	mySubject m;
+	if (summarizationLevel == 0)
+	{
+		m.Account_Domain = CW2A(Account_Domain);
+		m.Account_Name = CW2A(Account_Name);
+		m.Logon_ID = CW2A(Logon_ID);
+		m.Security_ID = CW2A(Security_ID);
+	}
+	else// if(summarizationLevel == 1)
+	{
+		m.Account_Domain = CW2A(Account_Domain);
+		m.Account_Name = CW2A(Account_Name);
+		//m.Logon_ID = CW2A(Logon_ID);
+		//m.Security_ID = CW2A(Security_ID);
+	}
+	return m;
 }
-*/
+
 void MySubject::print()
 {
 	wprintf(L"Subject:\n");

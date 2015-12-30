@@ -6,12 +6,12 @@
  */
 #include "Process_constants.h"
 
-
+namespace HydraWindows {
 
 const ProcessConstants g_Process_constants;
 
 ProcessConstants::ProcessConstants() {
 }
 
-
+} // namespace
 

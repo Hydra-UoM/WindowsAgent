@@ -9,6 +9,20 @@ MyErrorInformation::MyErrorInformation(const wchar_t* Reason1):
 	    Reason = Reason1;
 }
 
+myErrorInformation MyErrorInformation::toLogStruct(int summarizationLevel)
+{
+	myErrorInformation m;
+	if (summarizationLevel == 0)
+	{
+		m.Reason = CW2A(Reason);				
+	}
+	else
+	{
+		m.Reason = CW2A(Reason);
+	}
+	return m;
+}
+
 void MyErrorInformation::print()
 {
 	wprintf(L"MyErrorInformation:\n");
