@@ -52,10 +52,83 @@ string Manager::ConfigFile(){
 	}
 
 	else cout << "Unable to open file";
-
-
 }
 
+string Manager::getMAC(){
+	std::string address;
+	PIP_ADAPTER_INFO AdapterInfo;
+	DWORD dwBufLen = sizeof(AdapterInfo);
+	char *mac_addr = (char*)malloc(17);
+	//char *address = (char*)malloc(17);
+	AdapterInfo = (IP_ADAPTER_INFO *)malloc(sizeof(IP_ADAPTER_INFO));
+	if (AdapterInfo == NULL) {
+		printf("Error allocating memory needed to call GetAdaptersinfo\n");
+
+	}
+
+	// Make an initial call to GetAdaptersInfo to get the necessary size into the dwBufLen     variable
+	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == ERROR_BUFFER_OVERFLOW) {
+
+		AdapterInfo = (IP_ADAPTER_INFO *)malloc(dwBufLen);
+		if (AdapterInfo == NULL) {
+			printf("Error allocating memory needed to call GetAdaptersinfo\n");
+		}
+	}
+
+	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == NO_ERROR) {
+		PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;// Contains pointer to current adapter info
+		do {
+			sprintf(mac_addr, "%02X:%02X:%02X:%02X:%02X:%02X",
+				pAdapterInfo->Address[0], pAdapterInfo->Address[1],
+				pAdapterInfo->Address[2], pAdapterInfo->Address[3],
+				pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
+
+			address = pAdapterInfo->IpAddressList.IpAddress.String;
+			pAdapterInfo = pAdapterInfo->Next;
+		} while (pAdapterInfo);
+	}
+	free(AdapterInfo);
+	std::string mac(mac_addr);
+
+	return mac;
+}
+
+string Manager::getIP(){
+	std::string address;
+	PIP_ADAPTER_INFO AdapterInfo;
+	DWORD dwBufLen = sizeof(AdapterInfo);
+	char *mac_addr = (char*)malloc(17);
+	//char *address = (char*)malloc(17);
+	AdapterInfo = (IP_ADAPTER_INFO *)malloc(sizeof(IP_ADAPTER_INFO));
+	if (AdapterInfo == NULL) {
+		printf("Error allocating memory needed to call GetAdaptersinfo\n");
+
+	}
+
+	// Make an initial call to GetAdaptersInfo to get the necessary size into the dwBufLen     variable
+	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == ERROR_BUFFER_OVERFLOW) {
+
+		AdapterInfo = (IP_ADAPTER_INFO *)malloc(dwBufLen);
+		if (AdapterInfo == NULL) {
+			printf("Error allocating memory needed to call GetAdaptersinfo\n");
+		}
+	}
+
+	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == NO_ERROR) {
+		PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;// Contains pointer to current adapter info
+		do {
+			sprintf(mac_addr, "%02X:%02X:%02X:%02X:%02X:%02X",
+				pAdapterInfo->Address[0], pAdapterInfo->Address[1],
+				pAdapterInfo->Address[2], pAdapterInfo->Address[3],
+				pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
+
+			address = pAdapterInfo->IpAddressList.IpAddress.String;
+			pAdapterInfo = pAdapterInfo->Next;
+		} while (pAdapterInfo);
+	}
+	free(AdapterInfo);
+	return address;
+}
 vector<ProcessF> Manager::FilterAllProcesses(double value1, double value2, double value3, double value4)
 {
 	vector<ProcessF> temp;
@@ -292,7 +365,7 @@ void Manager::fullData(int time){
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
-	while (true){
+	while (tRetired == true){
 		procF = manage.GetAllProcesses();
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -321,7 +394,7 @@ void Manager::fullData(int time){
 		} while (!val);
 		Sleep(5000);
 	}
-
+	tCompleted = true;
 }
 
 void Manager::currentData(int time){
@@ -344,7 +417,7 @@ void Manager::currentData(int time){
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
-	while (true){
+	while (tRetired == true){
 		procF = manage.FilterAllProcesses(30, 1024 * 300, 0, 0);
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -373,7 +446,7 @@ void Manager::currentData(int time){
 		} while (!val);
 		Sleep(time * 1000);
 	}
-
+	tCompleted = true;
 }
 
 void Manager::importantData(int time){
@@ -396,7 +469,7 @@ void Manager::importantData(int time){
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
-	while (true){
+	while (tRetired == true){
 		for (int i = 0; i < time + 2; i++)
 		{
 			d.GetData();
@@ -430,7 +503,7 @@ void Manager::importantData(int time){
 			}
 		} while (!val);
 	}
-
+	tCompleted = true;
 }
 
 void Manager::sendStoredData(){
@@ -480,6 +553,7 @@ void Manager::sendStoredData(){
 	} while (!val);
 
 }
+
 void Manager::deviceClient(){
 	Manager manage;
 	//MyLogManager myMan;
@@ -499,46 +573,12 @@ void Manager::deviceClient(){
 
 	//Device Register Function 
 	std::string type = "Windows";
-	std::string address;
-	PIP_ADAPTER_INFO AdapterInfo;
-	DWORD dwBufLen = sizeof(AdapterInfo);
-	char *mac_addr = (char*)malloc(17);
-	//char *address = (char*)malloc(17);
-	AdapterInfo = (IP_ADAPTER_INFO *)malloc(sizeof(IP_ADAPTER_INFO));
-	if (AdapterInfo == NULL) {
-		printf("Error allocating memory needed to call GetAdaptersinfo\n");
 
-	}
-
-	// Make an initial call to GetAdaptersInfo to get the necessary size into the dwBufLen     variable
-	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == ERROR_BUFFER_OVERFLOW) {
-
-		AdapterInfo = (IP_ADAPTER_INFO *)malloc(dwBufLen);
-		if (AdapterInfo == NULL) {
-			printf("Error allocating memory needed to call GetAdaptersinfo\n");
-		}
-	}
-
-	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == NO_ERROR) {
-		PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;// Contains pointer to current adapter info
-		do {
-			sprintf(mac_addr, "%02X:%02X:%02X:%02X:%02X:%02X",
-				pAdapterInfo->Address[0], pAdapterInfo->Address[1],
-				pAdapterInfo->Address[2], pAdapterInfo->Address[3],
-				pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
-
-			address = pAdapterInfo->IpAddressList.IpAddress.String;
-			pAdapterInfo = pAdapterInfo->Next;
-		} while (pAdapterInfo);
-	}
-	free(AdapterInfo);
-	std::string mac(mac_addr);
-
-	device.deviceId = mac;
-	device.IPAddress = address;
+	device.deviceId = manage.getMAC();
+	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];
-	//device.name= myMan.getComputerName();
+	device.name= getComputerName();
 
 	bool val = false;
 	do{
@@ -555,4 +595,46 @@ void Manager::deviceClient(){
 			cout << "ERROR: " << tx.what() << endl;
 		}
 	} while (!val);
+}
+
+void Manager::printError(TCHAR* msg)
+{
+	DWORD eNum;
+	TCHAR sysMsg[256];
+	TCHAR* p;
+
+	eNum = GetLastError();
+	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL, eNum,
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+		sysMsg, 256, NULL);
+
+	// Trim the end of the line and terminate it with a null
+	p = sysMsg;
+	while ((*p > 31) || (*p == 9))
+		++p;
+	do { *p-- = 0; } while ((p >= sysMsg) &&
+		((*p == '.') || (*p < 33)));
+
+	// Display the message
+	_tprintf(TEXT("\n\t%s failed with error %d (%s)"), msg, eNum, sysMsg);
+}
+
+string Manager::getComputerName()
+{
+	string str_computerName;
+	LPWSTR  computerName;
+	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
+	TCHAR  infoBuf[INFO_BUFFER_SIZE];
+	DWORD  bufCharCount = INFO_BUFFER_SIZE;
+	// Get and display the name of the computer. 
+	bufCharCount = INFO_BUFFER_SIZE;
+	if (!GetComputerName(infoBuf, &bufCharCount))
+	{
+		printError(TEXT("GetComputerName"));
+	}
+	computerName = infoBuf;
+	if (computerName){ str_computerName = CW2A(computerName); }
+	return str_computerName;
 }

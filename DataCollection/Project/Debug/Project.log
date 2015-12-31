@@ -1,9 +1,9 @@
-﻿Build started 12/30/2015 10:53:27 PM.
-     1>Project "E:\AAA_In_git\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
+﻿Build started 12/31/2015 5:23:22 PM.
+     1>Project "E:\Removed_enum_changed_to_string\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>Link:
-         Project.vcxproj -> E:\AAA_In_git\WindowsAgent\DataCollection\Debug\Project.exe
-     1>Done Building Project "E:\AAA_In_git\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
+         Project.vcxproj -> E:\Removed_enum_changed_to_string\WindowsAgent\DataCollection\Debug\Project.exe
+     1>Done Building Project "E:\Removed_enum_changed_to_string\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.35
+Time Elapsed 00:00:01.29

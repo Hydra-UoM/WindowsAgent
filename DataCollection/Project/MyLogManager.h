@@ -2,6 +2,9 @@
 #ifndef MyLogManager_H
 #define MyLogManager_H
 
+#include <Iphlpapi.h>
+#include <Assert.h>
+
 #include "MyLogRetriever.h"
 #include "MyUserAccountDetails.h"
 #include <thread>
@@ -11,6 +14,8 @@
 #include <fstream>
 #include <wininet.h>
 #include "MyDBHandler.h"
+
+#pragma comment(lib, "iphlpapi.lib")
 
 class MyLogManager
 {
@@ -25,12 +30,11 @@ public:
 	// bandwidth high && resource utilization low
 	static bool isInternetConnectionAvailable();
 	static string ConfigFile();
+	static vector<HydraCN::myLogStructure> changeLogListFormatToBeSent(vector<myStruct::myLogStructure> logStructList, string eventCategory, string process_name);
+	static HydraCN::myLogStructure changeLogFormatToBeSent(myStruct::myLogStructure logStruct, string eventCategory, string process_name);
+
 	static vector<HydraCN::myUserAccountDetailsStruct> changeUserInfoListFormatToBeSent(vector<myStruct::myUserAccountDetailsStruct> userStructList);
-	static vector<HydraCN::myLogStructure> changeLogListFormatToBeSent(vector<myStruct::myLogStructure> logStructList);
-
 	static HydraCN::myUserAccountDetailsStruct changeUserInfoFormatToBeSent(myStruct::myUserAccountDetailsStruct userStruct);
-	static HydraCN::myLogStructure changeLogFormatToBeSent(myStruct::myLogStructure logStruct);
-
 	static vector<myStruct::myLogStructure> getLogs(int timeGapInMilliSeconds, int64_t summarizationLevel, string logType, string process_name, string securityLevel);
 
 	static vector<myStruct::myLogStructure> getLogsForAllProcesses(string logType, int timeGapInMilliSeconds, int summarizationLevel);
@@ -51,8 +55,10 @@ public:
 	static vector<myStruct::myLogStructure> getApplicationCrashes(int timeGapInMilliSeconds, int summarizationLevel);
 	static vector<myStruct::myLogStructure> getSoftwareAndServicesInstallation(int timeGapInMilliSeconds, int summarizationLevel);
 	static vector<myStruct::myLogStructure> getRemoteLoginEvents(int timeGapInMilliSeconds, int summarizationLevel);
-
 	static myStruct::myUserAccountDetailsStruct getCurrentLoggedInUser(int summarizationLevel);
 	static vector<myStruct::myUserAccountDetailsStruct> getAllUserInformation(int summarizationLevel);
+	static void sendStoredData();
+	static void storeImportantLogData();
+	static string getMAC();
 };
 #endif

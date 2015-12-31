@@ -15,6 +15,7 @@ sqlite3_stmt *res;
 
 DBHandler::DBHandler()
 {
+	createTable();
 }
 
 
@@ -46,7 +47,7 @@ void DBHandler::openDB(){
 void DBHandler::createTable(){
 	openDB();
 	//Create SQL statement 
-	sql = "CREATE TABLE PerformData("  \
+	sql = "CREATE TABLE  IF NOT EXISTS PerformData("  \
 		"NAME         TEXT," \
 		"CPU          REAL,"\
 		"Memory       REAL,"\

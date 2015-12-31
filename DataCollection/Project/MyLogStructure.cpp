@@ -204,7 +204,7 @@ myLogStructure MyLogStructure::toStruct(int summarizationLevel)
 	if (summarizationLevel == 2) // High level summarization.
 	{
 		if (message){ m.message = CW2A(message); }
-		//m.levelMessageString = CW2A(levelMessageString);
+		m.levelMessageString = CW2A(levelMessageString);
 		//m.taskMessageString = CW2A(taskMessageString);
 		//m.opCodeMessageString = CW2A(opCodeMessageString);
 		//m.channelMessageString = CW2A(channelMessageString);

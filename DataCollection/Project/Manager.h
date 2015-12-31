@@ -5,8 +5,11 @@
 #include "Memory.h"
 #include "IO.h"
 #include "Data.h"
+#include <tchar.h>
+#include <atlstr.h>
+#define INFO_BUFFER_SIZE 32767
 static bool tRetired;
-class Manager:public CPU,public Memory,public IO
+class Manager :public CPU, public Memory, public IO
 {
 public:
 
@@ -14,9 +17,9 @@ public:
 	virtual ~Manager();
 	string ConfigFile();
 	void Start();
-	vector<ProcessF> FilterAllProcesses(double value1, double value2, double value3,double value4);
+	vector<ProcessF> FilterAllProcesses(double value1, double value2, double value3, double value4);
 	static void FilterAllAvgProcesses(int samples, double value1, double value2, double value3, double value4, vector<string> processList);
-	ProcessF GetAvgProcess_PID(int PID,int sample);
+	ProcessF GetAvgProcess_PID(int PID, int sample);
 	void deviceClient();
 	vector<ProcessF> GetAllProcesses();
 	static void retire();
@@ -24,6 +27,10 @@ public:
 	static void currentData(int time);
 	static void importantData(int time);
 	static void sendStoredData();
+	string getMAC();
+	string getIP();
+	string getComputerName();
+	void printError(TCHAR* msg);
 };
 
 #endif

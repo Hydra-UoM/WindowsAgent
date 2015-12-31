@@ -107,6 +107,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 		fileRead.push_back(token);
 	}
 	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));// 9091
+	cout << fileRead[0] << endl;
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 	RegisterDeviceServiceClient client(protocol);
@@ -118,284 +119,150 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 	vector<myStruct::myLogStructure> logList;												vector<HydraCN::myLogStructure> logListToBeSent;
 	myStruct::myLogStructure tempLogStructure;												HydraCN::myLogStructure tempLogStructureToBeSent;
 
-	myStruct::myUserAccountDetailsStruct getCurrentLoggedInUserInfoFromDB;						HydraCN::myUserAccountDetailsStruct getCurrentLoggedInUserInfoFromDBToBeSent;
-	vector<myStruct::myUserAccountDetailsStruct> getAllUserInformationFromDBList;					vector<HydraCN::myUserAccountDetailsStruct> getAllUserInformationListFromDBToBeSent;
-	vector<myStruct::myLogStructure> logFromDBList;												vector<HydraCN::myLogStructure> logFromDBListToBeSent;
-
 	isAllowed = true;
 	while (isAllowed)
 	{
 		try{
-			//if (isInternetConnectionAvailable)
-			//{
 			transport->open();
 			for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
 			{
-				if (isInternetConnectionAvailable && MyDBHandler::isAvailableLogData)
-				{
-					logFromDBList = MyDBHandler::retrieveLogData();
-					logFromDBListToBeSent = changeLogListFormatToBeSent(logFromDBList);
-					client.pushLogInfo(logFromDBListToBeSent);
-					MyDBHandler::deleteLogData();
-					cout << "PushedLogData" << endl;
-				}
-				if (isInternetConnectionAvailable && MyDBHandler::isAvailableUsersData)
-				{
-					getAllUserInformationFromDBList = MyDBHandler::retrieveUsersData();
-					getAllUserInformationListFromDBToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationFromDBList);
-					client.pushUsersInfo(getAllUserInformationListFromDBToBeSent);
-					MyDBHandler::deleteUsersData();
-					cout << "PushedUsersData" << endl;
-
-					myStruct::myUserAccountDetailsStruct getCurrentLoggedInUserInfoFromDB;						HydraCN::myUserAccountDetailsStruct getCurrentLoggedInUserInfoFromDBToBeSent;
-				}
-				if (isInternetConnectionAvailable && MyDBHandler::isAvailableCurrentUserData)
-				{
-					//getCurrentLoggedInUserInfoFromDB = MyDBHandler::retrieveCurrentUserData();
-					getCurrentLoggedInUserInfoFromDBToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfoFromDB);
-					client.pushCurrentUserInfo(getCurrentLoggedInUserInfoFromDBToBeSent);
-					MyDBHandler::deleteCurrentUserData();
-					cout << "PushedCurrentUserData" << endl;
-				}
 				switch (stoi(*intIterator))
 				{
 				case 18:
 					logList = MyLogManager::getLogs(timeInMinute * 60000, summarizationLevel, logType, process_name, securityLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
-						cout << "Pushed18" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					logListToBeSent = changeLogListFormatToBeSent(logList,"USER_DEFINED",process_name);
+					client.pushLogInfoTest1(logListToBeSent);
+					cout << "Pushed18" << endl;
 					break;
 				case 17:
 					logList = MyLogManager::getLogonFailures(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
-						cout << "Pushed17" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					logListToBeSent = changeLogListFormatToBeSent(logList,"LOGON_FAILURES", "");
+					client.pushLogInfoTest1(logListToBeSent);
+					cout << "Pushed17" << endl;
 					break;
 				case 25:
 					logList = MyLogManager::getSuccessLoginInformation(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
-						cout << "Pushed25" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					logListToBeSent = changeLogListFormatToBeSent(logList, "SUCCESS_LOGIN","");
+					client.pushLogInfoTest1(logListToBeSent);
+					cout << "Pushed25" << endl;
 					break;
 				case 27:
 					logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
-						cout << "Pushed27" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList, "FIREWALL_EVENTS","");
+					client.pushLogInfoTest1(logListToBeSent);
+					cout << "Pushed27" << endl;
+					
 					break;
 				case 28:
 					logList = MyLogManager::getAccountUsage(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList,"ACCOUNT_USAGE","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed28" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 29:
 					logList = MyLogManager::getGroupPolicyEditors(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent(logList,"GROUP_POLICY_EDITORS","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed29" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 30:
 					logList = MyLogManager::getWindowsDefenderEvents(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent(logList,"WINDOWS_DEFENDER_EVENTS","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed30" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 31:
 					logList = MyLogManager::getMobileDeviceEvents(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent(logList, "MOBILE_DEVICE_EVENTS","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed31" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+				
 					break;
 				case 32:
 					logList = MyLogManager::getPrintingServicesEvents(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent(logList,"PRINTING_SERVICES","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed32" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 33:
 					logList = MyLogManager::getSystemOrServiceFailures(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList,"SYSTEM_OR_SERVICE_FAILURES","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed33" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 34:
 					logList = MyLogManager::getClearingEventLogs(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList,"CLEARING_EVENT_LOGS","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed34" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 35:
 					logList = MyLogManager::getWindowsUpdateErrors(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList, "WINDOWS_UPDATE_ERRORS","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed35" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 36:
 					logList = MyLogManager::getApplicationCrashes(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList,"APPLICATION_CRASHES","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed36" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 37:
 					logList = MyLogManager::getSoftwareAndServicesInstallation(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList, "SOFTWARE_AND_SERVICES_INSTALLATION","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed37" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 38:
 					logList = MyLogManager::getRemoteLoginEvents(timeInMinute * 60000, summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
-						logListToBeSent = changeLogListFormatToBeSent(logList);
-						client.pushLogInfo(logListToBeSent);
+					logListToBeSent = changeLogListFormatToBeSent
+						(logList, "REMOTE_LOGIN_EVENTS","");
+					client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed38" << endl;
-					}
-					else
-					{
-						MyDBHandler::createLogTable();
-						MyDBHandler::storeLogData(logList);
-					}
+					
 					break;
 				case 22:
 					getCurrentLoggedInUserInfo = MyLogManager::getCurrentLoggedInUser(summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
+					
 						getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
 						client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
 						cout << "pushed22" << endl;
-					}
-					else
-					{
-						MyDBHandler::createCurrentUserTable();
-						MyDBHandler::storeCurrentUserData(getCurrentLoggedInUserInfo);
-					}
+					
 					break;
 				case 23:
 					getAllUserInformationList = MyLogManager::getAllUserInformation(summarizationLevel);
-					if (isInternetConnectionAvailable)
-					{
+					
 						getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
 						client.pushUsersInfo(getAllUserInformationListToBeSent);
 						cout << "pushed23" << endl;
-					}
-					else
-					{
-						MyDBHandler::createUsersTable();
-						MyDBHandler::storeUsersData(getAllUserInformationList);
-					}
 					break;
 				}
 			}
@@ -404,6 +271,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 		}
 		catch (TException& tx)
 		{
+			cout << "Test" << endl;
 			cout << "ERROR: " << tx.what() << endl;
 		}
 		Sleep(timeInMinute * 60000);
@@ -413,6 +281,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 void MyLogManager::stopExecution()
 {
+	cout << "Stopped" << endl;
 	isAllowed = false;
 	while (isNotCompleted)
 	{
@@ -742,7 +611,8 @@ vector<HydraCN::myUserAccountDetailsStruct> MyLogManager::changeUserInfoListForm
 	}
 	return userStructListToBeSent;
 }
-vector<HydraCN::myLogStructure> MyLogManager::changeLogListFormatToBeSent(vector<myStruct::myLogStructure> logStructList)
+vector<HydraCN::myLogStructure> MyLogManager::changeLogListFormatToBeSent
+(vector<myStruct::myLogStructure> logStructList, string eventCategory, string process_name)
 {
 	vector<myStruct::myLogStructure>::iterator logIterator;
 	myStruct::myLogStructure tempLogStructure;												HydraCN::myLogStructure tempLogStructureToBeSent;
@@ -750,7 +620,7 @@ vector<HydraCN::myLogStructure> MyLogManager::changeLogListFormatToBeSent(vector
 	for (logIterator = logStructList.begin(); logIterator != logStructList.end(); logIterator++)
 	{
 		tempLogStructure = (*logIterator);
-		tempLogStructureToBeSent = changeLogFormatToBeSent(tempLogStructure);
+		tempLogStructureToBeSent = changeLogFormatToBeSent(tempLogStructure, eventCategory, process_name);
 		logListToBeSent.push_back(tempLogStructureToBeSent);
 	}
 	return logListToBeSent;
@@ -777,10 +647,12 @@ HydraCN::myUserAccountDetailsStruct MyLogManager::changeUserInfoFormatToBeSent(m
 	UserInfoToBeSent.usri4_profile = userStruct.usri4_profile;
 	UserInfoToBeSent.usri4_password_expired = userStruct.usri4_password_expired;
 	UserInfoToBeSent.usri4_auth_flags = userStruct.usri4_auth_flags;
+	UserInfoToBeSent.mac = getMAC();
 	return UserInfoToBeSent;
 }
 
-HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent(myStruct::myLogStructure logStruct)
+HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent
+(myStruct::myLogStructure logStruct, string eventCategory, string process_name)
 {
 	HydraCN::myLogStructure tempLogStructureToBeSent;
 	tempLogStructureToBeSent.message = logStruct.message;
@@ -950,6 +822,10 @@ HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent(myStruct::myLogStr
 	tempLogStructureToBeSent.myFailureInformation1 = tempMyFailureInformationToBeSent;
 	tempLogStructureToBeSent.myNewLogon1 = tempMyNewLogonToBeSent;
 	tempLogStructureToBeSent.myDetailedAuthenticationInformation1 = tempMyDetailedAuthenticationInformationToBeSent;
+
+	tempLogStructureToBeSent.mac = getMAC();
+	tempLogStructureToBeSent.eventCategory = eventCategory;
+	tempLogStructureToBeSent.processName = process_name;
 	return tempLogStructureToBeSent;
 }
 
@@ -988,4 +864,112 @@ bool MyLogManager::isInternetConnectionAvailable()
 	{
 		return false;
 	}
+}
+
+void MyLogManager::sendStoredData()
+{
+	string line;
+	vector<string> fileRead;
+	line = MyLogManager::ConfigFile();
+	istringstream ss(line);
+	string token;
+	while (getline(ss, token, ',')) {
+		fileRead.push_back(token);
+	}
+
+	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));
+	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+	RegisterDeviceServiceClient client(protocol);
+	MyDBHandler Dbh;
+	std::vector<myStruct::myLogStructure>logList = Dbh.retrieveLogData();
+	//vector<HydraCN::myLogStructure> logListToBeSent = changeLogListFormatToBeSent(logList, LogImportantEvents);
+	bool val = false;
+	do{
+		try {
+			transport->open();
+		//	val = client.pushLogInfo(logListToBeSent);
+			cout << "Stored Log Data Pushed" << endl;
+			transport->close();
+			Dbh.deleteLogData();
+		}
+		catch (TException& tx) {
+			cout << "ERROR: " << tx.what() << endl;
+		}
+	} while (!val);
+}
+
+void MyLogManager::storeImportantLogData()
+{
+	vector<myStruct::myLogStructure> logList;
+	logList = MyLogManager::getLogonFailures(50000, 0);
+	MyDBHandler Dbh;
+	Dbh.createLogTable();
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getSuccessLoginInformation(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getFirewallEvents(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getAccountUsage(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getGroupPolicyEditors(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getWindowsDefenderEvents(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getMobileDeviceEvents(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getSystemOrServiceFailures(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getClearingEventLogs(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getWindowsUpdateErrors(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getApplicationCrashes(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getSoftwareAndServicesInstallation(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getRemoteLoginEvents(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getRemoteLoginEvents(50000, 0);
+	Dbh.storeLogData(logList);
+	logList = MyLogManager::getLogs(50000, 0, "", "", "Error & Critical");
+	Dbh.storeLogData(logList);
+}
+
+string MyLogManager::getMAC(){
+	PIP_ADAPTER_INFO AdapterInfo;
+	DWORD dwBufLen = sizeof(AdapterInfo);
+	char *mac_addr = (char*)malloc(17);
+
+	AdapterInfo = (IP_ADAPTER_INFO *)malloc(sizeof(IP_ADAPTER_INFO));
+	if (AdapterInfo == NULL) {
+		printf("Error allocating memory needed to call GetAdaptersinfo\n");
+
+	}
+
+	// Make an initial call to GetAdaptersInfo to get the necessary size into the dwBufLen     variable
+	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == ERROR_BUFFER_OVERFLOW) {
+
+		AdapterInfo = (IP_ADAPTER_INFO *)malloc(dwBufLen);
+		if (AdapterInfo == NULL) {
+			printf("Error allocating memory needed to call GetAdaptersinfo\n");
+		}
+	}
+
+	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == NO_ERROR) {
+		PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;// Contains pointer to current adapter info
+		do {
+			sprintf(mac_addr, "%02X:%02X:%02X:%02X:%02X:%02X",
+				pAdapterInfo->Address[0], pAdapterInfo->Address[1],
+				pAdapterInfo->Address[2], pAdapterInfo->Address[3],
+				pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
+			//printf("mac: %s\n", mac_addr);
+			string mac(mac_addr);
+			return mac;
+
+			//printf("\n");
+			pAdapterInfo = pAdapterInfo->Next;
+		} while (pAdapterInfo);
+	}
+	free(AdapterInfo);
 }

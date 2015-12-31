@@ -83,8 +83,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="centralNodeServiceV3_constants.h" />
-    <ClInclude Include="centralNodeServiceV3_types.h" />
+    <ClInclude Include="centralNodeServiceV8_constants.h" />
+    <ClInclude Include="centralNodeServiceV8_types.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="DBHandler.h" />
@@ -133,8 +133,8 @@
     <ClInclude Include="WindowsAgentConstants.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="centralNodeServiceV3_constants.cpp" />
-    <ClCompile Include="centralNodeServiceV3_types.cpp" />
+    <ClCompile Include="centralNodeServiceV8_constants.cpp" />
+    <ClCompile Include="centralNodeServiceV8_types.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="DBHandler.cpp" />

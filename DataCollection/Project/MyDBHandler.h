@@ -1,5 +1,4 @@
 #include "stdafx.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "sqlite3.h"
@@ -28,7 +27,6 @@ public:
 	static void deleteCurrentUserData();
 	static void deleteUsersData();
 	static void close();
-
 	static bool isAvailableLogData;
 	static bool isAvailableUsersData;
 	static bool isAvailableCurrentUserData;

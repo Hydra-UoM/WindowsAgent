@@ -45,9 +45,6 @@
     <ClInclude Include="Objects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RegisterDeviceService.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Process_constants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,12 +117,6 @@
     <ClInclude Include="MyUserAccountDetailsStructure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="centralNodeServiceV3_constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="centralNodeServiceV3_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DBHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -159,6 +150,15 @@
     <ClInclude Include="WindowsAgentConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="centralNodeServiceV8_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="centralNodeServiceV8_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RegisterDeviceService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -177,9 +177,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Memory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RegisterDeviceService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Process_constants.cpp">
@@ -257,12 +254,6 @@
     <ClCompile Include="MyUserAccountDetailsStructure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="centralNodeServiceV3_constants.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="centralNodeServiceV3_types.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DBHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -288,6 +279,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyNewLogon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="centralNodeServiceV8_constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="centralNodeServiceV8_types.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RegisterDeviceService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

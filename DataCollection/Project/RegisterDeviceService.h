@@ -8,7 +8,7 @@
 #define RegisterDeviceService_H
 
 #include <thrift/TDispatchProcessor.h>
-#include "centralNodeServiceV3_types.h"
+#include "centralNodeServiceV8_types.h"
 
 namespace HydraCN {
 
@@ -20,6 +20,7 @@ class RegisterDeviceServiceIf {
   virtual bool pushLogInfo(const std::vector<myLogStructure> & logInfo) = 0;
   virtual bool pushUsersInfo(const std::vector<myUserAccountDetailsStruct> & usersInfo) = 0;
   virtual bool pushCurrentUserInfo(const myUserAccountDetailsStruct& userInfo) = 0;
+  virtual bool pushLogInfoTest1(const std::vector<myLogStructure> & logInfo) = 0;
 };
 
 class RegisterDeviceServiceIfFactory {
@@ -69,6 +70,10 @@ class RegisterDeviceServiceNull : virtual public RegisterDeviceServiceIf {
     bool _return = false;
     return _return;
   }
+  bool pushLogInfoTest1(const std::vector<myLogStructure> & /* logInfo */) {
+    bool _return = false;
+    return _return;
+  }
 };
 
 typedef struct _RegisterDeviceService_registerDevice_args__isset {
@@ -79,8 +84,8 @@ typedef struct _RegisterDeviceService_registerDevice_args__isset {
 class RegisterDeviceService_registerDevice_args {
  public:
 
-  static const char* ascii_fingerprint; // = "5A4C887E32C9E703427D47B3B77D0731";
-  static const uint8_t binary_fingerprint[16]; // = {0x5A,0x4C,0x88,0x7E,0x32,0xC9,0xE7,0x03,0x42,0x7D,0x47,0xB3,0xB7,0x7D,0x07,0x31};
+  static const char* ascii_fingerprint; // = "2777DAAC6BF25455A28C2672DEAA17C2";
+  static const uint8_t binary_fingerprint[16]; // = {0x27,0x77,0xDA,0xAC,0x6B,0xF2,0x54,0x55,0xA2,0x8C,0x26,0x72,0xDE,0xAA,0x17,0xC2};
 
   RegisterDeviceService_registerDevice_args(const RegisterDeviceService_registerDevice_args&);
   RegisterDeviceService_registerDevice_args& operator=(const RegisterDeviceService_registerDevice_args&);
@@ -116,8 +121,8 @@ class RegisterDeviceService_registerDevice_args {
 class RegisterDeviceService_registerDevice_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "5A4C887E32C9E703427D47B3B77D0731";
-  static const uint8_t binary_fingerprint[16]; // = {0x5A,0x4C,0x88,0x7E,0x32,0xC9,0xE7,0x03,0x42,0x7D,0x47,0xB3,0xB7,0x7D,0x07,0x31};
+  static const char* ascii_fingerprint; // = "2777DAAC6BF25455A28C2672DEAA17C2";
+  static const uint8_t binary_fingerprint[16]; // = {0x27,0x77,0xDA,0xAC,0x6B,0xF2,0x54,0x55,0xA2,0x8C,0x26,0x72,0xDE,0xAA,0x17,0xC2};
 
 
   virtual ~RegisterDeviceService_registerDevice_pargs() throw();
@@ -199,8 +204,8 @@ typedef struct _RegisterDeviceService_pushProcessesInfo_args__isset {
 class RegisterDeviceService_pushProcessesInfo_args {
  public:
 
-  static const char* ascii_fingerprint; // = "A95927E8E55EC17E91DEF8C5D8259167";
-  static const uint8_t binary_fingerprint[16]; // = {0xA9,0x59,0x27,0xE8,0xE5,0x5E,0xC1,0x7E,0x91,0xDE,0xF8,0xC5,0xD8,0x25,0x91,0x67};
+  static const char* ascii_fingerprint; // = "5242EB2EDC2E66E2C2886424293E29FD";
+  static const uint8_t binary_fingerprint[16]; // = {0x52,0x42,0xEB,0x2E,0xDC,0x2E,0x66,0xE2,0xC2,0x88,0x64,0x24,0x29,0x3E,0x29,0xFD};
 
   RegisterDeviceService_pushProcessesInfo_args(const RegisterDeviceService_pushProcessesInfo_args&);
   RegisterDeviceService_pushProcessesInfo_args& operator=(const RegisterDeviceService_pushProcessesInfo_args&);
@@ -236,8 +241,8 @@ class RegisterDeviceService_pushProcessesInfo_args {
 class RegisterDeviceService_pushProcessesInfo_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "A95927E8E55EC17E91DEF8C5D8259167";
-  static const uint8_t binary_fingerprint[16]; // = {0xA9,0x59,0x27,0xE8,0xE5,0x5E,0xC1,0x7E,0x91,0xDE,0xF8,0xC5,0xD8,0x25,0x91,0x67};
+  static const char* ascii_fingerprint; // = "5242EB2EDC2E66E2C2886424293E29FD";
+  static const uint8_t binary_fingerprint[16]; // = {0x52,0x42,0xEB,0x2E,0xDC,0x2E,0x66,0xE2,0xC2,0x88,0x64,0x24,0x29,0x3E,0x29,0xFD};
 
 
   virtual ~RegisterDeviceService_pushProcessesInfo_pargs() throw();
@@ -319,8 +324,8 @@ typedef struct _RegisterDeviceService_pushLogInfo_args__isset {
 class RegisterDeviceService_pushLogInfo_args {
  public:
 
-  static const char* ascii_fingerprint; // = "74BDC74F9872F7066D5917D4C90936D5";
-  static const uint8_t binary_fingerprint[16]; // = {0x74,0xBD,0xC7,0x4F,0x98,0x72,0xF7,0x06,0x6D,0x59,0x17,0xD4,0xC9,0x09,0x36,0xD5};
+  static const char* ascii_fingerprint; // = "07468BF015F3A0143CBED4C9C8A7EBB1";
+  static const uint8_t binary_fingerprint[16]; // = {0x07,0x46,0x8B,0xF0,0x15,0xF3,0xA0,0x14,0x3C,0xBE,0xD4,0xC9,0xC8,0xA7,0xEB,0xB1};
 
   RegisterDeviceService_pushLogInfo_args(const RegisterDeviceService_pushLogInfo_args&);
   RegisterDeviceService_pushLogInfo_args& operator=(const RegisterDeviceService_pushLogInfo_args&);
@@ -356,8 +361,8 @@ class RegisterDeviceService_pushLogInfo_args {
 class RegisterDeviceService_pushLogInfo_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "74BDC74F9872F7066D5917D4C90936D5";
-  static const uint8_t binary_fingerprint[16]; // = {0x74,0xBD,0xC7,0x4F,0x98,0x72,0xF7,0x06,0x6D,0x59,0x17,0xD4,0xC9,0x09,0x36,0xD5};
+  static const char* ascii_fingerprint; // = "07468BF015F3A0143CBED4C9C8A7EBB1";
+  static const uint8_t binary_fingerprint[16]; // = {0x07,0x46,0x8B,0xF0,0x15,0xF3,0xA0,0x14,0x3C,0xBE,0xD4,0xC9,0xC8,0xA7,0xEB,0xB1};
 
 
   virtual ~RegisterDeviceService_pushLogInfo_pargs() throw();
@@ -439,8 +444,8 @@ typedef struct _RegisterDeviceService_pushUsersInfo_args__isset {
 class RegisterDeviceService_pushUsersInfo_args {
  public:
 
-  static const char* ascii_fingerprint; // = "FB29C747C9F610C2004F3D0375CC745F";
-  static const uint8_t binary_fingerprint[16]; // = {0xFB,0x29,0xC7,0x47,0xC9,0xF6,0x10,0xC2,0x00,0x4F,0x3D,0x03,0x75,0xCC,0x74,0x5F};
+  static const char* ascii_fingerprint; // = "3D64C8929A4F55768B5F3CDF3689F3C8";
+  static const uint8_t binary_fingerprint[16]; // = {0x3D,0x64,0xC8,0x92,0x9A,0x4F,0x55,0x76,0x8B,0x5F,0x3C,0xDF,0x36,0x89,0xF3,0xC8};
 
   RegisterDeviceService_pushUsersInfo_args(const RegisterDeviceService_pushUsersInfo_args&);
   RegisterDeviceService_pushUsersInfo_args& operator=(const RegisterDeviceService_pushUsersInfo_args&);
@@ -476,8 +481,8 @@ class RegisterDeviceService_pushUsersInfo_args {
 class RegisterDeviceService_pushUsersInfo_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "FB29C747C9F610C2004F3D0375CC745F";
-  static const uint8_t binary_fingerprint[16]; // = {0xFB,0x29,0xC7,0x47,0xC9,0xF6,0x10,0xC2,0x00,0x4F,0x3D,0x03,0x75,0xCC,0x74,0x5F};
+  static const char* ascii_fingerprint; // = "3D64C8929A4F55768B5F3CDF3689F3C8";
+  static const uint8_t binary_fingerprint[16]; // = {0x3D,0x64,0xC8,0x92,0x9A,0x4F,0x55,0x76,0x8B,0x5F,0x3C,0xDF,0x36,0x89,0xF3,0xC8};
 
 
   virtual ~RegisterDeviceService_pushUsersInfo_pargs() throw();
@@ -559,8 +564,8 @@ typedef struct _RegisterDeviceService_pushCurrentUserInfo_args__isset {
 class RegisterDeviceService_pushCurrentUserInfo_args {
  public:
 
-  static const char* ascii_fingerprint; // = "B9AA47A6B64E1DDE5ED8AE852DFADC98";
-  static const uint8_t binary_fingerprint[16]; // = {0xB9,0xAA,0x47,0xA6,0xB6,0x4E,0x1D,0xDE,0x5E,0xD8,0xAE,0x85,0x2D,0xFA,0xDC,0x98};
+  static const char* ascii_fingerprint; // = "BC3D14CECFD529BA650087E9873A2F3D";
+  static const uint8_t binary_fingerprint[16]; // = {0xBC,0x3D,0x14,0xCE,0xCF,0xD5,0x29,0xBA,0x65,0x00,0x87,0xE9,0x87,0x3A,0x2F,0x3D};
 
   RegisterDeviceService_pushCurrentUserInfo_args(const RegisterDeviceService_pushCurrentUserInfo_args&);
   RegisterDeviceService_pushCurrentUserInfo_args& operator=(const RegisterDeviceService_pushCurrentUserInfo_args&);
@@ -596,8 +601,8 @@ class RegisterDeviceService_pushCurrentUserInfo_args {
 class RegisterDeviceService_pushCurrentUserInfo_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "B9AA47A6B64E1DDE5ED8AE852DFADC98";
-  static const uint8_t binary_fingerprint[16]; // = {0xB9,0xAA,0x47,0xA6,0xB6,0x4E,0x1D,0xDE,0x5E,0xD8,0xAE,0x85,0x2D,0xFA,0xDC,0x98};
+  static const char* ascii_fingerprint; // = "BC3D14CECFD529BA650087E9873A2F3D";
+  static const uint8_t binary_fingerprint[16]; // = {0xBC,0x3D,0x14,0xCE,0xCF,0xD5,0x29,0xBA,0x65,0x00,0x87,0xE9,0x87,0x3A,0x2F,0x3D};
 
 
   virtual ~RegisterDeviceService_pushCurrentUserInfo_pargs() throw();
@@ -671,6 +676,126 @@ class RegisterDeviceService_pushCurrentUserInfo_presult {
   friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_pushCurrentUserInfo_presult& obj);
 };
 
+typedef struct _RegisterDeviceService_pushLogInfoTest1_args__isset {
+  _RegisterDeviceService_pushLogInfoTest1_args__isset() : logInfo(false) {}
+  bool logInfo :1;
+} _RegisterDeviceService_pushLogInfoTest1_args__isset;
+
+class RegisterDeviceService_pushLogInfoTest1_args {
+ public:
+
+  static const char* ascii_fingerprint; // = "07468BF015F3A0143CBED4C9C8A7EBB1";
+  static const uint8_t binary_fingerprint[16]; // = {0x07,0x46,0x8B,0xF0,0x15,0xF3,0xA0,0x14,0x3C,0xBE,0xD4,0xC9,0xC8,0xA7,0xEB,0xB1};
+
+  RegisterDeviceService_pushLogInfoTest1_args(const RegisterDeviceService_pushLogInfoTest1_args&);
+  RegisterDeviceService_pushLogInfoTest1_args& operator=(const RegisterDeviceService_pushLogInfoTest1_args&);
+  RegisterDeviceService_pushLogInfoTest1_args() {
+  }
+
+  virtual ~RegisterDeviceService_pushLogInfoTest1_args() throw();
+  std::vector<myLogStructure>  logInfo;
+
+  _RegisterDeviceService_pushLogInfoTest1_args__isset __isset;
+
+  void __set_logInfo(const std::vector<myLogStructure> & val);
+
+  bool operator == (const RegisterDeviceService_pushLogInfoTest1_args & rhs) const
+  {
+    if (!(logInfo == rhs.logInfo))
+      return false;
+    return true;
+  }
+  bool operator != (const RegisterDeviceService_pushLogInfoTest1_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RegisterDeviceService_pushLogInfoTest1_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_pushLogInfoTest1_args& obj);
+};
+
+
+class RegisterDeviceService_pushLogInfoTest1_pargs {
+ public:
+
+  static const char* ascii_fingerprint; // = "07468BF015F3A0143CBED4C9C8A7EBB1";
+  static const uint8_t binary_fingerprint[16]; // = {0x07,0x46,0x8B,0xF0,0x15,0xF3,0xA0,0x14,0x3C,0xBE,0xD4,0xC9,0xC8,0xA7,0xEB,0xB1};
+
+
+  virtual ~RegisterDeviceService_pushLogInfoTest1_pargs() throw();
+  const std::vector<myLogStructure> * logInfo;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_pushLogInfoTest1_pargs& obj);
+};
+
+typedef struct _RegisterDeviceService_pushLogInfoTest1_result__isset {
+  _RegisterDeviceService_pushLogInfoTest1_result__isset() : success(false) {}
+  bool success :1;
+} _RegisterDeviceService_pushLogInfoTest1_result__isset;
+
+class RegisterDeviceService_pushLogInfoTest1_result {
+ public:
+
+  static const char* ascii_fingerprint; // = "D9D3B4421B1F23CB4063C80B484E7909";
+  static const uint8_t binary_fingerprint[16]; // = {0xD9,0xD3,0xB4,0x42,0x1B,0x1F,0x23,0xCB,0x40,0x63,0xC8,0x0B,0x48,0x4E,0x79,0x09};
+
+  RegisterDeviceService_pushLogInfoTest1_result(const RegisterDeviceService_pushLogInfoTest1_result&);
+  RegisterDeviceService_pushLogInfoTest1_result& operator=(const RegisterDeviceService_pushLogInfoTest1_result&);
+  RegisterDeviceService_pushLogInfoTest1_result() : success(0) {
+  }
+
+  virtual ~RegisterDeviceService_pushLogInfoTest1_result() throw();
+  bool success;
+
+  _RegisterDeviceService_pushLogInfoTest1_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const RegisterDeviceService_pushLogInfoTest1_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const RegisterDeviceService_pushLogInfoTest1_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RegisterDeviceService_pushLogInfoTest1_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_pushLogInfoTest1_result& obj);
+};
+
+typedef struct _RegisterDeviceService_pushLogInfoTest1_presult__isset {
+  _RegisterDeviceService_pushLogInfoTest1_presult__isset() : success(false) {}
+  bool success :1;
+} _RegisterDeviceService_pushLogInfoTest1_presult__isset;
+
+class RegisterDeviceService_pushLogInfoTest1_presult {
+ public:
+
+  static const char* ascii_fingerprint; // = "D9D3B4421B1F23CB4063C80B484E7909";
+  static const uint8_t binary_fingerprint[16]; // = {0xD9,0xD3,0xB4,0x42,0x1B,0x1F,0x23,0xCB,0x40,0x63,0xC8,0x0B,0x48,0x4E,0x79,0x09};
+
+
+  virtual ~RegisterDeviceService_pushLogInfoTest1_presult() throw();
+  bool* success;
+
+  _RegisterDeviceService_pushLogInfoTest1_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_pushLogInfoTest1_presult& obj);
+};
+
 class RegisterDeviceServiceClient : virtual public RegisterDeviceServiceIf {
  public:
   RegisterDeviceServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -711,6 +836,9 @@ class RegisterDeviceServiceClient : virtual public RegisterDeviceServiceIf {
   bool pushCurrentUserInfo(const myUserAccountDetailsStruct& userInfo);
   void send_pushCurrentUserInfo(const myUserAccountDetailsStruct& userInfo);
   bool recv_pushCurrentUserInfo();
+  bool pushLogInfoTest1(const std::vector<myLogStructure> & logInfo);
+  void send_pushLogInfoTest1(const std::vector<myLogStructure> & logInfo);
+  bool recv_pushLogInfoTest1();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -731,6 +859,7 @@ class RegisterDeviceServiceProcessor : public ::apache::thrift::TDispatchProcess
   void process_pushLogInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_pushUsersInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_pushCurrentUserInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_pushLogInfoTest1(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   RegisterDeviceServiceProcessor(boost::shared_ptr<RegisterDeviceServiceIf> iface) :
     iface_(iface) {
@@ -739,6 +868,7 @@ class RegisterDeviceServiceProcessor : public ::apache::thrift::TDispatchProcess
     processMap_["pushLogInfo"] = &RegisterDeviceServiceProcessor::process_pushLogInfo;
     processMap_["pushUsersInfo"] = &RegisterDeviceServiceProcessor::process_pushUsersInfo;
     processMap_["pushCurrentUserInfo"] = &RegisterDeviceServiceProcessor::process_pushCurrentUserInfo;
+    processMap_["pushLogInfoTest1"] = &RegisterDeviceServiceProcessor::process_pushLogInfoTest1;
   }
 
   virtual ~RegisterDeviceServiceProcessor() {}
@@ -810,6 +940,15 @@ class RegisterDeviceServiceMultiface : virtual public RegisterDeviceServiceIf {
       ifaces_[i]->pushCurrentUserInfo(userInfo);
     }
     return ifaces_[i]->pushCurrentUserInfo(userInfo);
+  }
+
+  bool pushLogInfoTest1(const std::vector<myLogStructure> & logInfo) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->pushLogInfoTest1(logInfo);
+    }
+    return ifaces_[i]->pushLogInfoTest1(logInfo);
   }
 
 };

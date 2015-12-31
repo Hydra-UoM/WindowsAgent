@@ -42,6 +42,8 @@ class ProcessStatsIf {
   virtual void getImportantLogEventsWithoutSummarization(const int16_t timeInMinute) = 0;
   virtual void getImportantLogEvents(const int16_t timeInMinute) = 0;
   virtual void getFullLogInformation(const int16_t timeInMinute) = 0;
+  virtual void stop() = 0;
+  virtual void stopLogInfo() = 0;
 };
 
 class ProcessStatsIfFactory {
@@ -155,6 +157,12 @@ class ProcessStatsNull : virtual public ProcessStatsIf {
     return;
   }
   void getFullLogInformation(const int16_t /* timeInMinute */) {
+    return;
+  }
+  void stop() {
+    return;
+  }
+  void stopLogInfo() {
     return;
   }
 };
@@ -3174,6 +3182,186 @@ class ProcessStats_getFullLogInformation_presult {
   friend std::ostream& operator<<(std::ostream& out, const ProcessStats_getFullLogInformation_presult& obj);
 };
 
+
+class ProcessStats_stop_args {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  ProcessStats_stop_args(const ProcessStats_stop_args&);
+  ProcessStats_stop_args& operator=(const ProcessStats_stop_args&);
+  ProcessStats_stop_args() {
+  }
+
+  virtual ~ProcessStats_stop_args() throw();
+
+  bool operator == (const ProcessStats_stop_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ProcessStats_stop_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ProcessStats_stop_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stop_args& obj);
+};
+
+
+class ProcessStats_stop_pargs {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+
+  virtual ~ProcessStats_stop_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stop_pargs& obj);
+};
+
+
+class ProcessStats_stop_result {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  ProcessStats_stop_result(const ProcessStats_stop_result&);
+  ProcessStats_stop_result& operator=(const ProcessStats_stop_result&);
+  ProcessStats_stop_result() {
+  }
+
+  virtual ~ProcessStats_stop_result() throw();
+
+  bool operator == (const ProcessStats_stop_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ProcessStats_stop_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ProcessStats_stop_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stop_result& obj);
+};
+
+
+class ProcessStats_stop_presult {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+
+  virtual ~ProcessStats_stop_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stop_presult& obj);
+};
+
+
+class ProcessStats_stopLogInfo_args {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  ProcessStats_stopLogInfo_args(const ProcessStats_stopLogInfo_args&);
+  ProcessStats_stopLogInfo_args& operator=(const ProcessStats_stopLogInfo_args&);
+  ProcessStats_stopLogInfo_args() {
+  }
+
+  virtual ~ProcessStats_stopLogInfo_args() throw();
+
+  bool operator == (const ProcessStats_stopLogInfo_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ProcessStats_stopLogInfo_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ProcessStats_stopLogInfo_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stopLogInfo_args& obj);
+};
+
+
+class ProcessStats_stopLogInfo_pargs {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+
+  virtual ~ProcessStats_stopLogInfo_pargs() throw();
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stopLogInfo_pargs& obj);
+};
+
+
+class ProcessStats_stopLogInfo_result {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+  ProcessStats_stopLogInfo_result(const ProcessStats_stopLogInfo_result&);
+  ProcessStats_stopLogInfo_result& operator=(const ProcessStats_stopLogInfo_result&);
+  ProcessStats_stopLogInfo_result() {
+  }
+
+  virtual ~ProcessStats_stopLogInfo_result() throw();
+
+  bool operator == (const ProcessStats_stopLogInfo_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ProcessStats_stopLogInfo_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ProcessStats_stopLogInfo_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stopLogInfo_result& obj);
+};
+
+
+class ProcessStats_stopLogInfo_presult {
+ public:
+
+  static const char* ascii_fingerprint; // = "99914B932BD37A50B983C5E7C90AE93B";
+  static const uint8_t binary_fingerprint[16]; // = {0x99,0x91,0x4B,0x93,0x2B,0xD3,0x7A,0x50,0xB9,0x83,0xC5,0xE7,0xC9,0x0A,0xE9,0x3B};
+
+
+  virtual ~ProcessStats_stopLogInfo_presult() throw();
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+  friend std::ostream& operator<<(std::ostream& out, const ProcessStats_stopLogInfo_presult& obj);
+};
+
 class ProcessStatsClient : virtual public ProcessStatsIf {
  public:
   ProcessStatsClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) {
@@ -3280,6 +3468,12 @@ class ProcessStatsClient : virtual public ProcessStatsIf {
   void getFullLogInformation(const int16_t timeInMinute);
   void send_getFullLogInformation(const int16_t timeInMinute);
   void recv_getFullLogInformation();
+  void stop();
+  void send_stop();
+  void recv_stop();
+  void stopLogInfo();
+  void send_stopLogInfo();
+  void recv_stopLogInfo();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -3322,6 +3516,8 @@ class ProcessStatsProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_getImportantLogEventsWithoutSummarization(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getImportantLogEvents(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_getFullLogInformation(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_stop(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_stopLogInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   ProcessStatsProcessor(boost::shared_ptr<ProcessStatsIf> iface) :
     iface_(iface) {
@@ -3352,6 +3548,8 @@ class ProcessStatsProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["getImportantLogEventsWithoutSummarization"] = &ProcessStatsProcessor::process_getImportantLogEventsWithoutSummarization;
     processMap_["getImportantLogEvents"] = &ProcessStatsProcessor::process_getImportantLogEvents;
     processMap_["getFullLogInformation"] = &ProcessStatsProcessor::process_getFullLogInformation;
+    processMap_["stop"] = &ProcessStatsProcessor::process_stop;
+    processMap_["stopLogInfo"] = &ProcessStatsProcessor::process_stopLogInfo;
   }
 
   virtual ~ProcessStatsProcessor() {}
@@ -3638,6 +3836,24 @@ class ProcessStatsMultiface : virtual public ProcessStatsIf {
       ifaces_[i]->getFullLogInformation(timeInMinute);
     }
     ifaces_[i]->getFullLogInformation(timeInMinute);
+  }
+
+  void stop() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->stop();
+    }
+    ifaces_[i]->stop();
+  }
+
+  void stopLogInfo() {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->stopLogInfo();
+    }
+    ifaces_[i]->stopLogInfo();
   }
 
 };

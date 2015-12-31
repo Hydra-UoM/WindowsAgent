@@ -223,14 +223,14 @@ uint32_t RegisterDeviceService_pushProcessesInfo_args::read(::apache::thrift::pr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->processes.clear();
-            uint32_t _size49;
-            ::apache::thrift::protocol::TType _etype52;
-            xfer += iprot->readListBegin(_etype52, _size49);
-            this->processes.resize(_size49);
-            uint32_t _i53;
-            for (_i53 = 0; _i53 < _size49; ++_i53)
+            uint32_t _size48;
+            ::apache::thrift::protocol::TType _etype51;
+            xfer += iprot->readListBegin(_etype51, _size48);
+            this->processes.resize(_size48);
+            uint32_t _i52;
+            for (_i52 = 0; _i52 < _size48; ++_i52)
             {
-              xfer += this->processes[_i53].read(iprot);
+              xfer += this->processes[_i52].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -259,10 +259,10 @@ uint32_t RegisterDeviceService_pushProcessesInfo_args::write(::apache::thrift::p
   xfer += oprot->writeFieldBegin("processes", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->processes.size()));
-    std::vector<ThriftAgentProcessInfo> ::const_iterator _iter54;
-    for (_iter54 = this->processes.begin(); _iter54 != this->processes.end(); ++_iter54)
+    std::vector<ThriftAgentProcessInfo> ::const_iterator _iter53;
+    for (_iter53 = this->processes.begin(); _iter53 != this->processes.end(); ++_iter53)
     {
-      xfer += (*_iter54).write(oprot);
+      xfer += (*_iter53).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -287,10 +287,10 @@ uint32_t RegisterDeviceService_pushProcessesInfo_pargs::write(::apache::thrift::
   xfer += oprot->writeFieldBegin("processes", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->processes)).size()));
-    std::vector<ThriftAgentProcessInfo> ::const_iterator _iter55;
-    for (_iter55 = (*(this->processes)).begin(); _iter55 != (*(this->processes)).end(); ++_iter55)
+    std::vector<ThriftAgentProcessInfo> ::const_iterator _iter54;
+    for (_iter54 = (*(this->processes)).begin(); _iter54 != (*(this->processes)).end(); ++_iter54)
     {
-      xfer += (*_iter55).write(oprot);
+      xfer += (*_iter54).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -437,14 +437,14 @@ uint32_t RegisterDeviceService_pushLogInfo_args::read(::apache::thrift::protocol
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->logInfo.clear();
-            uint32_t _size56;
-            ::apache::thrift::protocol::TType _etype59;
-            xfer += iprot->readListBegin(_etype59, _size56);
-            this->logInfo.resize(_size56);
-            uint32_t _i60;
-            for (_i60 = 0; _i60 < _size56; ++_i60)
+            uint32_t _size55;
+            ::apache::thrift::protocol::TType _etype58;
+            xfer += iprot->readListBegin(_etype58, _size55);
+            this->logInfo.resize(_size55);
+            uint32_t _i59;
+            for (_i59 = 0; _i59 < _size55; ++_i59)
             {
-              xfer += this->logInfo[_i60].read(iprot);
+              xfer += this->logInfo[_i59].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -473,10 +473,10 @@ uint32_t RegisterDeviceService_pushLogInfo_args::write(::apache::thrift::protoco
   xfer += oprot->writeFieldBegin("logInfo", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->logInfo.size()));
-    std::vector<myLogStructure> ::const_iterator _iter61;
-    for (_iter61 = this->logInfo.begin(); _iter61 != this->logInfo.end(); ++_iter61)
+    std::vector<myLogStructure> ::const_iterator _iter60;
+    for (_iter60 = this->logInfo.begin(); _iter60 != this->logInfo.end(); ++_iter60)
     {
-      xfer += (*_iter61).write(oprot);
+      xfer += (*_iter60).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -501,10 +501,10 @@ uint32_t RegisterDeviceService_pushLogInfo_pargs::write(::apache::thrift::protoc
   xfer += oprot->writeFieldBegin("logInfo", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->logInfo)).size()));
-    std::vector<myLogStructure> ::const_iterator _iter62;
-    for (_iter62 = (*(this->logInfo)).begin(); _iter62 != (*(this->logInfo)).end(); ++_iter62)
+    std::vector<myLogStructure> ::const_iterator _iter61;
+    for (_iter61 = (*(this->logInfo)).begin(); _iter61 != (*(this->logInfo)).end(); ++_iter61)
     {
-      xfer += (*_iter62).write(oprot);
+      xfer += (*_iter61).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -651,14 +651,14 @@ uint32_t RegisterDeviceService_pushUsersInfo_args::read(::apache::thrift::protoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->usersInfo.clear();
-            uint32_t _size63;
-            ::apache::thrift::protocol::TType _etype66;
-            xfer += iprot->readListBegin(_etype66, _size63);
-            this->usersInfo.resize(_size63);
-            uint32_t _i67;
-            for (_i67 = 0; _i67 < _size63; ++_i67)
+            uint32_t _size62;
+            ::apache::thrift::protocol::TType _etype65;
+            xfer += iprot->readListBegin(_etype65, _size62);
+            this->usersInfo.resize(_size62);
+            uint32_t _i66;
+            for (_i66 = 0; _i66 < _size62; ++_i66)
             {
-              xfer += this->usersInfo[_i67].read(iprot);
+              xfer += this->usersInfo[_i66].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -687,10 +687,10 @@ uint32_t RegisterDeviceService_pushUsersInfo_args::write(::apache::thrift::proto
   xfer += oprot->writeFieldBegin("usersInfo", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->usersInfo.size()));
-    std::vector<myUserAccountDetailsStruct> ::const_iterator _iter68;
-    for (_iter68 = this->usersInfo.begin(); _iter68 != this->usersInfo.end(); ++_iter68)
+    std::vector<myUserAccountDetailsStruct> ::const_iterator _iter67;
+    for (_iter67 = this->usersInfo.begin(); _iter67 != this->usersInfo.end(); ++_iter67)
     {
-      xfer += (*_iter68).write(oprot);
+      xfer += (*_iter67).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -715,10 +715,10 @@ uint32_t RegisterDeviceService_pushUsersInfo_pargs::write(::apache::thrift::prot
   xfer += oprot->writeFieldBegin("usersInfo", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->usersInfo)).size()));
-    std::vector<myUserAccountDetailsStruct> ::const_iterator _iter69;
-    for (_iter69 = (*(this->usersInfo)).begin(); _iter69 != (*(this->usersInfo)).end(); ++_iter69)
+    std::vector<myUserAccountDetailsStruct> ::const_iterator _iter68;
+    for (_iter68 = (*(this->usersInfo)).begin(); _iter68 != (*(this->usersInfo)).end(); ++_iter68)
     {
-      xfer += (*_iter69).write(oprot);
+      xfer += (*_iter68).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -983,6 +983,220 @@ RegisterDeviceService_pushCurrentUserInfo_presult::~RegisterDeviceService_pushCu
 
 
 uint32_t RegisterDeviceService_pushCurrentUserInfo_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+
+RegisterDeviceService_pushLogInfoTest1_args::~RegisterDeviceService_pushLogInfoTest1_args() throw() {
+}
+
+
+uint32_t RegisterDeviceService_pushLogInfoTest1_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->logInfo.clear();
+            uint32_t _size69;
+            ::apache::thrift::protocol::TType _etype72;
+            xfer += iprot->readListBegin(_etype72, _size69);
+            this->logInfo.resize(_size69);
+            uint32_t _i73;
+            for (_i73 = 0; _i73 < _size69; ++_i73)
+            {
+              xfer += this->logInfo[_i73].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.logInfo = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t RegisterDeviceService_pushLogInfoTest1_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  oprot->incrementRecursionDepth();
+  xfer += oprot->writeStructBegin("RegisterDeviceService_pushLogInfoTest1_args");
+
+  xfer += oprot->writeFieldBegin("logInfo", ::apache::thrift::protocol::T_LIST, 1);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->logInfo.size()));
+    std::vector<myLogStructure> ::const_iterator _iter74;
+    for (_iter74 = this->logInfo.begin(); _iter74 != this->logInfo.end(); ++_iter74)
+    {
+      xfer += (*_iter74).write(oprot);
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  oprot->decrementRecursionDepth();
+  return xfer;
+}
+
+
+RegisterDeviceService_pushLogInfoTest1_pargs::~RegisterDeviceService_pushLogInfoTest1_pargs() throw() {
+}
+
+
+uint32_t RegisterDeviceService_pushLogInfoTest1_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  oprot->incrementRecursionDepth();
+  xfer += oprot->writeStructBegin("RegisterDeviceService_pushLogInfoTest1_pargs");
+
+  xfer += oprot->writeFieldBegin("logInfo", ::apache::thrift::protocol::T_LIST, 1);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->logInfo)).size()));
+    std::vector<myLogStructure> ::const_iterator _iter75;
+    for (_iter75 = (*(this->logInfo)).begin(); _iter75 != (*(this->logInfo)).end(); ++_iter75)
+    {
+      xfer += (*_iter75).write(oprot);
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  oprot->decrementRecursionDepth();
+  return xfer;
+}
+
+
+RegisterDeviceService_pushLogInfoTest1_result::~RegisterDeviceService_pushLogInfoTest1_result() throw() {
+}
+
+
+uint32_t RegisterDeviceService_pushLogInfoTest1_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t RegisterDeviceService_pushLogInfoTest1_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("RegisterDeviceService_pushLogInfoTest1_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_BOOL, 0);
+    xfer += oprot->writeBool(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+
+RegisterDeviceService_pushLogInfoTest1_presult::~RegisterDeviceService_pushLogInfoTest1_presult() throw() {
+}
+
+
+uint32_t RegisterDeviceService_pushLogInfoTest1_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   uint32_t xfer = 0;
   std::string fname;
@@ -1312,6 +1526,64 @@ bool RegisterDeviceServiceClient::recv_pushCurrentUserInfo()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "pushCurrentUserInfo failed: unknown result");
 }
 
+bool RegisterDeviceServiceClient::pushLogInfoTest1(const std::vector<myLogStructure> & logInfo)
+{
+  send_pushLogInfoTest1(logInfo);
+  return recv_pushLogInfoTest1();
+}
+
+void RegisterDeviceServiceClient::send_pushLogInfoTest1(const std::vector<myLogStructure> & logInfo)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("pushLogInfoTest1", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  RegisterDeviceService_pushLogInfoTest1_pargs args;
+  args.logInfo = &logInfo;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+bool RegisterDeviceServiceClient::recv_pushLogInfoTest1()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("pushLogInfoTest1") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  bool _return;
+  RegisterDeviceService_pushLogInfoTest1_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "pushLogInfoTest1 failed: unknown result");
+}
+
 bool RegisterDeviceServiceProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
@@ -1598,6 +1870,60 @@ void RegisterDeviceServiceProcessor::process_pushCurrentUserInfo(int32_t seqid, 
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "RegisterDeviceService.pushCurrentUserInfo", bytes);
+  }
+}
+
+void RegisterDeviceServiceProcessor::process_pushLogInfoTest1(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("RegisterDeviceService.pushLogInfoTest1", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "RegisterDeviceService.pushLogInfoTest1");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "RegisterDeviceService.pushLogInfoTest1");
+  }
+
+  RegisterDeviceService_pushLogInfoTest1_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "RegisterDeviceService.pushLogInfoTest1", bytes);
+  }
+
+  RegisterDeviceService_pushLogInfoTest1_result result;
+  try {
+    result.success = iface_->pushLogInfoTest1(args.logInfo);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "RegisterDeviceService.pushLogInfoTest1");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("pushLogInfoTest1", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "RegisterDeviceService.pushLogInfoTest1");
+  }
+
+  oprot->writeMessageBegin("pushLogInfoTest1", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "RegisterDeviceService.pushLogInfoTest1", bytes);
   }
 }
 
