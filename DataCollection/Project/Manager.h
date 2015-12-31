@@ -8,7 +8,7 @@
 #include <tchar.h>
 #include <atlstr.h>
 #define INFO_BUFFER_SIZE 32767
-static bool tRetired;
+extern bool tRetired;
 class Manager :public CPU, public Memory, public IO
 {
 public:
@@ -17,6 +17,7 @@ public:
 	virtual ~Manager();
 	string ConfigFile();
 	void Start();
+
 	vector<ProcessF> FilterAllProcesses(double value1, double value2, double value3, double value4);
 	static void FilterAllAvgProcesses(int samples, double value1, double value2, double value3, double value4, vector<string> processList);
 	ProcessF GetAvgProcess_PID(int PID, int sample);

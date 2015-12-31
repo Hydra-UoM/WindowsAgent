@@ -71,7 +71,9 @@ void MyDBHandler::createLogTable(){
 			+ "AFL_Security_ID TEXT, AFL_Account_Name TEXT, AFL_Account_Domain TEXT, "
 			+ "Failure_Reason TEXT, Status TEXT, Sub_Status TEXT, "
 			+ "NL_Security_ID TEXT, NL_Account_Name TEXT, NL_Account_Domain TEXT, NL_Logon_ID TEXT, NL_Logon_GUID TEXT, "
-			+ "Logon_Process TEXT, Authentication_Package TEXT, Transited_Services TEXT, Package_Name TEXT, Key_Length TEXT)";
+			+ "Logon_Process TEXT, Authentication_Package TEXT, Transited_Services TEXT, Package_Name TEXT, Key_Length TEXT, "
+			+ "mac TEXT, eventCategory TEXT, processName TEXT)";
+
 		rc = query((char*)create_table_qry.c_str());
 		if (rc)
 		{
@@ -93,7 +95,7 @@ void MyDBHandler::createUsersTable(){
 		create_table_qry = create_table_qry + "CREATE TABLE IF NOT EXISTS UsersData(computerName TEXT NOT NULL,usri4_name TEXT,usri4_password_age TEXT,usri4_priv TEXT,"
 			+ "usri4_flags TEXT, usri4_usr_comment TEXT, usri4_parms TEXT, usri4_last_logon TEXT, usri4_last_logoff TEXT, usri4_acct_expires TEXT, usri4_max_storage TEXT,"
 			+ "usri4_units_per_week TEXT, usri4_logon_hours TEXT, usri4_bad_pw_count TEXT, usri4_num_logons TEXT, usri4_country_code TEXT, usri4_code_page TEXT,"
-			+ "usri4_primary_group_id TEXT, usri4_profile TEXT, usri4_password_expired TEXT, usri4_auth_flags TEXT);";
+			+ "usri4_primary_group_id TEXT, usri4_profile TEXT, usri4_password_expired TEXT, usri4_auth_flags TEXT, mac TEXT);";
 		rc = query((char*)create_table_qry.c_str());
 		if (rc)
 		{
@@ -115,7 +117,7 @@ void MyDBHandler::createCurrentUserTable(){
 		create_table_qry = create_table_qry + "CREATE TABLE IF NOT EXISTS CurrentUserData(computerName TEXT NOT NULL,usri4_name TEXT,usri4_password_age TEXT,usri4_priv TEXT,"
 			+ "usri4_flags TEXT, usri4_usr_comment TEXT, usri4_parms TEXT, usri4_last_logon TEXT, usri4_last_logoff TEXT, usri4_acct_expires TEXT, usri4_max_storage TEXT,"
 			+ "usri4_units_per_week TEXT, usri4_logon_hours TEXT, usri4_bad_pw_count TEXT, usri4_num_logons TEXT, usri4_country_code TEXT, usri4_code_page TEXT,"
-			+ "usri4_primary_group_id TEXT, usri4_profile TEXT, usri4_password_expired TEXT, usri4_auth_flags TEXT);";
+			+ "usri4_primary_group_id TEXT, usri4_profile TEXT, usri4_password_expired TEXT, usri4_auth_flags TEXT, mac TEXT);";
 		rc = query((char*)create_table_qry.c_str());
 		if (rc)
 		{
@@ -138,7 +140,7 @@ void MyDBHandler::storeLogData(std::vector<myStruct::myLogStructure>logList)
 		std::string insert_qry = "";
 		insert_qry = insert_qry + "INSERT INTO LogData VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22,?23,?24,?25,"
 			+ "?26,?27,?28,?29,?30,?31,?32,?33,?34,?35,?36,?37,?38,?39,?40,?41,?42,?43,?44,?45,?46,?47,?48,?49,?50,?51,?52,?53,?54,?55,?56,?57,?58,?59,?60,"
-			+ "?61,?62,?63,?64,?65,?66,?67,?68,?69,?70,?71,?72,?73,?74,?75,?76,?77,?78,?79);";
+			+ "?61,?62,?63,?64,?65,?66,?67,?68,?69,?70,?71,?72,?73,?74,?75,?76,?77,?78,?79,?80,?81,?82);";
 
 		sqlite3_stmt *pointer;
 		for (i = logList.begin(); i != logList.end(); ++i)
@@ -246,6 +248,10 @@ void MyDBHandler::storeLogData(std::vector<myStruct::myLogStructure>logList)
 				sqlite3_bind_text(pointer, 78, tempLog.myDetailedAuthenticationInformation1.Package_Name.c_str(), strlen(tempLog.myDetailedAuthenticationInformation1.Package_Name.c_str()), 0);
 				sqlite3_bind_text(pointer, 79, tempLog.myDetailedAuthenticationInformation1.Key_Length.c_str(), strlen(tempLog.myDetailedAuthenticationInformation1.Key_Length.c_str()), 0);
 
+				sqlite3_bind_text(pointer, 80, tempLog.mac.c_str(), strlen(tempLog.mac.c_str()), 0);
+				sqlite3_bind_text(pointer, 81, tempLog.eventCategory.c_str(), strlen(tempLog.eventCategory.c_str()), 0);
+				sqlite3_bind_text(pointer, 82, tempLog.processName.c_str(), strlen(tempLog.processName.c_str()), 0);
+
 				sqlite3_step(pointer);   // prepare statemnt Ready 
 				sqlite3_reset(pointer);
 				printf("Data inserted successfully\n");
@@ -262,7 +268,7 @@ void MyDBHandler::storeUsersData(std::vector<myStruct::myUserAccountDetailsStruc
 	std::vector<myStruct::myUserAccountDetailsStruct>::iterator i;
 	if (openDB())
 	{
-		std::string insert_qry = "INSERT INTO UsersData VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21);";
+		std::string insert_qry = "INSERT INTO UsersData VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22);";
 
 		sqlite3_stmt *pointer;
 		for (i = usersList.begin(); i != usersList.end(); ++i)
@@ -292,6 +298,8 @@ void MyDBHandler::storeUsersData(std::vector<myStruct::myUserAccountDetailsStruc
 				sqlite3_bind_text(pointer, 19, tempUser.usri4_profile.c_str(), strlen(tempUser.usri4_profile.c_str()), 0);
 				sqlite3_bind_text(pointer, 20, tempUser.usri4_password_expired.c_str(), strlen(tempUser.usri4_password_expired.c_str()), 0);
 				sqlite3_bind_text(pointer, 21, tempUser.usri4_auth_flags.c_str(), strlen(tempUser.usri4_auth_flags.c_str()), 0);
+				sqlite3_bind_text(pointer, 22, tempUser.mac.c_str(), strlen(tempUser.mac.c_str()), 0);
+
 				sqlite3_step(pointer);   // prepare statemnt Ready 
 				sqlite3_reset(pointer);
 				printf("Data inserted successfully\n");
@@ -307,7 +315,7 @@ void MyDBHandler::storeCurrentUserData(myStruct::myUserAccountDetailsStruct curr
 {
 	if (openDB())
 	{
-		std::string insert_qry = "INSERT INTO CurrentUserData VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21);";
+		std::string insert_qry = "INSERT INTO CurrentUserData VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13,?14,?15,?16,?17,?18,?19,?20,?21,?22);";
 
 		sqlite3_stmt *pointer;
 		if (sqlite3_prepare_v2(database, insert_qry.c_str(), strlen(insert_qry.c_str()), &pointer, 0) == SQLITE_OK)
@@ -333,6 +341,8 @@ void MyDBHandler::storeCurrentUserData(myStruct::myUserAccountDetailsStruct curr
 			sqlite3_bind_text(pointer, 19, currentUser.usri4_profile.c_str(), strlen(currentUser.usri4_profile.c_str()), 0);
 			sqlite3_bind_text(pointer, 20, currentUser.usri4_password_expired.c_str(), strlen(currentUser.usri4_password_expired.c_str()), 0);
 			sqlite3_bind_text(pointer, 21, currentUser.usri4_auth_flags.c_str(), strlen(currentUser.usri4_auth_flags.c_str()), 0);
+			sqlite3_bind_text(pointer, 22, currentUser.mac.c_str(), strlen(currentUser.mac.c_str()), 0);
+
 			sqlite3_step(pointer);   // prepare statemnt Ready 
 			sqlite3_reset(pointer);
 			printf("Data inserted successfully\n");
@@ -377,6 +387,7 @@ std::vector<myStruct::myUserAccountDetailsStruct> MyDBHandler::retrieveCurrentUs
 				currentUser.usri4_profile = (char*)sqlite3_column_text(pointer, 18);
 				currentUser.usri4_password_expired = (char*)sqlite3_column_text(pointer, 19);
 				currentUser.usri4_auth_flags = (char*)sqlite3_column_text(pointer, 20);
+				currentUser.mac = (char*)sqlite3_column_text(pointer, 21);
 				result = sqlite3_step(pointer);
 				currentUserList.push_back(currentUser);
 			}
@@ -419,6 +430,7 @@ std::vector<myStruct::myUserAccountDetailsStruct>  MyDBHandler::retrieveUsersDat
 				tempUser.usri4_profile = (char*)sqlite3_column_text(pointer, 18);
 				tempUser.usri4_password_expired = (char*)sqlite3_column_text(pointer, 19);
 				tempUser.usri4_auth_flags = (char*)sqlite3_column_text(pointer, 20);
+				tempUser.mac = (char*)sqlite3_column_text(pointer, 21);
 				result = sqlite3_step(pointer);
 				usersList.push_back(tempUser);
 			}
@@ -539,6 +551,10 @@ std::vector<myStruct::myLogStructure> MyDBHandler::retrieveLogData(){
 				tempLog.myDetailedAuthenticationInformation1.Transited_Services = (char*)sqlite3_column_text(pointer, 76);
 				tempLog.myDetailedAuthenticationInformation1.Package_Name = (char*)sqlite3_column_text(pointer, 77);
 				tempLog.myDetailedAuthenticationInformation1.Key_Length = (char*)sqlite3_column_text(pointer, 78);
+
+				tempLog.mac = (char*)sqlite3_column_text(pointer, 79);
+				tempLog.eventCategory = (char*)sqlite3_column_text(pointer, 80);
+				tempLog.processName = (char*)sqlite3_column_text(pointer, 81);
 
 				result = sqlite3_step(pointer);
 				logList.push_back(tempLog);

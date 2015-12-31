@@ -186,7 +186,6 @@ public:
 		procF = manage.FilterAllProcesses(cpu, mem, down, up);
 		for (auto i : procF)
 		{
-
 			if (processname == i.name.c_str()){
 				_return.push_back(processname);
 				_return.push_back(std::to_string(i.cpu));
@@ -216,6 +215,7 @@ public:
 		// Your implementation goes here
 		printf("filterAllAvgProcesses\n");
 		auto memfunc = &Manager::FilterAllAvgProcesses;
+		tRetired = true;
 		std::thread thread1(memfunc, sample, cpu, mem, down, up, processList);
 		thread1.detach();
 	}
@@ -332,17 +332,17 @@ public:
 		thread1.detach();
 	}
 
-  void stop() {
-    // Your implementation goes here
-    printf("stop\n");
-	manage.retire();
-  }
+	void stop() {
+		// Your implementation goes here
+		printf("stop\n");
+		manage.retire();
+	}
 
-  void stopLogInfo() {
-    // Your implementation goes here
-    printf("stopLogInfo\n");
-	MyLogManager::stopExecution();
-  }
+	void stopLogInfo() {
+		// Your implementation goes here
+		printf("stopLogInfo\n");
+		MyLogManager::stopExecution();
+	}
 
 };
 
@@ -354,29 +354,29 @@ int main(int argc, char **argv) {
 	/**
 	if (!MyLogManager::isInternetConnectionAvailable())
 	{
-		while (true){
-			db.insertData();
-			MyLogManager::storeImportantLogData();
-			Sleep(50000);
-		}
+	while (true){
+	db.insertData();
+	
+	Sleep(50000);
+	}
 	}
 	*/
 	//else{
-		manage.deviceClient();
-		//manage.sendStoredData();
-		//MyLogManager::sendStoredData();
-		int port = 9090;
+	manage.deviceClient();
+	//manage.sendStoredData();
+	//MyLogManager::sendStoredData();
+	int port = 9090;
 
-		using boost::shared_ptr;
-		shared_ptr<ProcessStatsHandler> handler(new ProcessStatsHandler());
-		shared_ptr<TProcessor> processor(new ProcessStatsProcessor(handler));
-		shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
-		shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
-		shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
+	using boost::shared_ptr;
+	shared_ptr<ProcessStatsHandler> handler(new ProcessStatsHandler());
+	shared_ptr<TProcessor> processor(new ProcessStatsProcessor(handler));
+	shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
+	shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
+	shared_ptr<TProtocolFactory> protocolFactory(new TBinaryProtocolFactory());
 
-		TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
-		server.serve();
-		return 0;
+	TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+	server.serve();
+	return 0;
 	//}
 }
 

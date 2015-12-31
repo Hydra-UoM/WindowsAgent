@@ -19,6 +19,7 @@ using namespace  HydraCN;
 
 HydraCN::Device device;
 bool tCompleted = false;
+bool tRetired;
 Manager::Manager()
 {
 }
@@ -210,9 +211,8 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	}
 	free(AdapterInfo);
 	std::string mac(mac_addr);
-
+	cout << tRetired << "****" << endl;
 	while (tRetired == true){
-
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
 		for (int i = 0; i < samples + 2; i++)
@@ -479,7 +479,7 @@ void Manager::importantData(int time){
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
 		for (auto i : d.myData)
 		{
-			if (get<5>(i) >= 30 && get<4>(i) >= 5000 && get<8>(i) >= 0 && get<9>(i) >= 0)
+			if (get<0>(i).c_str() == "Project.exe" || get<5>(i) >= 30 && get<4>(i) >= 5000 && get<8>(i) >= 0 && get<9>(i) >= 0)
 			{
 				proc.name = get<0>(i);
 				proc.cpuUsage = get<5>(i);
@@ -526,7 +526,7 @@ void Manager::sendStoredData(){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 	DBHandler Dbh;
 	procF = Dbh.sendData();
-	bool val = false;
+
 
 	for (auto i : procF)
 	{
@@ -539,13 +539,14 @@ void Manager::sendStoredData(){
 		process.push_back(proc);
 	}
 
+	bool val = false;
 	do{
 		try {
 			transport->open();
 			cout << "Data Pushed" << endl;
 			val = client.pushProcessesInfo(process);
 			transport->close();
-			Dbh.deleteData();
+			//Dbh.deleteData();
 		}
 		catch (TException& tx) {
 			cout << "ERROR: " << tx.what() << endl;
@@ -578,7 +579,7 @@ void Manager::deviceClient(){
 	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];
-	device.name= getComputerName();
+	//device.name= myMan.getComputerName();
 
 	bool val = false;
 	do{

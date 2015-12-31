@@ -120,150 +120,151 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 	myStruct::myLogStructure tempLogStructure;												HydraCN::myLogStructure tempLogStructureToBeSent;
 
 	isAllowed = true;
+	int eventIndex = stoi(*intIterator);
 	while (isAllowed)
 	{
 		try{
 			transport->open();
 			for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
 			{
-				switch (stoi(*intIterator))
+				switch (eventIndex)
 				{
-				case 18:
-					logList = MyLogManager::getLogs(timeInMinute * 60000, summarizationLevel, logType, process_name, securityLevel);
-					logListToBeSent = changeLogListFormatToBeSent(logList,"USER_DEFINED",process_name);
-					client.pushLogInfoTest1(logListToBeSent);
-					cout << "Pushed18" << endl;
-					break;
-				case 17:
-					logList = MyLogManager::getLogonFailures(timeInMinute * 60000, summarizationLevel);
-					logListToBeSent = changeLogListFormatToBeSent(logList,"LOGON_FAILURES", "");
-					client.pushLogInfoTest1(logListToBeSent);
-					cout << "Pushed17" << endl;
-					break;
-				case 25:
-					logList = MyLogManager::getSuccessLoginInformation(timeInMinute * 60000, summarizationLevel);
-					logListToBeSent = changeLogListFormatToBeSent(logList, "SUCCESS_LOGIN","");
-					client.pushLogInfoTest1(logListToBeSent);
-					cout << "Pushed25" << endl;
-					break;
-				case 27:
-					logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
+					case 18:
+						logList = MyLogManager::getLogs(timeInMinute * 60000, summarizationLevel, logType, process_name, securityLevel);
+						logListToBeSent = changeLogListFormatToBeSent(logList,"USER_DEFINED",process_name);
+						client.pushLogInfoTest1(logListToBeSent);
+						cout << "Pushed18" << endl;
+						break;
+					case 17:
+						logList = MyLogManager::getLogonFailures(timeInMinute * 60000, summarizationLevel);
+						logListToBeSent = changeLogListFormatToBeSent(logList,"LOGON_FAILURES", "");
+						client.pushLogInfoTest1(logListToBeSent);
+						cout << "Pushed17" << endl;
+						break;
+					case 25:
+						logList = MyLogManager::getSuccessLoginInformation(timeInMinute * 60000, summarizationLevel);
+						logListToBeSent = changeLogListFormatToBeSent(logList, "SUCCESS_LOGIN","");
+						client.pushLogInfoTest1(logListToBeSent);
+						cout << "Pushed25" << endl;
+						break;
+					case 27:
+						logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList, "FIREWALL_EVENTS","");
-					client.pushLogInfoTest1(logListToBeSent);
-					cout << "Pushed27" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList, "FIREWALL_EVENTS","");
+						client.pushLogInfoTest1(logListToBeSent);
+						cout << "Pushed27" << endl;
 					
-					break;
-				case 28:
-					logList = MyLogManager::getAccountUsage(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 28:
+						logList = MyLogManager::getAccountUsage(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList,"ACCOUNT_USAGE","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed28" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList,"ACCOUNT_USAGE","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed28" << endl;
 					
-					break;
-				case 29:
-					logList = MyLogManager::getGroupPolicyEditors(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 29:
+						logList = MyLogManager::getGroupPolicyEditors(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent(logList,"GROUP_POLICY_EDITORS","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed29" << endl;
+						logListToBeSent = changeLogListFormatToBeSent(logList,"GROUP_POLICY_EDITORS","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed29" << endl;
 					
-					break;
-				case 30:
-					logList = MyLogManager::getWindowsDefenderEvents(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 30:
+						logList = MyLogManager::getWindowsDefenderEvents(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent(logList,"WINDOWS_DEFENDER_EVENTS","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed30" << endl;
+						logListToBeSent = changeLogListFormatToBeSent(logList,"WINDOWS_DEFENDER_EVENTS","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed30" << endl;
 					
-					break;
-				case 31:
-					logList = MyLogManager::getMobileDeviceEvents(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 31:
+						logList = MyLogManager::getMobileDeviceEvents(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent(logList, "MOBILE_DEVICE_EVENTS","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed31" << endl;
+						logListToBeSent = changeLogListFormatToBeSent(logList, "MOBILE_DEVICE_EVENTS","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed31" << endl;
 				
-					break;
-				case 32:
-					logList = MyLogManager::getPrintingServicesEvents(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 32:
+						logList = MyLogManager::getPrintingServicesEvents(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent(logList,"PRINTING_SERVICES","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed32" << endl;
+						logListToBeSent = changeLogListFormatToBeSent(logList,"PRINTING_SERVICES","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed32" << endl;
 					
-					break;
-				case 33:
-					logList = MyLogManager::getSystemOrServiceFailures(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 33:
+						logList = MyLogManager::getSystemOrServiceFailures(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList,"SYSTEM_OR_SERVICE_FAILURES","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed33" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList,"SYSTEM_OR_SERVICE_FAILURES","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed33" << endl;
 					
-					break;
-				case 34:
-					logList = MyLogManager::getClearingEventLogs(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 34:
+						logList = MyLogManager::getClearingEventLogs(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList,"CLEARING_EVENT_LOGS","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed34" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList,"CLEARING_EVENT_LOGS","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed34" << endl;
 					
-					break;
-				case 35:
-					logList = MyLogManager::getWindowsUpdateErrors(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 35:
+						logList = MyLogManager::getWindowsUpdateErrors(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList, "WINDOWS_UPDATE_ERRORS","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed35" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList, "WINDOWS_UPDATE_ERRORS","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed35" << endl;
 					
-					break;
-				case 36:
-					logList = MyLogManager::getApplicationCrashes(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 36:
+						logList = MyLogManager::getApplicationCrashes(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList,"APPLICATION_CRASHES","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed36" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList,"APPLICATION_CRASHES","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed36" << endl;
 					
-					break;
-				case 37:
-					logList = MyLogManager::getSoftwareAndServicesInstallation(timeInMinute * 60000, summarizationLevel);
+						break;
+					case 37:
+						logList = MyLogManager::getSoftwareAndServicesInstallation(timeInMinute * 60000, summarizationLevel);
 					
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList, "SOFTWARE_AND_SERVICES_INSTALLATION","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed37" << endl;
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList, "SOFTWARE_AND_SERVICES_INSTALLATION","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed37" << endl;
 					
-					break;
-				case 38:
-					logList = MyLogManager::getRemoteLoginEvents(timeInMinute * 60000, summarizationLevel);
-					logListToBeSent = changeLogListFormatToBeSent
-						(logList, "REMOTE_LOGIN_EVENTS","");
-					client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed38" << endl;
+						break;
+					case 38:
+						logList = MyLogManager::getRemoteLoginEvents(timeInMinute * 60000, summarizationLevel);
+						logListToBeSent = changeLogListFormatToBeSent
+							(logList, "REMOTE_LOGIN_EVENTS","");
+						client.pushLogInfoTest1(logListToBeSent);
+							cout << "Pushed38" << endl;
 					
-					break;
-				case 22:
-					getCurrentLoggedInUserInfo = MyLogManager::getCurrentLoggedInUser(summarizationLevel);
+						break;
+					case 22:
+						getCurrentLoggedInUserInfo = MyLogManager::getCurrentLoggedInUser(summarizationLevel);
 					
-						getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
-						client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
-						cout << "pushed22" << endl;
+							getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
+							client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
+							cout << "pushed22" << endl;
 					
-					break;
-				case 23:
-					getAllUserInformationList = MyLogManager::getAllUserInformation(summarizationLevel);
+						break;
+					case 23:
+						getAllUserInformationList = MyLogManager::getAllUserInformation(summarizationLevel);
 					
-						getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
-						client.pushUsersInfo(getAllUserInformationListToBeSent);
-						cout << "pushed23" << endl;
-					break;
+							getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
+							client.pushUsersInfo(getAllUserInformationListToBeSent);
+							cout << "pushed23" << endl;
+						break;
 				}
 			}
 			transport->close();
@@ -271,12 +272,69 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 		}
 		catch (TException& tx)
 		{
-			cout << "Test" << endl;
+			getEventCategory(stoi(*intIterator));
 			cout << "ERROR: " << tx.what() << endl;
+			MyDBHandler Dbh;
+			Dbh.createLogTable();
+			Dbh.storeLogData(logList);
 		}
 		Sleep(timeInMinute * 60000);
 	}
 	isNotCompleted = false;
+}
+
+string MyLogManager::getEventCategory(int eventIndex)
+{
+	string eventCategory;
+	switch (eventIndex)
+	{
+		case 18:
+			eventCategory = "USER_DEFINED";
+			break;
+		case 17:
+			eventCategory = "LOGON_FAILURES";
+			break;
+		case 25:
+			eventCategory = "SUCCESS_LOGIN";
+			break;
+		case 27:
+			eventCategory = "FIREWALL_EVENTS";
+			break;
+		case 28:
+			eventCategory = "ACCOUNT_USAGE";
+			break;
+		case 29:
+			eventCategory = "GROUP_POLICY_EDITORS";
+			break;
+		case 30:
+			eventCategory = "WINDOWS_DEFENDER_EVENTS";
+			break;
+		case 31:
+			eventCategory = "MOBILE_DEVICE_EVENTS";
+			break;
+		case 32:
+			eventCategory = "PRINTING_SERVICES";
+			break;
+		case 33:
+			eventCategory = "SYSTEM_OR_SERVICE_FAILURES";
+			break;
+		case 34:
+			eventCategory = "CLEARING_EVENT_LOGS";
+			break;
+		case 35:
+			eventCategory = "WINDOWS_UPDATE_ERRORS";
+			break;
+		case 36:
+			eventCategory = "APPLICATION_CRASHES";
+			break;
+		case 37:
+			eventCategory = "SOFTWARE_AND_SERVICES_INSTALLATION";
+			break;
+		case 38:
+			eventCategory = "REMOTE_LOGIN_EVENTS";
+			break;
+	}
+	return eventCategory;
 }
 
 void MyLogManager::stopExecution()

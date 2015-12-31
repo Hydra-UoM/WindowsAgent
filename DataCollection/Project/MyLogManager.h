@@ -60,5 +60,6 @@ public:
 	static void sendStoredData();
 	static void storeImportantLogData();
 	static string getMAC();
+	static string getEventCategory(int eventIndex);
 };
 #endif

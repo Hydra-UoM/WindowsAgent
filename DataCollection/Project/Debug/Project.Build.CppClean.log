@@ -1,114 +1,61 @@
-e:\aaa - copy\windowsagent\datacollection\project\debug\vc120.pdb
-e:\aaa - copy\windowsagent\datacollection\project\debug\vc120.idb
-e:\aaa - copy\windowsagent\datacollection\project\debug\mylogontype.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mylogretriever.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mylogstructure.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mylogstructuremaker.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mynetworkinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mynewlogon.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myobject.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myprocessinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myproviderinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myruleinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mysubject.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mytimestamp.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myuseraccountdetails.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myuseraccountdetailsstructure.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\processstats.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\processstats_server.skeleton.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\process_constants.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\process_types.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\registerdeviceservice.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\stdafx.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\data.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\dbhandler.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\getprocessid.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\io.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\manager.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\memory.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myaccessrequestinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myaccountforwhichlogonfailed.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myadditionalinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myapplicationinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mycalloutinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mychangeinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mydbhandler.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mydetailedauthenticationinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myerrorinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myfailureinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myfilterinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\myimpersonationlevel.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mylayerinformation.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\mylogmanager.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\centralnodeservicev3_constants.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\centralnodeservicev3_types.obj
-e:\aaa - copy\windowsagent\datacollection\project\debug\cpu.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\vc120.pdb
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\vc120.idb
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mylogontype.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mylogretriever.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mylogstructure.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mylogstructuremaker.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mynetworkinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mynewlogon.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myobject.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myprocessinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myproviderinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myruleinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mysubject.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mytimestamp.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myuseraccountdetails.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myuseraccountdetailsstructure.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\processstats.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\processstats_server.skeleton.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\process_constants.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\process_types.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\registerdeviceservice.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\stdafx.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\data.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\dbhandler.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\getprocessid.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\io.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\manager.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\memory.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myaccessrequestinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myaccountforwhichlogonfailed.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myadditionalinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myapplicationinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mycalloutinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mychangeinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mydbhandler.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mydetailedauthenticationinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myerrorinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myfailureinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myfilterinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\myimpersonationlevel.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mylayerinformation.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\mylogmanager.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\centralnodeservicev3_constants.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\centralnodeservicev3_types.obj
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\cpu.obj
-e:\aaa - copy\windowsagent\datacollection\debug\project.ilk
-e:\aaa - copy\windowsagent\datacollection\debug\project.exe
-e:\aaa - copy\windowsagent\datacollection\debug\project.pdb
-e:\aaa - copy - copy\windowsagent\datacollection\debug\project.ilk
-e:\aaa - copy - copy\windowsagent\datacollection\debug\project.exe
-e:\aaa - copy - copy\windowsagent\datacollection\debug\project.pdb
-e:\aaa - copy\windowsagent\datacollection\debug\system.data.dll
-e:\aaa - copy\windowsagent\datacollection\debug\system.dll
-e:\aaa - copy\windowsagent\datacollection\debug\system.drawing.dll
-e:\aaa - copy\windowsagent\datacollection\debug\system.windows.forms.dll
-e:\aaa - copy\windowsagent\datacollection\debug\system.xml.dll
-e:\aaa - copy - copy\windowsagent\datacollection\debug\system.data.dll
-e:\aaa - copy - copy\windowsagent\datacollection\debug\system.dll
-e:\aaa - copy - copy\windowsagent\datacollection\debug\system.drawing.dll
-e:\aaa - copy - copy\windowsagent\datacollection\debug\system.windows.forms.dll
-e:\aaa - copy - copy\windowsagent\datacollection\debug\system.xml.dll
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.vcxprojresolveassemblyreference.cache
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\cl.command.1.tlog
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\cl.read.1.tlog
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\cl.write.1.tlog
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\link.command.1.tlog
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\link.read.1.tlog
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\link.write.1.tlog
-e:\aaa - copy - copy\windowsagent\datacollection\project\debug\project.tlog\project.write.1u.tlog
+e:\aaa\windowsagent\datacollection\project\debug\vc120.pdb
+e:\aaa\windowsagent\datacollection\project\debug\vc120.idb
+e:\aaa\windowsagent\datacollection\project\debug\mylogontype.obj
+e:\aaa\windowsagent\datacollection\project\debug\mylogretriever.obj
+e:\aaa\windowsagent\datacollection\project\debug\mylogstructure.obj
+e:\aaa\windowsagent\datacollection\project\debug\mylogstructuremaker.obj
+e:\aaa\windowsagent\datacollection\project\debug\mynetworkinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\mynewlogon.obj
+e:\aaa\windowsagent\datacollection\project\debug\myobject.obj
+e:\aaa\windowsagent\datacollection\project\debug\myprocessinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myproviderinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myruleinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\mysubject.obj
+e:\aaa\windowsagent\datacollection\project\debug\mytimestamp.obj
+e:\aaa\windowsagent\datacollection\project\debug\myuseraccountdetails.obj
+e:\aaa\windowsagent\datacollection\project\debug\myuseraccountdetailsstructure.obj
+e:\aaa\windowsagent\datacollection\project\debug\processstats.obj
+e:\aaa\windowsagent\datacollection\project\debug\processstats_server.skeleton.obj
+e:\aaa\windowsagent\datacollection\project\debug\process_constants.obj
+e:\aaa\windowsagent\datacollection\project\debug\process_types.obj
+e:\aaa\windowsagent\datacollection\project\debug\registerdeviceservice.obj
+e:\aaa\windowsagent\datacollection\project\debug\stdafx.obj
+e:\aaa\windowsagent\datacollection\project\debug\data.obj
+e:\aaa\windowsagent\datacollection\project\debug\dbhandler.obj
+e:\aaa\windowsagent\datacollection\project\debug\getprocessid.obj
+e:\aaa\windowsagent\datacollection\project\debug\io.obj
+e:\aaa\windowsagent\datacollection\project\debug\manager.obj
+e:\aaa\windowsagent\datacollection\project\debug\memory.obj
+e:\aaa\windowsagent\datacollection\project\debug\myaccessrequestinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myaccountforwhichlogonfailed.obj
+e:\aaa\windowsagent\datacollection\project\debug\myadditionalinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myapplicationinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\mycalloutinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\mychangeinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\mydbhandler.obj
+e:\aaa\windowsagent\datacollection\project\debug\mydetailedauthenticationinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myerrorinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myfailureinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myfilterinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\myimpersonationlevel.obj
+e:\aaa\windowsagent\datacollection\project\debug\mylayerinformation.obj
+e:\aaa\windowsagent\datacollection\project\debug\mylogmanager.obj
+e:\aaa\windowsagent\datacollection\project\debug\centralnodeservicev8_constants.obj
+e:\aaa\windowsagent\datacollection\project\debug\centralnodeservicev8_types.obj
+e:\aaa\windowsagent\datacollection\project\debug\cpu.obj
+e:\aaa\windowsagent\datacollection\debug\project.ilk
+e:\aaa\windowsagent\datacollection\debug\project.exe
+e:\aaa\windowsagent\datacollection\debug\project.pdb
+e:\aaa\windowsagent\datacollection\debug\system.data.dll
+e:\aaa\windowsagent\datacollection\debug\system.dll
+e:\aaa\windowsagent\datacollection\debug\system.drawing.dll
+e:\aaa\windowsagent\datacollection\debug\system.windows.forms.dll
+e:\aaa\windowsagent\datacollection\debug\system.xml.dll
+e:\aaa\windowsagent\datacollection\project\debug\project.vcxprojresolveassemblyreference.cache
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\cl.command.1.tlog
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\cl.read.1.tlog
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\cl.write.1.tlog
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\link.command.1.tlog
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\link.read.1.tlog
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\link.write.1.tlog
+e:\aaa\windowsagent\datacollection\project\debug\project.tlog\project.write.1u.tlog

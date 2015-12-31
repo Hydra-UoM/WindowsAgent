@@ -1,9 +1,139 @@
-﻿Build started 12/31/2015 5:23:22 PM.
-     1>Project "E:\Removed_enum_changed_to_string\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         Project.vcxproj -> E:\Removed_enum_changed_to_string\WindowsAgent\DataCollection\Debug\Project.exe
-     1>Done Building Project "E:\Removed_enum_changed_to_string\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
+﻿Build started 12/31/2015 11:30:53 PM.
+     1>Project "E:\AAA\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\local\boost_1_59_0 /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows" /I"C:\Users\\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src" /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VARIADIC_MAX=8 /D _CRT_SECURE_NO_WARNINGS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt centralNodeServiceV8_constants.cpp centralNodeServiceV8_types.cpp CPU.cpp Data.cpp DBHandler.cpp GetProcessID.cpp IO.cpp Manager.cpp Memory.cpp MyAccessRequestInformation.cpp MyAccountForWhichLogonFailed.cpp MyAdditionalInformation.cpp MyApplicationInformation.cpp MyCalloutInformation.cpp MyChangeInformation.cpp MyDBHandler.cpp MyDetailedAuthenticationInformation.cpp MyErrorInformation.cpp MyFailureInformation.cpp MyFilterInformation.cpp MyImpersonationLevel.cpp MyLayerInformation.cpp MyLogManager.cpp MyLogonType.cpp MyLogRetriever.cpp MyLogStructure.cpp MyLogStructureMaker.cpp MyNetworkInformation.cpp MyNewLogon.cpp MyObject.cpp MyProcessInformation.cpp MyProviderInformation.cpp MyRuleInformation.cpp MySubject.cpp MyTimeStamp.cpp MyUserAccountDetails.cpp MyUserAccountDetailsStructure.cpp ProcessStats.cpp ProcessStats_server.skeleton.cpp Process_constants.cpp Process_types.cpp RegisterDeviceService.cpp stdafx.cpp
+         stdafx.cpp
+         RegisterDeviceService.cpp
+         Process_types.cpp
+         Process_constants.cpp
+         ProcessStats_server.skeleton.cpp
+     1>e:\aaa\windowsagent\datacollection\project\Objects.h(219): warning C4244: '=' : conversion from 'DWORD' to 'float', possible loss of data
+     1>ProcessStats_server.skeleton.cpp(226): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
+         ProcessStats.cpp
+         MyUserAccountDetailsStructure.cpp
+         MyUserAccountDetails.cpp
+         MyTimeStamp.cpp
+         MySubject.cpp
+         MyRuleInformation.cpp
+         MyProviderInformation.cpp
+         MyProcessInformation.cpp
+         MyObject.cpp
+         MyNewLogon.cpp
+         MyNetworkInformation.cpp
+         MyLogStructureMaker.cpp
+         MyLogStructure.cpp
+         MyLogRetriever.cpp
+     1>MyLogRetriever.cpp(385): warning C4018: '<' : signed/unsigned mismatch
+     1>MyLogRetriever.cpp(1038): warning C4065: switch statement contains 'default' but no 'case' labels
+         MyLogonType.cpp
+         Generating Code...
+         Compiling...
+         MyLogManager.cpp
+     1>MyLogManager.cpp(360): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(364): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(371): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(375): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(385): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(389): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(396): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(400): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
+     1>MyLogManager.cpp(896): warning C4101: 'num2' : unreferenced local variable
+     1>MyLogManager.cpp(896): warning C4101: 'num1' : unreferenced local variable
+         MyLayerInformation.cpp
+         MyImpersonationLevel.cpp
+         MyFilterInformation.cpp
+         MyFailureInformation.cpp
+         MyErrorInformation.cpp
+         MyDetailedAuthenticationInformation.cpp
+         MyDBHandler.cpp
+     1>MyDBHandler.cpp(77): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>MyDBHandler.cpp(99): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>MyDBHandler.cpp(121): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>MyDBHandler.cpp(572): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>MyDBHandler.cpp(590): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+     1>MyDBHandler.cpp(608): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+         MyChangeInformation.cpp
+         MyCalloutInformation.cpp
+         MyApplicationInformation.cpp
+         MyAdditionalInformation.cpp
+         MyAccountForWhichLogonFailed.cpp
+         MyAccessRequestInformation.cpp
+         Memory.cpp
+         Manager.cpp
+     1>Manager.cpp(38): warning C4101: 'num2' : unreferenced local variable
+     1>Manager.cpp(38): warning C4101: 'num1' : unreferenced local variable
+         IO.cpp
+         GetProcessID.cpp
+         DBHandler.cpp
+         Data.cpp
+     1>Data.cpp(390): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>Data.cpp(331): warning C4101: 'createTime' : unreferenced local variable
+     1>Data.cpp(334): warning C4101: 'userTime' : unreferenced local variable
+     1>Data.cpp(332): warning C4101: 'exitTime' : unreferenced local variable
+     1>Data.cpp(333): warning C4101: 'kernelTime' : unreferenced local variable
+     1>Data.cpp(572): warning C4018: '<' : signed/unsigned mismatch
+     1>Data.cpp(584): warning C4018: '<' : signed/unsigned mismatch
+     1>Data.cpp(596): warning C4018: '<' : signed/unsigned mismatch
+     1>Data.cpp(608): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+     1>e:\aaa\windowsagent\datacollection\project\manager.cpp(56): warning C4715: 'Manager::ConfigFile' : not all control paths return a value
+     1>e:\aaa\windowsagent\datacollection\project\mydbhandler.cpp(441): warning C4715: 'MyDBHandler::retrieveUsersData' : not all control paths return a value
+     1>e:\aaa\windowsagent\datacollection\project\mydbhandler.cpp(566): warning C4715: 'MyDBHandler::retrieveLogData' : not all control paths return a value
+     1>e:\aaa\windowsagent\datacollection\project\mydbhandler.cpp(398): warning C4715: 'MyDBHandler::retrieveCurrentUserData' : not all control paths return a value
+     1>e:\aaa\windowsagent\datacollection\project\mylogmanager.cpp(913): warning C4715: 'MyLogManager::ConfigFile' : not all control paths return a value
+     1>e:\aaa\windowsagent\datacollection\project\mylogmanager.cpp(1033): warning C4715: 'MyLogManager::getMAC' : not all control paths return a value
+         Compiling...
+         CPU.cpp
+         centralNodeServiceV8_types.cpp
+         centralNodeServiceV8_constants.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\AAA\WindowsAgent\DataCollection\Debug\Project.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\local\boost_1_59_0\stage\lib /LIBPATH:"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\Debug" sqlite3.lib "libboost_thread-vc120-mt-gd-1_59.lib" "libboost_chrono-vc120-mt-gd-1_59.lib" libthrift.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\AAA\WindowsAgent\DataCollection\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\AAA\WindowsAgent\DataCollection\Debug\Project.lib" /MACHINE:X86 Debug\centralNodeServiceV8_constants.obj
+         Debug\centralNodeServiceV8_types.obj
+         Debug\CPU.obj
+         Debug\Data.obj
+         Debug\DBHandler.obj
+         Debug\GetProcessID.obj
+         Debug\IO.obj
+         Debug\Manager.obj
+         Debug\Memory.obj
+         Debug\MyAccessRequestInformation.obj
+         Debug\MyAccountForWhichLogonFailed.obj
+         Debug\MyAdditionalInformation.obj
+         Debug\MyApplicationInformation.obj
+         Debug\MyCalloutInformation.obj
+         Debug\MyChangeInformation.obj
+         Debug\MyDBHandler.obj
+         Debug\MyDetailedAuthenticationInformation.obj
+         Debug\MyErrorInformation.obj
+         Debug\MyFailureInformation.obj
+         Debug\MyFilterInformation.obj
+         Debug\MyImpersonationLevel.obj
+         Debug\MyLayerInformation.obj
+         Debug\MyLogManager.obj
+         Debug\MyLogonType.obj
+         Debug\MyLogRetriever.obj
+         Debug\MyLogStructure.obj
+         Debug\MyLogStructureMaker.obj
+         Debug\MyNetworkInformation.obj
+         Debug\MyNewLogon.obj
+         Debug\MyObject.obj
+         Debug\MyProcessInformation.obj
+         Debug\MyProviderInformation.obj
+         Debug\MyRuleInformation.obj
+         Debug\MySubject.obj
+         Debug\MyTimeStamp.obj
+         Debug\MyUserAccountDetails.obj
+         Debug\MyUserAccountDetailsStructure.obj
+         Debug\ProcessStats.obj
+         Debug\ProcessStats_server.skeleton.obj
+         Debug\Process_constants.obj
+         Debug\Process_types.obj
+         Debug\RegisterDeviceService.obj
+         Debug\stdafx.obj
+         Project.vcxproj -> E:\AAA\WindowsAgent\DataCollection\Debug\Project.exe
+     1>Done Building Project "E:\AAA\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.29
+Time Elapsed 00:01:21.04
