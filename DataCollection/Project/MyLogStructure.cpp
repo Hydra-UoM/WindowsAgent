@@ -196,10 +196,12 @@ void MyLogStructure::print()
 	//_tprintf( TEXT("Process's image name:  %ls\n\n"),processImageName);
 }
 
-myLogStructure MyLogStructure::toStruct(int summarizationLevel)
+myLogStructure MyLogStructure::toStruct(int summarizationLevel, string processName1, string eventCategory1)
 {
 	//sizeOfEvent = sizeOfEvent + str_eventID.length() + str_level.length() + str_executionProcessID.length() + str_eventMessageString.length();
 	myLogStructure m;
+	m.processName = processName1;
+	m.eventCategory = eventCategory1;
 	m.myTimeStamp1 = timeStamp.toTimeStampStruct();
 	if (summarizationLevel == 2) // High level summarization.
 	{

@@ -30,8 +30,8 @@ public:
 	// bandwidth high && resource utilization low
 	static bool isInternetConnectionAvailable();
 	static string ConfigFile();
-	static vector<HydraCN::myLogStructure> changeLogListFormatToBeSent(vector<myStruct::myLogStructure> logStructList, string eventCategory, string process_name);
-	static HydraCN::myLogStructure changeLogFormatToBeSent(myStruct::myLogStructure logStruct, string eventCategory, string process_name);
+	static vector<HydraCN::myLogStructure> changeLogListFormatToBeSent(vector<myStruct::myLogStructure> logStructList/**, string eventCategory, string process_name*/);
+	static HydraCN::myLogStructure changeLogFormatToBeSent(myStruct::myLogStructure logStruct/**, string eventCategory, string process_name*/);
 
 	static vector<HydraCN::myUserAccountDetailsStruct> changeUserInfoListFormatToBeSent(vector<myStruct::myUserAccountDetailsStruct> userStructList);
 	static HydraCN::myUserAccountDetailsStruct changeUserInfoFormatToBeSent(myStruct::myUserAccountDetailsStruct userStruct);
@@ -60,6 +60,5 @@ public:
 	static void sendStoredData();
 	static void storeImportantLogData();
 	static string getMAC();
-	static string getEventCategory(int eventIndex);
 };
 #endif

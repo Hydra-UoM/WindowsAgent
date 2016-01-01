@@ -57,7 +57,7 @@ public:
 	void initializeAvailableInformation();
 	//std::vector<wstring> splitLPWSTRWithManyDelimiters(const wstring &original, const wstring &delimiters);
 	string wchar_t_pointerToString(const wchar_t*text);
-	myStruct::myLogStructure toStruct(int summarizationLevel);
+	myStruct::myLogStructure toStruct(int summarizationLevel, string processName1, string eventCategory1);
 
 	//private:
 	const wchar_t* message; // change it into wstring from const wchar_t* makes exception

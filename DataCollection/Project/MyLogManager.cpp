@@ -120,30 +120,32 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 	myStruct::myLogStructure tempLogStructure;												HydraCN::myLogStructure tempLogStructureToBeSent;
 
 	isAllowed = true;
-	int eventIndex = stoi(*intIterator);
+	MyDBHandler Dbh;
+	int eventIndex = 18;
 	while (isAllowed)
 	{
 		try{
 			transport->open();
 			for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
 			{
+				eventIndex = stoi(*intIterator);
 				switch (eventIndex)
 				{
 					case 18:
 						logList = MyLogManager::getLogs(timeInMinute * 60000, summarizationLevel, logType, process_name, securityLevel);
-						logListToBeSent = changeLogListFormatToBeSent(logList,"USER_DEFINED",process_name);
+						logListToBeSent = changeLogListFormatToBeSent(logList/**,"USER_DEFINED",process_name*/);
 						client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed18" << endl;
 						break;
 					case 17:
 						logList = MyLogManager::getLogonFailures(timeInMinute * 60000, summarizationLevel);
-						logListToBeSent = changeLogListFormatToBeSent(logList,"LOGON_FAILURES", "");
+						logListToBeSent = changeLogListFormatToBeSent(logList/**,"LOGON_FAILURES", ""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed17" << endl;
 						break;
 					case 25:
 						logList = MyLogManager::getSuccessLoginInformation(timeInMinute * 60000, summarizationLevel);
-						logListToBeSent = changeLogListFormatToBeSent(logList, "SUCCESS_LOGIN","");
+						logListToBeSent = changeLogListFormatToBeSent(logList/**, "SUCCESS_LOGIN",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed25" << endl;
 						break;
@@ -151,7 +153,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList, "FIREWALL_EVENTS","");
+							(logList/**, "FIREWALL_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed27" << endl;
 					
@@ -160,7 +162,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getAccountUsage(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList,"ACCOUNT_USAGE","");
+							(logList/**,"ACCOUNT_USAGE",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed28" << endl;
 					
@@ -168,7 +170,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					case 29:
 						logList = MyLogManager::getGroupPolicyEditors(timeInMinute * 60000, summarizationLevel);
 					
-						logListToBeSent = changeLogListFormatToBeSent(logList,"GROUP_POLICY_EDITORS","");
+						logListToBeSent = changeLogListFormatToBeSent(logList/**,"GROUP_POLICY_EDITORS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed29" << endl;
 					
@@ -176,7 +178,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					case 30:
 						logList = MyLogManager::getWindowsDefenderEvents(timeInMinute * 60000, summarizationLevel);
 					
-						logListToBeSent = changeLogListFormatToBeSent(logList,"WINDOWS_DEFENDER_EVENTS","");
+						logListToBeSent = changeLogListFormatToBeSent(logList/**,"WINDOWS_DEFENDER_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed30" << endl;
 					
@@ -184,7 +186,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					case 31:
 						logList = MyLogManager::getMobileDeviceEvents(timeInMinute * 60000, summarizationLevel);
 					
-						logListToBeSent = changeLogListFormatToBeSent(logList, "MOBILE_DEVICE_EVENTS","");
+						logListToBeSent = changeLogListFormatToBeSent(logList/**, "MOBILE_DEVICE_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed31" << endl;
 				
@@ -192,7 +194,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					case 32:
 						logList = MyLogManager::getPrintingServicesEvents(timeInMinute * 60000, summarizationLevel);
 					
-						logListToBeSent = changeLogListFormatToBeSent(logList,"PRINTING_SERVICES","");
+						logListToBeSent = changeLogListFormatToBeSent(logList/**,"PRINTING_SERVICES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed32" << endl;
 					
@@ -201,7 +203,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getSystemOrServiceFailures(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList,"SYSTEM_OR_SERVICE_FAILURES","");
+							(logList/**,"SYSTEM_OR_SERVICE_FAILURES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed33" << endl;
 					
@@ -210,7 +212,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getClearingEventLogs(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList,"CLEARING_EVENT_LOGS","");
+							(logList/**,"CLEARING_EVENT_LOGS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed34" << endl;
 					
@@ -219,7 +221,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getWindowsUpdateErrors(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList, "WINDOWS_UPDATE_ERRORS","");
+							(logList/**, "WINDOWS_UPDATE_ERRORS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed35" << endl;
 					
@@ -228,7 +230,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getApplicationCrashes(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList,"APPLICATION_CRASHES","");
+							(logList/**,"APPLICATION_CRASHES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed36" << endl;
 					
@@ -237,7 +239,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getSoftwareAndServicesInstallation(timeInMinute * 60000, summarizationLevel);
 					
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList, "SOFTWARE_AND_SERVICES_INSTALLATION","");
+							(logList/**, "SOFTWARE_AND_SERVICES_INSTALLATION",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed37" << endl;
 					
@@ -245,7 +247,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					case 38:
 						logList = MyLogManager::getRemoteLoginEvents(timeInMinute * 60000, summarizationLevel);
 						logListToBeSent = changeLogListFormatToBeSent
-							(logList, "REMOTE_LOGIN_EVENTS","");
+							(logList/**, "REMOTE_LOGIN_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 							cout << "Pushed38" << endl;
 					
@@ -272,69 +274,26 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 		}
 		catch (TException& tx)
 		{
-			getEventCategory(stoi(*intIterator));
 			cout << "ERROR: " << tx.what() << endl;
-			MyDBHandler Dbh;
-			Dbh.createLogTable();
-			Dbh.storeLogData(logList);
+			if (eventIndex == 22)
+			{
+				Dbh.createCurrentUserTable();
+				Dbh.storeCurrentUserData(getCurrentLoggedInUserInfo);
+			}
+			else if (eventIndex == 23)
+			{
+				Dbh.createUsersTable();
+				Dbh.storeUsersData(getAllUserInformationList);
+			}
+			else
+			{
+				Dbh.createLogTable();
+				Dbh.storeLogData(logList);
+			}
 		}
 		Sleep(timeInMinute * 60000);
 	}
 	isNotCompleted = false;
-}
-
-string MyLogManager::getEventCategory(int eventIndex)
-{
-	string eventCategory;
-	switch (eventIndex)
-	{
-		case 18:
-			eventCategory = "USER_DEFINED";
-			break;
-		case 17:
-			eventCategory = "LOGON_FAILURES";
-			break;
-		case 25:
-			eventCategory = "SUCCESS_LOGIN";
-			break;
-		case 27:
-			eventCategory = "FIREWALL_EVENTS";
-			break;
-		case 28:
-			eventCategory = "ACCOUNT_USAGE";
-			break;
-		case 29:
-			eventCategory = "GROUP_POLICY_EDITORS";
-			break;
-		case 30:
-			eventCategory = "WINDOWS_DEFENDER_EVENTS";
-			break;
-		case 31:
-			eventCategory = "MOBILE_DEVICE_EVENTS";
-			break;
-		case 32:
-			eventCategory = "PRINTING_SERVICES";
-			break;
-		case 33:
-			eventCategory = "SYSTEM_OR_SERVICE_FAILURES";
-			break;
-		case 34:
-			eventCategory = "CLEARING_EVENT_LOGS";
-			break;
-		case 35:
-			eventCategory = "WINDOWS_UPDATE_ERRORS";
-			break;
-		case 36:
-			eventCategory = "APPLICATION_CRASHES";
-			break;
-		case 37:
-			eventCategory = "SOFTWARE_AND_SERVICES_INSTALLATION";
-			break;
-		case 38:
-			eventCategory = "REMOTE_LOGIN_EVENTS";
-			break;
-	}
-	return eventCategory;
 }
 
 void MyLogManager::stopExecution()
@@ -350,7 +309,7 @@ void MyLogManager::stopExecution()
 
 vector<myStruct::myLogStructure> MyLogManager::getLogs(int timeGapInMilliSeconds, int64_t summarizationLevel, string logType, string process_name, string securityLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("USER_DEFINED");
 	if (logType.compare("") == 0) // need to send all logs
 	{
 		if (process_name.compare("") == 0) // need to send logs for all process
@@ -405,7 +364,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogs(int timeGapInMilliSeconds
 
 vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcesses(string logType, int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructList;
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", timeGapInMilliSeconds);
@@ -425,7 +384,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcesses(string log
 
 vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcess(string logType, string process_name, int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructList;
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", process_name, timeGapInMilliSeconds);
@@ -438,7 +397,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcess(string logType
 
 vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcessesWithSecurityConstraint(string logType, string securityLevel, int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructList;
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
@@ -450,7 +409,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcessesWithSecurit
 
 vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcessWithSecurityConstraint(string logType, string securityLevel, string process_name, int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructList;
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
@@ -488,7 +447,7 @@ vector<myStruct::myUserAccountDetailsStruct> MyLogManager::getAllUserInformation
 
 vector<myStruct::myLogStructure> MyLogManager::getLogonFailures(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("LOGON_FAILURES");
 	vector<myStruct::myLogStructure>logStructList;
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.handleFailedLoginEvents(timeGapInMilliSeconds, summarizationLevel);
@@ -506,7 +465,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogonFailures(int timeGapInMil
 
 vector<myStruct::myLogStructure> MyLogManager::getSuccessLoginInformation(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("SUCCESS_LOGIN");
 	vector<myStruct::myLogStructure>logStructList;
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.handleSuccessLoginEvents(timeGapInMilliSeconds, summarizationLevel);
@@ -524,7 +483,7 @@ vector<myStruct::myLogStructure> MyLogManager::getSuccessLoginInformation(int ti
 
 vector<myStruct::myLogStructure> MyLogManager::getFirewallEvents(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("FIREWALL_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleFirewallEvents(timeGapInMilliSeconds, 50000);
@@ -536,7 +495,7 @@ vector<myStruct::myLogStructure> MyLogManager::getFirewallEvents(int timeGapInMi
 
 vector<myStruct::myLogStructure> MyLogManager::getAccountUsage(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("ACCOUNT_USAGE");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleAccountUsage(timeGapInMilliSeconds, 50000);
@@ -548,7 +507,7 @@ vector<myStruct::myLogStructure> MyLogManager::getAccountUsage(int timeGapInMill
 
 vector<myStruct::myLogStructure> MyLogManager::getGroupPolicyEditors(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("GROUP_POLICY_EDITORS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.groupPolicyEditorsEvents(timeGapInMilliSeconds, 50000);
@@ -560,7 +519,7 @@ vector<myStruct::myLogStructure> MyLogManager::getGroupPolicyEditors(int timeGap
 
 vector<myStruct::myLogStructure> MyLogManager::getWindowsDefenderEvents(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("WINDOWS_DEFENDER_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.windowsDefenderEvents(timeGapInMilliSeconds, 50000);
@@ -572,7 +531,7 @@ vector<myStruct::myLogStructure> MyLogManager::getWindowsDefenderEvents(int time
 
 vector<myStruct::myLogStructure> MyLogManager::getMobileDeviceEvents(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("MOBILE_DEVICE_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.mobileDeviceEvents(timeGapInMilliSeconds, 50000);
@@ -584,7 +543,7 @@ vector<myStruct::myLogStructure> MyLogManager::getMobileDeviceEvents(int timeGap
 
 vector<myStruct::myLogStructure> MyLogManager::getPrintingServicesEvents(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("PRINTING_SERVICES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.printingServicesEvents(timeGapInMilliSeconds, 50000);
@@ -596,7 +555,7 @@ vector<myStruct::myLogStructure> MyLogManager::getPrintingServicesEvents(int tim
 
 vector<myStruct::myLogStructure> MyLogManager::getSystemOrServiceFailures(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("SYSTEM_OR_SERVICE_FAILURES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.systemOrServiceFailures(timeGapInMilliSeconds, 50000);
@@ -608,7 +567,7 @@ vector<myStruct::myLogStructure> MyLogManager::getSystemOrServiceFailures(int ti
 
 vector<myStruct::myLogStructure> MyLogManager::getClearingEventLogs(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("CLEARING_EVENT_LOGS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.clearingEventLogs(timeGapInMilliSeconds, summarizationLevel, 50000);
@@ -618,7 +577,7 @@ vector<myStruct::myLogStructure> MyLogManager::getClearingEventLogs(int timeGapI
 
 vector<myStruct::myLogStructure> MyLogManager::getWindowsUpdateErrors(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("WINDOWS_UPDATE_ERRORS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.windowsUpdateErrors(timeGapInMilliSeconds, summarizationLevel, 50000);
@@ -628,7 +587,7 @@ vector<myStruct::myLogStructure> MyLogManager::getWindowsUpdateErrors(int timeGa
 
 vector<myStruct::myLogStructure> MyLogManager::getApplicationCrashes(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("APPLICATION_CRASHES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.applicationCrashes(timeGapInMilliSeconds, summarizationLevel, 50000);
@@ -638,7 +597,7 @@ vector<myStruct::myLogStructure> MyLogManager::getApplicationCrashes(int timeGap
 
 vector<myStruct::myLogStructure> MyLogManager::getSoftwareAndServicesInstallation(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("SOFTWARE_AND_SERVICES_INSTALLATION");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.softwareAndServicesInstallation(timeGapInMilliSeconds, summarizationLevel, 50000);
@@ -648,7 +607,7 @@ vector<myStruct::myLogStructure> MyLogManager::getSoftwareAndServicesInstallatio
 
 vector<myStruct::myLogStructure> MyLogManager::getRemoteLoginEvents(int timeGapInMilliSeconds, int summarizationLevel)
 {
-	MyLogRetriever myLogRetriever;
+	MyLogRetriever myLogRetriever("REMOTE_LOGIN_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	logStructList = myLogRetriever.getRemoteLoginEvents(timeGapInMilliSeconds, summarizationLevel);
@@ -669,8 +628,9 @@ vector<HydraCN::myUserAccountDetailsStruct> MyLogManager::changeUserInfoListForm
 	}
 	return userStructListToBeSent;
 }
+
 vector<HydraCN::myLogStructure> MyLogManager::changeLogListFormatToBeSent
-(vector<myStruct::myLogStructure> logStructList, string eventCategory, string process_name)
+(vector<myStruct::myLogStructure> logStructList/**, string eventCategory, string process_name*/)
 {
 	vector<myStruct::myLogStructure>::iterator logIterator;
 	myStruct::myLogStructure tempLogStructure;												HydraCN::myLogStructure tempLogStructureToBeSent;
@@ -678,7 +638,7 @@ vector<HydraCN::myLogStructure> MyLogManager::changeLogListFormatToBeSent
 	for (logIterator = logStructList.begin(); logIterator != logStructList.end(); logIterator++)
 	{
 		tempLogStructure = (*logIterator);
-		tempLogStructureToBeSent = changeLogFormatToBeSent(tempLogStructure, eventCategory, process_name);
+		tempLogStructureToBeSent = changeLogFormatToBeSent(tempLogStructure/**, eventCategory, process_name*/);
 		logListToBeSent.push_back(tempLogStructureToBeSent);
 	}
 	return logListToBeSent;
@@ -710,7 +670,7 @@ HydraCN::myUserAccountDetailsStruct MyLogManager::changeUserInfoFormatToBeSent(m
 }
 
 HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent
-(myStruct::myLogStructure logStruct, string eventCategory, string process_name)
+(myStruct::myLogStructure logStruct/**, string eventCategory, string process_name*/)
 {
 	HydraCN::myLogStructure tempLogStructureToBeSent;
 	tempLogStructureToBeSent.message = logStruct.message;
@@ -882,8 +842,8 @@ HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent
 	tempLogStructureToBeSent.myDetailedAuthenticationInformation1 = tempMyDetailedAuthenticationInformationToBeSent;
 
 	tempLogStructureToBeSent.mac = getMAC();
-	tempLogStructureToBeSent.eventCategory = eventCategory;
-	tempLogStructureToBeSent.processName = process_name;
+	tempLogStructureToBeSent.eventCategory = logStruct.eventCategory;
+	tempLogStructureToBeSent.processName = logStruct.processName;
 	return tempLogStructureToBeSent;
 }
 
@@ -960,9 +920,9 @@ void MyLogManager::sendStoredData()
 void MyLogManager::storeImportantLogData()
 {
 	vector<myStruct::myLogStructure> logList;
-	logList = MyLogManager::getLogonFailures(50000, 0);
 	MyDBHandler Dbh;
 	Dbh.createLogTable();
+	logList = MyLogManager::getLogonFailures(50000, 0);
 	Dbh.storeLogData(logList);
 	logList = MyLogManager::getSuccessLoginInformation(50000, 0);
 	Dbh.storeLogData(logList);

@@ -29,7 +29,6 @@ namespace myStruct
 		std::string usri4_profile = "";
 		std::string usri4_password_expired = "";
 		std::string usri4_auth_flags = "";
-		std::string mac = "";
 	};
 
 	struct myRuleInformation
@@ -262,7 +261,6 @@ namespace myStruct
 		myNewLogon myNewLogon1;
 		myDetailedAuthenticationInformation myDetailedAuthenticationInformation1;
 
-		std::string mac = "";
 		std::string eventCategory = "";
 		std::string processName = "";
 	};

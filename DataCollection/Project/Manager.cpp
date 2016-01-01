@@ -235,14 +235,22 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 						//if a process haves the values equal or bigger than the user input the process is contained in temp
 						if (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
 						{
-
-
 							proc.name = get<0>(i);
 							proc.cpuUsage = get<5>(i);
 							proc.ramUsage = (get<4>(i));
 							proc.sentData = (get<8>(i));
 							proc.receiveData = (get<9>(i));
 							proc.pid = std::to_string(get<1>(i));
+
+							cout << proc.name << endl;
+							cout << proc.cpuUsage << endl;
+							cout << proc.ramUsage << endl;
+							cout << proc.sentData << endl;
+							cout << proc.receiveData << endl;
+							cout << proc.pid << endl;
+
+							cout << "**********************" << endl;
+
 							process.push_back(proc);
 						}
 					}
@@ -271,9 +279,8 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		do{
 			try {
 				transport->open();
-				cout << "Data Pushed" << endl;
 				val = client.pushProcessesInfo(process);
-
+				cout << "Data Pushed" << endl;
 				transport->close();
 			}
 			catch (TException& tx) {

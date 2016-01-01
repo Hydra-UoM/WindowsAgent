@@ -12,7 +12,6 @@ extern bool tRetired;
 class Manager :public CPU, public Memory, public IO
 {
 public:
-
 	Manager();
 	virtual ~Manager();
 	string ConfigFile();

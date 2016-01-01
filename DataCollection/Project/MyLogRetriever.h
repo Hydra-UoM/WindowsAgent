@@ -20,7 +20,7 @@ using namespace std;
 class MyLogRetriever
 {
 public:
-	MyLogRetriever();
+	MyLogRetriever(std::string eventCategory1);
 	vector<myStruct::myLogStructure> getAllLogsForAProcess(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel, std::string process_name);
 	vector<myStruct::myLogStructure> getAllLogs(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel);
 
@@ -85,6 +85,9 @@ public:
 
 	MyLogStructure*myLogStructures[800];
 	int totalNumberOfEvents = 0;
+
 	int numberOfAvailableEvents = 0;
+	string processName = "";
+	string eventCategory = "";
 };
 #endif
