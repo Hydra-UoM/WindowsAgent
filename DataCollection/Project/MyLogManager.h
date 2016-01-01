@@ -14,6 +14,7 @@
 #include <fstream>
 #include <wininet.h>
 #include "MyDBHandler.h"
+#include "Manager.h"
 
 #pragma comment(lib, "iphlpapi.lib")
 
@@ -59,6 +60,5 @@ public:
 	static vector<myStruct::myUserAccountDetailsStruct> getAllUserInformation(int summarizationLevel);
 	static void sendStoredData();
 	static void storeImportantLogData();
-	static string getMAC();
 };
 #endif

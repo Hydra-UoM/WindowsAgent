@@ -9,7 +9,6 @@
 #include <Assert.h>
 #pragma comment(lib, "iphlpapi.lib")
 
-
 using namespace std;
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -583,10 +582,11 @@ void Manager::deviceClient(){
 	std::string type = "Windows";
 
 	device.deviceId = manage.getMAC();
+	cout << "+++++++" << device.deviceId << endl;
 	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];
-	//device.name= myMan.getComputerName();
+	device.name = manage.getComputerName();
 
 	bool val = false;
 	do{

@@ -107,7 +107,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 		fileRead.push_back(token);
 	}
 	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));// 9091
-	cout << fileRead[0] << endl;
+	//cout << fileRead[0] << endl;
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 	RegisterDeviceServiceClient client(protocol);
@@ -124,10 +124,27 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 	int eventIndex = 18;
 	while (isAllowed)
 	{
-		try{
-			transport->open();
-			for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
+		for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
+		{
+			try
 			{
+				transport->open();
+				if (MyDBHandler::isAvailableLogData)
+				{
+					logList = MyDBHandler::retrieveLogData();
+					MyDBHandler::deleteLogData();
+					logListToBeSent = changeLogListFormatToBeSent(logList/**,"USER_DEFINED",process_name*/);
+					client.pushLogInfoTest1(logListToBeSent);
+					cout << "Retriven Log Data" << endl;
+				}
+				if (MyDBHandler::isAvailableUsersData)
+				{
+					getAllUserInformationList = MyDBHandler::retrieveUsersData();
+					MyDBHandler::deleteUsersData();
+					getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
+					client.pushUsersInfo(getAllUserInformationListToBeSent);
+					cout << "Retriven Users Data" << endl;
+				}
 				eventIndex = stoi(*intIterator);
 				switch (eventIndex)
 				{
@@ -151,144 +168,146 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						break;
 					case 27:
 						logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "FIREWALL_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
 						cout << "Pushed27" << endl;
-					
+
 						break;
 					case 28:
 						logList = MyLogManager::getAccountUsage(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"ACCOUNT_USAGE",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed28" << endl;
-					
+						cout << "Pushed28" << endl;
+
 						break;
 					case 29:
 						logList = MyLogManager::getGroupPolicyEditors(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"GROUP_POLICY_EDITORS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed29" << endl;
-					
+						cout << "Pushed29" << endl;
+
 						break;
 					case 30:
 						logList = MyLogManager::getWindowsDefenderEvents(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"WINDOWS_DEFENDER_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed30" << endl;
-					
+						cout << "Pushed30" << endl;
+
 						break;
 					case 31:
 						logList = MyLogManager::getMobileDeviceEvents(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent(logList/**, "MOBILE_DEVICE_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed31" << endl;
-				
+						cout << "Pushed31" << endl;
+
 						break;
 					case 32:
 						logList = MyLogManager::getPrintingServicesEvents(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"PRINTING_SERVICES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed32" << endl;
-					
+						cout << "Pushed32" << endl;
+
 						break;
 					case 33:
 						logList = MyLogManager::getSystemOrServiceFailures(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"SYSTEM_OR_SERVICE_FAILURES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed33" << endl;
-					
+						cout << "Pushed33" << endl;
+
 						break;
 					case 34:
 						logList = MyLogManager::getClearingEventLogs(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"CLEARING_EVENT_LOGS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed34" << endl;
-					
+						cout << "Pushed34" << endl;
+
 						break;
 					case 35:
 						logList = MyLogManager::getWindowsUpdateErrors(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "WINDOWS_UPDATE_ERRORS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed35" << endl;
-					
+						cout << "Pushed35" << endl;
+
 						break;
 					case 36:
 						logList = MyLogManager::getApplicationCrashes(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"APPLICATION_CRASHES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed36" << endl;
-					
+						cout << "Pushed36" << endl;
+
 						break;
 					case 37:
 						logList = MyLogManager::getSoftwareAndServicesInstallation(timeInMinute * 60000, summarizationLevel);
-					
+
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "SOFTWARE_AND_SERVICES_INSTALLATION",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed37" << endl;
-					
+						cout << "Pushed37" << endl;
+
 						break;
 					case 38:
 						logList = MyLogManager::getRemoteLoginEvents(timeInMinute * 60000, summarizationLevel);
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "REMOTE_LOGIN_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-							cout << "Pushed38" << endl;
-					
+						cout << "Pushed38" << endl;
+
 						break;
 					case 22:
 						getCurrentLoggedInUserInfo = MyLogManager::getCurrentLoggedInUser(summarizationLevel);
-					
-							getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
-							client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
-							cout << "pushed22" << endl;
-					
+
+						getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
+						client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
+						cout << "pushed22" << endl;
+
 						break;
 					case 23:
 						getAllUserInformationList = MyLogManager::getAllUserInformation(summarizationLevel);
-					
-							getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
-							client.pushUsersInfo(getAllUserInformationListToBeSent);
-							cout << "pushed23" << endl;
+
+						getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
+						client.pushUsersInfo(getAllUserInformationListToBeSent);
+						cout << "pushed23" << endl;
 						break;
 				}
+				transport->close();
 			}
-			transport->close();
-			//}
-		}
-		catch (TException& tx)
-		{
-			cout << "ERROR: " << tx.what() << endl;
-			if (eventIndex == 22)
+			catch (TException& tx)
 			{
-				Dbh.createCurrentUserTable();
-				Dbh.storeCurrentUserData(getCurrentLoggedInUserInfo);
-			}
-			else if (eventIndex == 23)
-			{
-				Dbh.createUsersTable();
-				Dbh.storeUsersData(getAllUserInformationList);
-			}
-			else
-			{
-				Dbh.createLogTable();
-				Dbh.storeLogData(logList);
+				cout << "ERROR: " << tx.what() << endl;
+				if (eventIndex == 22)
+				{
+					Dbh.createCurrentUserTable();
+					Dbh.storeCurrentUserData(getCurrentLoggedInUserInfo);
+					cout << "Stored Current User Data" << endl;
+				}
+				else if (eventIndex == 23)
+				{
+					Dbh.createUsersTable();
+					Dbh.storeUsersData(getAllUserInformationList);
+					cout << "Stored Users Data" << endl;
+				}
+				else
+				{
+					Dbh.createLogTable();
+					Dbh.storeLogData(logList);
+					cout << "Stored Log Data" << endl;
+				}
 			}
 		}
 		Sleep(timeInMinute * 60000);
@@ -665,7 +684,9 @@ HydraCN::myUserAccountDetailsStruct MyLogManager::changeUserInfoFormatToBeSent(m
 	UserInfoToBeSent.usri4_profile = userStruct.usri4_profile;
 	UserInfoToBeSent.usri4_password_expired = userStruct.usri4_password_expired;
 	UserInfoToBeSent.usri4_auth_flags = userStruct.usri4_auth_flags;
-	UserInfoToBeSent.mac = getMAC();
+
+	Manager man;
+	UserInfoToBeSent.mac = man.getMAC();
 	return UserInfoToBeSent;
 }
 
@@ -841,9 +862,13 @@ HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent
 	tempLogStructureToBeSent.myNewLogon1 = tempMyNewLogonToBeSent;
 	tempLogStructureToBeSent.myDetailedAuthenticationInformation1 = tempMyDetailedAuthenticationInformationToBeSent;
 
-	tempLogStructureToBeSent.mac = getMAC();
+	Manager man;
+	tempLogStructureToBeSent.mac = man.getMAC();
+
 	tempLogStructureToBeSent.eventCategory = logStruct.eventCategory;
 	tempLogStructureToBeSent.processName = logStruct.processName;
+
+	cout << "*****" << tempLogStructureToBeSent.mac << endl;
 	return tempLogStructureToBeSent;
 }
 
@@ -952,42 +977,4 @@ void MyLogManager::storeImportantLogData()
 	Dbh.storeLogData(logList);
 	logList = MyLogManager::getLogs(50000, 0, "", "", "Error & Critical");
 	Dbh.storeLogData(logList);
-}
-
-string MyLogManager::getMAC(){
-	PIP_ADAPTER_INFO AdapterInfo;
-	DWORD dwBufLen = sizeof(AdapterInfo);
-	char *mac_addr = (char*)malloc(17);
-
-	AdapterInfo = (IP_ADAPTER_INFO *)malloc(sizeof(IP_ADAPTER_INFO));
-	if (AdapterInfo == NULL) {
-		printf("Error allocating memory needed to call GetAdaptersinfo\n");
-
-	}
-
-	// Make an initial call to GetAdaptersInfo to get the necessary size into the dwBufLen     variable
-	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == ERROR_BUFFER_OVERFLOW) {
-
-		AdapterInfo = (IP_ADAPTER_INFO *)malloc(dwBufLen);
-		if (AdapterInfo == NULL) {
-			printf("Error allocating memory needed to call GetAdaptersinfo\n");
-		}
-	}
-
-	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == NO_ERROR) {
-		PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;// Contains pointer to current adapter info
-		do {
-			sprintf(mac_addr, "%02X:%02X:%02X:%02X:%02X:%02X",
-				pAdapterInfo->Address[0], pAdapterInfo->Address[1],
-				pAdapterInfo->Address[2], pAdapterInfo->Address[3],
-				pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
-			//printf("mac: %s\n", mac_addr);
-			string mac(mac_addr);
-			return mac;
-
-			//printf("\n");
-			pAdapterInfo = pAdapterInfo->Next;
-		} while (pAdapterInfo);
-	}
-	free(AdapterInfo);
 }
