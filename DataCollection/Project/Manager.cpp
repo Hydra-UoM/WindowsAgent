@@ -183,8 +183,9 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 
 	cout << tRetired << "****" << endl;
 	while (tRetired == true){
-		
 		manage.Register();
+
+		
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
 		for (int i = 0; i < samples + 2; i++)
@@ -246,13 +247,13 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 				}
 			}
 		}
-
+		manage.sendStoredData();
 		
 			try {
 				transport->open();
-				manage.sendStoredData();
 				val = client.pushProcessesInfo(process);
 				cout << "Data Pushed" << endl;
+				db.deleteData();
 				transport->close();
 			}
 			catch (TException& tx) {
@@ -403,7 +404,7 @@ void Manager::currentData(int time){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
 	while (tRetired == true){
-		manage.sendStoredData();
+		
 		procF = manage.FilterAllProcesses(30, 1024 * 300, 0, 0);
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -420,12 +421,12 @@ void Manager::currentData(int time){
 			proc.pid = std::to_string(i.id);
 			process.push_back(proc);
 		}
-
+		manage.sendStoredData();
 			try {
 				transport->open();
 				cout << "Data Pushed" << endl;
 				val = client.pushProcessesInfo(process);
-
+				db.deleteData();
 				transport->close();
 			}
 			catch (TException& tx) {
@@ -538,7 +539,7 @@ void Manager::sendStoredData(){
 			cout << "Data Pushed" << endl;
 			val = client.pushProcessesInfo(process);
 			transport->close();
-			Dbh.deleteData();
+			//Dbh.deleteData();
 		}
 		catch (TException& tx) {
 			cout << "ERROR: " << tx.what() << endl;
