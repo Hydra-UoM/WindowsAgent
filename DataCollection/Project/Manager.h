@@ -29,8 +29,9 @@ public:
 	static void sendStoredData();
 	string getMAC();
 	string getIP();
+	string getTime(); 
 	string getComputerName();
-	void printError(TCHAR* msg);
+	//void printError(TCHAR* msg);
 };
 
 #endif

@@ -9,6 +9,7 @@
 #include <Assert.h>
 #pragma comment(lib, "iphlpapi.lib")
 
+
 using namespace std;
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -169,8 +170,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
 	}
-	//vector<ProcessF> temp;
-	//ProcessF p;
+	
 	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
@@ -180,36 +180,6 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 	d.MAX_SAMPLES = samples;
 
-	PIP_ADAPTER_INFO AdapterInfo;
-	DWORD dwBufLen = sizeof(AdapterInfo);
-	char *mac_addr = (char*)malloc(17);
-	AdapterInfo = (IP_ADAPTER_INFO *)malloc(sizeof(IP_ADAPTER_INFO));
-	if (AdapterInfo == NULL) {
-		printf("Error allocating memory needed to call GetAdaptersinfo\n");
-
-	}
-
-	// Make an initial call to GetAdaptersInfo to get the necessary size into the dwBufLen     variable
-	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == ERROR_BUFFER_OVERFLOW) {
-
-		AdapterInfo = (IP_ADAPTER_INFO *)malloc(dwBufLen);
-		if (AdapterInfo == NULL) {
-			printf("Error allocating memory needed to call GetAdaptersinfo\n");
-		}
-	}
-
-	if (GetAdaptersInfo(AdapterInfo, &dwBufLen) == NO_ERROR) {
-		PIP_ADAPTER_INFO pAdapterInfo = AdapterInfo;// Contains pointer to current adapter info
-		do {
-			sprintf(mac_addr, "%02X:%02X:%02X:%02X:%02X:%02X",
-				pAdapterInfo->Address[0], pAdapterInfo->Address[1],
-				pAdapterInfo->Address[2], pAdapterInfo->Address[3],
-				pAdapterInfo->Address[4], pAdapterInfo->Address[5]);
-			pAdapterInfo = pAdapterInfo->Next;
-		} while (pAdapterInfo);
-	}
-	free(AdapterInfo);
-	std::string mac(mac_addr);
 	cout << tRetired << "****" << endl;
 	while (tRetired == true){
 		bool val = false;
@@ -219,8 +189,10 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 			d.GetData();
 			Sleep(30000);
 		}
-		proc.mac = mac;
+		proc.mac = manage.getMAC();
+		cout << manage.getMAC();
 		proc.type = "Windows";
+		proc.timestamp = manage.getTime();
 
 
 		if (!processList.empty()){
@@ -582,11 +554,11 @@ void Manager::deviceClient(){
 	std::string type = "Windows";
 
 	device.deviceId = manage.getMAC();
-	cout << "+++++++" << device.deviceId << endl;
 	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];
-	device.name = manage.getComputerName();
+	device.name= manage.getComputerName();
+	
 
 	bool val = false;
 	do{
@@ -604,7 +576,7 @@ void Manager::deviceClient(){
 		}
 	} while (!val);
 }
-
+/*
 void Manager::printError(TCHAR* msg)
 {
 	DWORD eNum;
@@ -627,22 +599,31 @@ void Manager::printError(TCHAR* msg)
 
 	// Display the message
 	_tprintf(TEXT("\n\t%s failed with error %d (%s)"), msg, eNum, sysMsg);
-}
+}*/
 
 string Manager::getComputerName()
 {
 	string str_computerName;
 	LPWSTR  computerName;
-	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 	TCHAR  infoBuf[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
 	// Get and display the name of the computer. 
 	bufCharCount = INFO_BUFFER_SIZE;
 	if (!GetComputerName(infoBuf, &bufCharCount))
 	{
-		printError(TEXT("GetComputerName"));
+		//printError(TEXT("GetComputerName"));
 	}
 	computerName = infoBuf;
 	if (computerName){ str_computerName = CW2A(computerName); }
 	return str_computerName;
+}
+
+string Manager::getTime() {
+	time_t     now = time(0);
+	struct tm  tstruct;
+	char       buf[80];
+	tstruct = *localtime(&now);
+	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+	return buf;
 }
