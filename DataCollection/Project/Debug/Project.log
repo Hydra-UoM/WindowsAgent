@@ -1,9 +1,52 @@
-﻿Build started 1/1/2016 5:36:19 PM.
-     1>Project "E:\AAA\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
+﻿Build started 1/1/2016 9:48:27 PM.
+     1>Project "E:\_WindowsAgent\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>Link:
-         Project.vcxproj -> E:\AAA\WindowsAgent\DataCollection\Debug\Project.exe
-     1>Done Building Project "E:\AAA\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\_WindowsAgent\WindowsAgent\DataCollection\Debug\Project.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\local\boost_1_59_0\stage\lib /LIBPATH:"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\Debug" sqlite3.lib "libboost_thread-vc120-mt-gd-1_59.lib" "libboost_chrono-vc120-mt-gd-1_59.lib" libthrift.lib wininet.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\_WindowsAgent\WindowsAgent\DataCollection\Debug\Project.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\_WindowsAgent\WindowsAgent\DataCollection\Debug\Project.lib" /MACHINE:X86 Debug\centralNodeServiceV8_constants.obj
+         Debug\centralNodeServiceV8_types.obj
+         Debug\CPU.obj
+         Debug\Data.obj
+         Debug\DBHandler.obj
+         Debug\GetProcessID.obj
+         Debug\IO.obj
+         Debug\Manager.obj
+         Debug\Memory.obj
+         Debug\MyAccessRequestInformation.obj
+         Debug\MyAccountForWhichLogonFailed.obj
+         Debug\MyAdditionalInformation.obj
+         Debug\MyApplicationInformation.obj
+         Debug\MyCalloutInformation.obj
+         Debug\MyChangeInformation.obj
+         Debug\MyDBHandler.obj
+         Debug\MyDetailedAuthenticationInformation.obj
+         Debug\MyErrorInformation.obj
+         Debug\MyFailureInformation.obj
+         Debug\MyFilterInformation.obj
+         Debug\MyImpersonationLevel.obj
+         Debug\MyLayerInformation.obj
+         Debug\MyLogManager.obj
+         Debug\MyLogonType.obj
+         Debug\MyLogRetriever.obj
+         Debug\MyLogStructure.obj
+         Debug\MyLogStructureMaker.obj
+         Debug\MyNetworkInformation.obj
+         Debug\MyNewLogon.obj
+         Debug\MyObject.obj
+         Debug\MyProcessInformation.obj
+         Debug\MyProviderInformation.obj
+         Debug\MyRuleInformation.obj
+         Debug\MySubject.obj
+         Debug\MyTimeStamp.obj
+         Debug\MyUserAccountDetails.obj
+         Debug\MyUserAccountDetailsStructure.obj
+         Debug\ProcessStats.obj
+         Debug\ProcessStats_server.skeleton.obj
+         Debug\Process_constants.obj
+         Debug\Process_types.obj
+         Debug\RegisterDeviceService.obj
+         Debug\stdafx.obj
+         Project.vcxproj -> E:\_WindowsAgent\WindowsAgent\DataCollection\Debug\Project.exe
+     1>Done Building Project "E:\_WindowsAgent\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.35
+Time Elapsed 00:00:02.45
