@@ -1,4 +1,4 @@
-
+#include "RegisterDeviceService.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "DBHandler.h"
@@ -15,7 +15,6 @@ sqlite3_stmt *res;
 
 DBHandler::DBHandler()
 {
-	createTable();
 }
 
 
@@ -52,7 +51,8 @@ void DBHandler::createTable(){
 		"CPU          REAL,"\
 		"Memory       REAL,"\
 		"Upload       REAL,"\
-		"Download     REAL); ";
+		"Download       REAL,"\
+		"PID    TEXT); ";
 	rc = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
 	if (rc != SQLITE_OK){
 		fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -64,26 +64,25 @@ void DBHandler::createTable(){
 	sqlite3_close(db);
 }
 
-void DBHandler::insertData(){
+void DBHandler::insertData(vector<HydraCN::ThriftAgentProcessInfo> procF){
 	Manager manage;
-	vector<ProcessF> procF;
 
-	procF = manage.FilterAllProcesses(30, 1024 * 500, 0, 0);
 	sqlite3_stmt *pointer;
 	int k = 1;
 	char *q; // query
 	//char fp[MAX_PATH];
-	openDB();
-	q = "Insert into PerformData (Name, CPU, Memory, Upload, Download) VALUES(?1,?2,?3,?4,?5)";
+	createTable();
+	q = "Insert into PerformData (Name, CPU, Memory, Upload, Download, PID) VALUES(?1,?2,?3,?4,?5,?6)";
 	for (auto i : procF)
 	{
 		if (sqlite3_prepare_v2(db, q, strlen(q), &pointer, 0) == SQLITE_OK){
 			//cout<<"\n\n inside loop i values is "<<i<<"\n\n";
 			sqlite3_bind_text(pointer, 1, i.name.c_str(), strlen(i.name.c_str()), 0); //Process Name 
-			sqlite3_bind_double(pointer, 2, i.cpu);
-			sqlite3_bind_double(pointer, 3, i.mem);
-			sqlite3_bind_double(pointer, 4, i.up);
-			sqlite3_bind_double(pointer, 5, i.down);
+			sqlite3_bind_double(pointer, 2, i.cpuUsage);
+			sqlite3_bind_double(pointer, 3, i.ramUsage);
+			sqlite3_bind_double(pointer, 4, i.sentData);
+			sqlite3_bind_double(pointer, 5, i.receiveData);
+			sqlite3_bind_text(pointer, 6, i.pid.c_str(), strlen(i.name.c_str()), 0);
 			sqlite3_step(pointer);   // prepare statemnt Ready 
 			sqlite3_reset(pointer);
 		}
@@ -127,11 +126,10 @@ void DBHandler::viewData(){
 	}
 	sqlite3_close(db);
 }
-
-vector<ProcessF> DBHandler::sendData(){
+vector<HydraCN::ThriftAgentProcessInfo> DBHandler::sendData(){
 	openDB();
 	string get_data_qry = "SELECT * FROM PerformData";
-	vector<ProcessF> processList;
+	std::vector<HydraCN::ThriftAgentProcessInfo> processList;
 	sqlite3_stmt *pointer;
 
 	if (sqlite3_prepare_v2(db, ((char*)get_data_qry.c_str()), -1, &pointer, 0) == SQLITE_OK)
@@ -139,11 +137,12 @@ vector<ProcessF> DBHandler::sendData(){
 		int result = sqlite3_step(pointer);
 		while (result == SQLITE_ROW)
 		{
-			ProcessF pro;
+			HydraCN::ThriftAgentProcessInfo pro;
 			pro.name = (char*)sqlite3_column_text(pointer, 0);
-			pro.cpu = sqlite3_column_double(pointer, 1);
-			pro.mem = sqlite3_column_double(pointer, 2);
-			pro.up = sqlite3_column_double(pointer, 3);
+			pro.cpuUsage = sqlite3_column_double(pointer, 1);
+			pro.ramUsage = sqlite3_column_double(pointer, 2);
+			pro.sentData = sqlite3_column_double(pointer, 3);
+			pro.pid = sqlite3_column_double(pointer, 4);
 			result = sqlite3_step(pointer);
 			processList.push_back(pro);
 		}
