@@ -31,7 +31,8 @@ public:
 	string getIP();
 	string getTime(); 
 	string getComputerName();
-	//void printError(TCHAR* msg);
+	void Register();
+	void printError(TCHAR* msg);
 };
 
 #endif

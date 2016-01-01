@@ -20,6 +20,7 @@ using namespace  HydraCN;
 HydraCN::Device device;
 bool tCompleted = false;
 bool tRetired;
+DBHandler db;
 Manager::Manager()
 {
 }
@@ -182,6 +183,8 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 
 	cout << tRetired << "****" << endl;
 	while (tRetired == true){
+		
+		manage.Register();
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
 		for (int i = 0; i < samples + 2; i++)
@@ -190,7 +193,6 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 			Sleep(30000);
 		}
 		proc.mac = manage.getMAC();
-		cout << manage.getMAC();
 		proc.type = "Windows";
 		proc.timestamp = manage.getTime();
 
@@ -220,8 +222,6 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 							cout << proc.receiveData << endl;
 							cout << proc.pid << endl;
 
-							cout << "**********************" << endl;
-
 							process.push_back(proc);
 						}
 					}
@@ -247,17 +247,18 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 			}
 		}
 
-		do{
+		
 			try {
 				transport->open();
+				manage.sendStoredData();
 				val = client.pushProcessesInfo(process);
 				cout << "Data Pushed" << endl;
 				transport->close();
 			}
 			catch (TException& tx) {
+			   db.insertData(process);
 				cout << "ERROR: " << tx.what() << endl;
 			}
-		} while (!val);
 
 	}
 	tCompleted = true;
@@ -344,9 +345,13 @@ void Manager::fullData(int time){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
 	while (tRetired == true){
+		manage.sendStoredData();
 		procF = manage.GetAllProcesses();
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
+		proc.mac = manage.getMAC();
+		proc.type = "Windows";
+		proc.timestamp = manage.getTime();
 		for (auto i : procF)
 		{
 			proc.name = i.name;
@@ -358,7 +363,7 @@ void Manager::fullData(int time){
 			process.push_back(proc);
 		}
 
-		do{
+		
 			try {
 				transport->open();
 				cout << "Data Pushed" << endl;
@@ -367,11 +372,13 @@ void Manager::fullData(int time){
 				transport->close();
 			}
 			catch (TException& tx) {
+				db.insertData(process);
+				manage.Register();
 				cout << "ERROR: " << tx.what() << endl;
 			}
-		} while (!val);
-		Sleep(5000);
-	}
+			Sleep(time * 60000);
+		} 
+
 	tCompleted = true;
 }
 
@@ -396,9 +403,13 @@ void Manager::currentData(int time){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
 	while (tRetired == true){
+		manage.sendStoredData();
 		procF = manage.FilterAllProcesses(30, 1024 * 300, 0, 0);
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
+		proc.mac = manage.getMAC();
+		proc.type = "Windows";
+		proc.timestamp = manage.getTime();
 		for (auto i : procF)
 		{
 			proc.name = i.name;
@@ -410,7 +421,6 @@ void Manager::currentData(int time){
 			process.push_back(proc);
 		}
 
-		do{
 			try {
 				transport->open();
 				cout << "Data Pushed" << endl;
@@ -419,10 +429,11 @@ void Manager::currentData(int time){
 				transport->close();
 			}
 			catch (TException& tx) {
+				db.insertData(process);
+				manage.Register();
 				cout << "ERROR: " << tx.what() << endl;
 			}
-		} while (!val);
-		Sleep(time * 1000);
+		Sleep(time * 60000);
 	}
 	tCompleted = true;
 }
@@ -448,6 +459,7 @@ void Manager::importantData(int time){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
 	while (tRetired == true){
+		manage.sendStoredData();
 		for (int i = 0; i < time + 2; i++)
 		{
 			d.GetData();
@@ -455,9 +467,12 @@ void Manager::importantData(int time){
 		}
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
+		proc.mac = manage.getMAC();
+		proc.type = "Windows";
+		proc.timestamp = manage.getTime();
 		for (auto i : d.myData)
 		{
-			if (get<0>(i).c_str() == "Project.exe" || get<5>(i) >= 30 && get<4>(i) >= 5000 && get<8>(i) >= 0 && get<9>(i) >= 0)
+			if (get<0>(i).c_str() == "Project" || get<5>(i) >= 30 && get<4>(i) >= 5000 && get<8>(i) >= 0 && get<9>(i) >= 0)
 			{
 				proc.name = get<0>(i);
 				proc.cpuUsage = get<5>(i);
@@ -468,7 +483,6 @@ void Manager::importantData(int time){
 				process.push_back(proc);
 			}
 		}
-		do{
 			try {
 				transport->open();
 				cout << "Data Pushed" << endl;
@@ -477,16 +491,17 @@ void Manager::importantData(int time){
 				transport->close();
 			}
 			catch (TException& tx) {
+				db.insertData(process);
+				manage.Register();
 				cout << "ERROR: " << tx.what() << endl;
 			}
-		} while (!val);
 	}
 	tCompleted = true;
 }
 
 void Manager::sendStoredData(){
 	Manager manage;
-	vector<ProcessF> procF;
+	vector<HydraCN::ThriftAgentProcessInfo> procF;
 	string line;
 	vector<string> fileRead;
 	line = manage.ConfigFile();
@@ -509,30 +524,67 @@ void Manager::sendStoredData(){
 	for (auto i : procF)
 	{
 		proc.name = i.name;
-		proc.cpuUsage = i.cpu;
-		proc.ramUsage = i.mem;
-		proc.sentData = i.up;
-		proc.receiveData = i.down;
-		proc.pid = std::to_string(i.id);
+		proc.cpuUsage = i.cpuUsage;
+		proc.ramUsage = i.ramUsage;
+		proc.sentData = i.sentData;
+		proc.receiveData = i.receiveData;
+		proc.pid = i.pid;
 		process.push_back(proc);
 	}
 
-	bool val = false;
-	do{
+	boolean val = false;
 		try {
 			transport->open();
 			cout << "Data Pushed" << endl;
 			val = client.pushProcessesInfo(process);
 			transport->close();
-			//Dbh.deleteData();
+			Dbh.deleteData();
 		}
 		catch (TException& tx) {
 			cout << "ERROR: " << tx.what() << endl;
 		}
-	} while (!val);
 
 }
+void Manager::Register(){
+	Manager manage;
+	//MyLogManager myMan;
+	string line;
+	vector<string> fileRead;
+	line = manage.ConfigFile();
+	istringstream ss(line);
+	string token;
 
+	while (getline(ss, token, ',')) {
+		fileRead.push_back(token);
+	}
+	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));
+	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+	RegisterDeviceServiceClient client(protocol);
+
+	//Device Register Function 
+	std::string type = "Windows";
+
+	device.deviceId = manage.getMAC();
+	device.IPAddress = manage.getIP();
+	device.type = type;
+	device.group = fileRead[1];
+	device.name = manage.getComputerName();
+
+
+	bool val = false;
+		try {
+
+			transport->open();
+			val =client.registerDevice(device);
+			cout << "Registered" << endl;
+			transport->close();
+		}
+
+		catch (TException& tx) {
+			cout << "ERROR: " << tx.what() << endl;
+		}
+}
 void Manager::deviceClient(){
 	Manager manage;
 	//MyLogManager myMan;
@@ -576,7 +628,7 @@ void Manager::deviceClient(){
 		}
 	} while (!val);
 }
-/*
+
 void Manager::printError(TCHAR* msg)
 {
 	DWORD eNum;
@@ -599,7 +651,7 @@ void Manager::printError(TCHAR* msg)
 
 	// Display the message
 	_tprintf(TEXT("\n\t%s failed with error %d (%s)"), msg, eNum, sysMsg);
-}*/
+}
 
 string Manager::getComputerName()
 {
@@ -611,7 +663,7 @@ string Manager::getComputerName()
 	bufCharCount = INFO_BUFFER_SIZE;
 	if (!GetComputerName(infoBuf, &bufCharCount))
 	{
-		//printError(TEXT("GetComputerName"));
+		printError(TEXT("GetComputerName"));
 	}
 	computerName = infoBuf;
 	if (computerName){ str_computerName = CW2A(computerName); }
@@ -619,11 +671,12 @@ string Manager::getComputerName()
 }
 
 string Manager::getTime() {
-	time_t     now = time(0);
-	struct tm  tstruct;
-	char       buf[80];
-	tstruct = *localtime(&now);
-	strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+	time_t seconds;
 
-	return buf;
+	seconds = time(NULL);
+	std::ostringstream ss;
+	ss << seconds;
+	string str = ss.str();
+
+	return str;
 }

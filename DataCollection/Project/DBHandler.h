@@ -1,4 +1,5 @@
 #pragma once
+#include "RegisterDeviceService.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "DBHandler.h"
@@ -12,10 +13,10 @@ public:
 	~DBHandler();
 	void openDB();
 	void createTable();
-	void insertData();
+	void insertData(vector<HydraCN::ThriftAgentProcessInfo> procF);
 	void deleteData();
 	void viewData();
-	vector<ProcessF> sendData();
+	vector<HydraCN::ThriftAgentProcessInfo> sendData();
 };
 
 
