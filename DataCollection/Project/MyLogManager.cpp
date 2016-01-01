@@ -126,6 +126,8 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 	{
 		for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
 		{
+			Manager man;
+			man.Register();
 			try
 			{
 				transport->open();
@@ -135,7 +137,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					MyDBHandler::deleteLogData();
 					logListToBeSent = changeLogListFormatToBeSent(logList/**,"USER_DEFINED",process_name*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					cout << "Retriven Log Data" << endl;
+					std::cout << "Retriven Log Data" << endl;
 				}
 				if (MyDBHandler::isAvailableUsersData)
 				{
@@ -143,7 +145,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					MyDBHandler::deleteUsersData();
 					getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
 					client.pushUsersInfo(getAllUserInformationListToBeSent);
-					cout << "Retriven Users Data" << endl;
+					std::cout << "Retriven Users Data" << std::endl;
 				}
 				if (MyDBHandler::isAvailableCurrentUserData)
 				{
@@ -151,7 +153,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					MyDBHandler::deleteCurrentUserData();
 					getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
 					client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
-					cout << "Retriven Current User Data" << endl;
+					std::cout << "Retriven Current User Data" << std::endl;
 				}
 				eventIndex = stoi(*intIterator);
 				switch (eventIndex)
@@ -160,19 +162,19 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logList = MyLogManager::getLogs(timeInMinute * 60000, summarizationLevel, logType, process_name, securityLevel);
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"USER_DEFINED",process_name*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed18" << endl;
+						std::cout << "Pushed18" << std::endl;
 						break;
 					case 17:
 						logList = MyLogManager::getLogonFailures(timeInMinute * 60000, summarizationLevel);
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"LOGON_FAILURES", ""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed17" << endl;
+						std::cout << "Pushed17" << std::endl;
 						break;
 					case 25:
 						logList = MyLogManager::getSuccessLoginInformation(timeInMinute * 60000, summarizationLevel);
 						logListToBeSent = changeLogListFormatToBeSent(logList/**, "SUCCESS_LOGIN",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed25" << endl;
+						std::cout << "Pushed25" << std::endl;
 						break;
 					case 27:
 						logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
@@ -180,7 +182,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "FIREWALL_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed27" << endl;
+						std::cout << "Pushed27" << std::endl;
 
 						break;
 					case 28:
@@ -189,7 +191,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"ACCOUNT_USAGE",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed28" << endl;
+						std::cout << "Pushed28" << std::endl;
 
 						break;
 					case 29:
@@ -197,7 +199,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"GROUP_POLICY_EDITORS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed29" << endl;
+						std::cout << "Pushed29" << std::endl;
 
 						break;
 					case 30:
@@ -205,7 +207,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"WINDOWS_DEFENDER_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed30" << endl;
+						std::cout << "Pushed30" << std::endl;
 
 						break;
 					case 31:
@@ -213,7 +215,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 						logListToBeSent = changeLogListFormatToBeSent(logList/**, "MOBILE_DEVICE_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed31" << endl;
+						std::cout << "Pushed31" << std::endl;
 
 						break;
 					case 32:
@@ -221,7 +223,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 						logListToBeSent = changeLogListFormatToBeSent(logList/**,"PRINTING_SERVICES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed32" << endl;
+						std::cout << "Pushed32" << std::endl;
 
 						break;
 					case 33:
@@ -230,7 +232,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"SYSTEM_OR_SERVICE_FAILURES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed33" << endl;
+						std::cout << "Pushed33" << std::endl;
 
 						break;
 					case 34:
@@ -239,7 +241,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"CLEARING_EVENT_LOGS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed34" << endl;
+						std::cout << "Pushed34" << std::endl;
 
 						break;
 					case 35:
@@ -248,7 +250,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "WINDOWS_UPDATE_ERRORS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed35" << endl;
+						std::cout << "Pushed35" << std::endl;
 
 						break;
 					case 36:
@@ -257,7 +259,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**,"APPLICATION_CRASHES",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed36" << endl;
+						std::cout << "Pushed36" << std::endl;
 
 						break;
 					case 37:
@@ -266,7 +268,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "SOFTWARE_AND_SERVICES_INSTALLATION",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed37" << endl;
+						std::cout << "Pushed37" << std::endl;
 
 						break;
 					case 38:
@@ -274,7 +276,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 						logListToBeSent = changeLogListFormatToBeSent
 							(logList/**, "REMOTE_LOGIN_EVENTS",""*/);
 						client.pushLogInfoTest1(logListToBeSent);
-						cout << "Pushed38" << endl;
+						std::cout << "Pushed38" << std::endl;
 
 						break;
 					case 22:
@@ -282,7 +284,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 						getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
 						client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
-						cout << "pushed22" << endl;
+						std::cout << "pushed22" << std::endl;
 
 						break;
 					case 23:
@@ -290,34 +292,34 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 						getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
 						client.pushUsersInfo(getAllUserInformationListToBeSent);
-						cout << "pushed23" << endl;
+						std::cout << "pushed23" << std::endl;
 						break;
 				}
 				transport->close();
 			}
 			catch (TException& tx)
 			{
-				cout << "ERROR: " << tx.what() << endl;
+				std::cout << "ERROR: " << tx.what() << std::endl;
 				if (eventIndex == 22)
 				{
 					Dbh.createCurrentUserTable();
 					Dbh.storeCurrentUserData(getCurrentLoggedInUserInfo);
-					cout << "Stored Current User Data" << endl;
+					std::cout << "Stored Current User Data" << std::endl;
 				}
 				else if (eventIndex == 23)
 				{
 					Dbh.createUsersTable();
 					Dbh.storeUsersData(getAllUserInformationList);
-					cout << "Stored Users Data" << endl;
+					std::cout << "Stored Users Data" << std::endl;
 				}
 				else
 				{
 					Dbh.createLogTable();
 					Dbh.storeLogData(logList);
-					cout << "Stored Log Data" << endl;
+					std::cout << "Stored Log Data" << std::endl;
 				}
-				Manager man;
-				man.deviceClient();
+				//Manager man;
+				//man.deviceClient();
 			}
 		}
 		Sleep(timeInMinute * 60000);
@@ -327,7 +329,7 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 
 void MyLogManager::stopExecution()
 {
-	cout << "Stopped" << endl;
+	std::cout << "Stopped" << endl;
 	isAllowed = false;
 	while (isNotCompleted)
 	{
@@ -904,7 +906,7 @@ string MyLogManager::ConfigFile(){
 
 	}
 
-	else cout << "Unable to open file";
+	else std::cout << "Unable to open file";
 }
 
 bool MyLogManager::isInternetConnectionAvailable()
@@ -942,12 +944,12 @@ void MyLogManager::sendStoredData()
 		try {
 			transport->open();
 		//	val = client.pushLogInfo(logListToBeSent);
-			cout << "Stored Log Data Pushed" << endl;
+			std::cout << "Stored Log Data Pushed" << endl;
 			transport->close();
 			Dbh.deleteLogData();
 		}
 		catch (TException& tx) {
-			cout << "ERROR: " << tx.what() << endl;
+			std::cout << "ERROR: " << tx.what() << endl;
 		}
 	} while (!val);
 }
