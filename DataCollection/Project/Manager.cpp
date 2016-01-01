@@ -210,7 +210,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	}
 	free(AdapterInfo);
 	std::string mac(mac_addr);
-	cout << tRetired << "****" << endl;
+	//cout << tRetired << "****" << endl;
 	while (tRetired == true){
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -241,14 +241,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 							proc.receiveData = (get<9>(i));
 							proc.pid = std::to_string(get<1>(i));
 
-							cout << proc.name << endl;
-							cout << proc.cpuUsage << endl;
-							cout << proc.ramUsage << endl;
-							cout << proc.sentData << endl;
-							cout << proc.receiveData << endl;
-							cout << proc.pid << endl;
-
-							cout << "**********************" << endl;
+							
 
 							process.push_back(proc);
 						}
@@ -276,17 +269,19 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		}
 
 		do{
-			try {
+			try 
+			{
 				transport->open();
 				val = client.pushProcessesInfo(process);
 				cout << "Data Pushed" << endl;
 				transport->close();
 			}
-			catch (TException& tx) {
+			catch (TException& tx)
+			{
 				cout << "ERROR: " << tx.what() << endl;
 			}
-		} while (!val);
-
+		} 
+		while (!val);
 	}
 	tCompleted = true;
 }
@@ -582,7 +577,7 @@ void Manager::deviceClient(){
 	std::string type = "Windows";
 
 	device.deviceId = manage.getMAC();
-	cout << "+++++++" << device.deviceId << endl;
+	//cout << "+++++++" << device.deviceId << endl;
 	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];

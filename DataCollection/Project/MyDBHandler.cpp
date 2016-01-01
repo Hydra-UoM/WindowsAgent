@@ -350,19 +350,18 @@ void MyDBHandler::storeCurrentUserData(myStruct::myUserAccountDetailsStruct curr
 	}
 }
 
-std::vector<myStruct::myUserAccountDetailsStruct> MyDBHandler::retrieveCurrentUserData(){
+myStruct::myUserAccountDetailsStruct MyDBHandler::retrieveCurrentUserData(){
 	if (openDB())
 	{
 		std::string get_data_qry = "SELECT * FROM CurrentUserData";
-		std::vector<myStruct::myUserAccountDetailsStruct> currentUserList;
+		myStruct::myUserAccountDetailsStruct currentUser;
 		sqlite3_stmt *pointer;
 
 		if (sqlite3_prepare_v2(database, ((char*)get_data_qry.c_str()), -1, &pointer, 0) == SQLITE_OK)
 		{
 			int result = sqlite3_step(pointer);
-			while (result == SQLITE_ROW)
+			if(result == SQLITE_ROW)
 			{
-				myStruct::myUserAccountDetailsStruct currentUser;
 				currentUser.computerName = (char*)sqlite3_column_text(pointer, 0);
 				currentUser.usri4_name = (char*)sqlite3_column_text(pointer, 1);
 				currentUser.usri4_password_age = (char*)sqlite3_column_text(pointer, 2);
@@ -385,11 +384,10 @@ std::vector<myStruct::myUserAccountDetailsStruct> MyDBHandler::retrieveCurrentUs
 				currentUser.usri4_password_expired = (char*)sqlite3_column_text(pointer, 19);
 				currentUser.usri4_auth_flags = (char*)sqlite3_column_text(pointer, 20);
 				result = sqlite3_step(pointer);
-				currentUserList.push_back(currentUser);
 			}
 		}
 		sqlite3_close(database);
-		return currentUserList;
+		return currentUser;
 	}
 }
 

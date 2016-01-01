@@ -20,7 +20,7 @@ public:
 	static void storeLogData(std::vector<myStruct::myLogStructure>logList);
 	static void storeUsersData(std::vector<myStruct::myUserAccountDetailsStruct>usersList);
 	static void storeCurrentUserData(myStruct::myUserAccountDetailsStruct currentUser);
-	static std::vector<myStruct::myUserAccountDetailsStruct> retrieveCurrentUserData();
+	static myStruct::myUserAccountDetailsStruct retrieveCurrentUserData();
 	static std::vector<myStruct::myUserAccountDetailsStruct> retrieveUsersData();
 	static std::vector<myStruct::myLogStructure> retrieveLogData();
 	static void deleteLogData();

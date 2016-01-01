@@ -145,6 +145,14 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					client.pushUsersInfo(getAllUserInformationListToBeSent);
 					cout << "Retriven Users Data" << endl;
 				}
+				if (MyDBHandler::isAvailableCurrentUserData)
+				{
+					getCurrentLoggedInUserInfo = MyDBHandler::retrieveCurrentUserData();
+					MyDBHandler::deleteCurrentUserData();
+					getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
+					client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
+					cout << "Retriven Current User Data" << endl;
+				}
 				eventIndex = stoi(*intIterator);
 				switch (eventIndex)
 				{
@@ -308,6 +316,8 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					Dbh.storeLogData(logList);
 					cout << "Stored Log Data" << endl;
 				}
+				Manager man;
+				man.deviceClient();
 			}
 		}
 		Sleep(timeInMinute * 60000);
@@ -868,7 +878,7 @@ HydraCN::myLogStructure MyLogManager::changeLogFormatToBeSent
 	tempLogStructureToBeSent.eventCategory = logStruct.eventCategory;
 	tempLogStructureToBeSent.processName = logStruct.processName;
 
-	cout << "*****" << tempLogStructureToBeSent.mac << endl;
+	//cout << "*****" << tempLogStructureToBeSent.mac << endl;
 	return tempLogStructureToBeSent;
 }
 
