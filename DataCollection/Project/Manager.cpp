@@ -182,12 +182,8 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 	d.MAX_SAMPLES = samples;
 
-	cout << tRetired << "****" << endl;
 	while (tRetired == true){
 
-		if (regVal == false){
-			manage.Register();
-		}
 		
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -210,7 +206,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 					if (get<0>(i).c_str() == *it){
 
 						//if a process haves the values equal or bigger than the user input the process is contained in temp
-						if (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
+						if (get<0>(i).c_str() == "Project" || get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
 						{
 							proc.name = get<0>(i);
 							proc.cpuUsage = get<5>(i);
@@ -236,7 +232,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		if (processList.empty()){
 			for (auto i : d.myData)
 			{
-				if (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
+				if (get<0>(i).c_str() == "Project"|| get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
 				{
 
 
@@ -254,12 +250,19 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		manage.sendStoredData();
 		
 			try {
+				
+				if (regVal == false){
+					manage.Register();
+				}
+
 				transport->open();
 				val = client.pushProcessesInfo(process);
 				cout << "Data Pushed" << endl;
 				transport->close();
 			}
 			catch (TException& tx) {
+				regVal = false;
+				db.createTable();
 			   db.insertData(process);
 				cout << "ERROR: " << tx.what() << endl;
 			}
@@ -375,12 +378,18 @@ void Manager::fullData(int time){
 
 		manage.sendStoredData();
 			try {
+				if (regVal == false){
+					manage.Register();
+				}
+
 				transport->open();
 				cout << "Data Pushed" << endl;
 				val = client.pushProcessesInfo(process);
 				transport->close();
 			}
 			catch (TException& tx) {
+				regVal = false;
+				db.createTable();
 				db.insertData(process);
 				
 				cout << "ERROR: " << tx.what() << endl;
@@ -439,6 +448,8 @@ void Manager::currentData(int time){
 				transport->close();
 			}
 			catch (TException& tx) {
+				regVal = false;
+				db.createTable();
 				db.insertData(process);
 				
 				cout << "ERROR: " << tx.what() << endl;
@@ -504,6 +515,8 @@ void Manager::importantData(int time){
 				transport->close();
 			}
 			catch (TException& tx) {
+				regVal = false;
+				db.createTable();
 				db.insertData(process);
 				
 				cout << "ERROR: " << tx.what() << endl;
@@ -549,6 +562,9 @@ void Manager::sendStoredData(){
 
 	bool val = false;
 		try {
+			if (regVal == false){
+				manage.Register();
+			}
 			transport->open();
 			cout << "Data Pushed" << endl;
 			val = client.pushProcessesInfo(process);

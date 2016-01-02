@@ -45,13 +45,12 @@ void DBHandler::openDB(){
 
 void DBHandler::createTable(){
 	openDB();
-	//Create SQL statement 
 	sql = "CREATE TABLE  IF NOT EXISTS PerformData("  \
 		"NAME         TEXT," \
 		"CPU          REAL,"\
 		"Memory       REAL,"\
 		"Upload       REAL,"\
-		"Download       REAL,"\
+		"Download     REAL,"\
 		"MAC       TEXT,"\
 		"Type      TEXT,"\
 		"Time      TEXT,"\
@@ -68,14 +67,17 @@ void DBHandler::createTable(){
 }
 
 void DBHandler::insertData(vector<HydraCN::ThriftAgentProcessInfo> procF){
-	Manager manage;
+Manager manage;
 
 	sqlite3_stmt *pointer;
 	int k = 1;
 	char *q; // query
 	//char fp[MAX_PATH];
-	createTable();
+	openDB();
+	string name = "process";
+	double c = 15;
 	q = "Insert into PerformData (Name, CPU, Memory, Upload, Download, MAC, Type, Time, PID) VALUES(?1,?2,?3,?4,?5,?6,?7,?8,?9)";
+
 	for (auto i : procF)
 	{
 		if (sqlite3_prepare_v2(db, q, strlen(q), &pointer, 0) == SQLITE_OK){
@@ -85,7 +87,7 @@ void DBHandler::insertData(vector<HydraCN::ThriftAgentProcessInfo> procF){
 			sqlite3_bind_double(pointer, 3, i.ramUsage);
 			sqlite3_bind_double(pointer, 4, i.sentData);
 			sqlite3_bind_double(pointer, 5, i.receiveData);
-			sqlite3_bind_text(pointer, 6, i.mac.c_str(), strlen(i.mac.c_str()), 0);
+			sqlite3_bind_text(pointer, 6, i.mac.c_str(), strlen(i.mac.c_str()),0);
 			sqlite3_bind_text(pointer, 7, i.type.c_str(), strlen(i.type.c_str()), 0);
 			sqlite3_bind_text(pointer, 8, i.timestamp.c_str(), strlen(i.timestamp.c_str()), 0);
 			sqlite3_bind_text(pointer, 9, i.pid.c_str(), strlen(i.pid.c_str()), 0);
@@ -150,9 +152,9 @@ vector<HydraCN::ThriftAgentProcessInfo> DBHandler::sendData(){
 			pro.sentData = sqlite3_column_double(pointer, 3);
 			pro.receiveData = sqlite3_column_double(pointer, 4);
 			pro.mac = (char*)sqlite3_column_text(pointer, 5);
-			pro.type= (char*)sqlite3_column_text(pointer, 6);
+     		pro.type= (char*)sqlite3_column_text(pointer, 6);
 			pro.timestamp = (char*)sqlite3_column_text(pointer, 7);
-			pro.pid = sqlite3_column_double(pointer, 8);
+		   pro.pid = sqlite3_column_double(pointer, 8);
 			result = sqlite3_step(pointer);
 			processList.push_back(pro);
 		}
