@@ -9,6 +9,7 @@
 #include <atlstr.h>
 #define INFO_BUFFER_SIZE 32767
 extern bool tRetired;
+extern bool regVal;
 class Manager :public CPU, public Memory, public IO
 {
 public:

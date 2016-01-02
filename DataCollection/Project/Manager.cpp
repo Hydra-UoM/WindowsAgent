@@ -20,6 +20,7 @@ using namespace  HydraCN;
 HydraCN::Device device;
 bool tCompleted = false;
 bool tRetired;
+bool regVal = false;
 DBHandler db;
 Manager::Manager()
 {
@@ -171,7 +172,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
 	}
-
+	
 	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
@@ -181,10 +182,13 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 	d.MAX_SAMPLES = samples;
 
+	cout << tRetired << "****" << endl;
 	while (tRetired == true){
-		manage.Register();
 
-
+		if (regVal == false){
+			manage.Register();
+		}
+		
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
 		for (int i = 0; i < samples + 2; i++)
@@ -214,7 +218,14 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 							proc.sentData = (get<8>(i));
 							proc.receiveData = (get<9>(i));
 							proc.pid = std::to_string(get<1>(i));
-							
+
+							cout << proc.name << endl;
+							cout << proc.cpuUsage << endl;
+							cout << proc.ramUsage << endl;
+							cout << proc.sentData << endl;
+							cout << proc.receiveData << endl;
+							cout << proc.pid << endl;
+
 							process.push_back(proc);
 						}
 					}
@@ -239,19 +250,19 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 				}
 			}
 		}
-		manage.sendStoredData();
 
-		try {
-			transport->open();
-			val = client.pushProcessesInfo(process);
-			cout << "Data Pushed" << endl;
-			db.deleteData();
-			transport->close();
-		}
-		catch (TException& tx) {
-			db.insertData(process);
-			cout << "ERROR: " << tx.what() << endl;
-		}
+		manage.sendStoredData();
+		
+			try {
+				transport->open();
+				val = client.pushProcessesInfo(process);
+				cout << "Data Pushed" << endl;
+				transport->close();
+			}
+			catch (TException& tx) {
+			   db.insertData(process);
+				cout << "ERROR: " << tx.what() << endl;
+			}
 
 	}
 	tCompleted = true;
@@ -320,6 +331,8 @@ vector<ProcessF> Manager::GetAllProcesses()
 }
 
 void Manager::fullData(int time){
+
+	
 	Manager manage;
 	vector<ProcessF> procF;
 	string line;
@@ -327,6 +340,7 @@ void Manager::fullData(int time){
 	line = manage.ConfigFile();
 	istringstream ss(line);
 	string token;
+	
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
 	}
@@ -338,7 +352,10 @@ void Manager::fullData(int time){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
 	while (tRetired == true){
-		manage.sendStoredData();
+		if (regVal == false){
+			manage.Register();
+		}
+		
 		procF = manage.GetAllProcesses();
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -356,21 +373,20 @@ void Manager::fullData(int time){
 			process.push_back(proc);
 		}
 
-
-		try {
-			transport->open();
-			cout << "Data Pushed" << endl;
-			val = client.pushProcessesInfo(process);
-
-			transport->close();
-		}
-		catch (TException& tx) {
-			db.insertData(process);
-			manage.Register();
-			cout << "ERROR: " << tx.what() << endl;
-		}
-		Sleep(time * 60000);
-	}
+		manage.sendStoredData();
+			try {
+				transport->open();
+				cout << "Data Pushed" << endl;
+				val = client.pushProcessesInfo(process);
+				transport->close();
+			}
+			catch (TException& tx) {
+				db.insertData(process);
+				
+				cout << "ERROR: " << tx.what() << endl;
+			}
+			Sleep(time * 60000);
+		} 
 
 	tCompleted = true;
 }
@@ -396,7 +412,9 @@ void Manager::currentData(int time){
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 
 	while (tRetired == true){
-
+		if (regVal == false){
+			manage.Register();
+		}
 		procF = manage.FilterAllProcesses(30, 1024 * 300, 0, 0);
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -414,18 +432,17 @@ void Manager::currentData(int time){
 			process.push_back(proc);
 		}
 		manage.sendStoredData();
-		try {
-			transport->open();
-			cout << "Data Pushed" << endl;
-			val = client.pushProcessesInfo(process);
-			db.deleteData();
-			transport->close();
-		}
-		catch (TException& tx) {
-			db.insertData(process);
-			manage.Register();
-			cout << "ERROR: " << tx.what() << endl;
-		}
+			try {
+				transport->open();
+				cout << "Data Pushed" << endl;
+				val = client.pushProcessesInfo(process);
+				transport->close();
+			}
+			catch (TException& tx) {
+				db.insertData(process);
+				
+				cout << "ERROR: " << tx.what() << endl;
+			}
 		Sleep(time * 60000);
 	}
 	tCompleted = true;
@@ -450,9 +467,12 @@ void Manager::importantData(int time){
 	RegisterDeviceServiceClient client(protocol);
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
-
+	
 	while (tRetired == true){
-		manage.sendStoredData();
+		if (regVal == false){
+			manage.Register();
+		}
+		
 		for (int i = 0; i < time + 2; i++)
 		{
 			d.GetData();
@@ -476,18 +496,18 @@ void Manager::importantData(int time){
 				process.push_back(proc);
 			}
 		}
-		try {
-			transport->open();
-			cout << "Data Pushed" << endl;
-			val = client.pushProcessesInfo(process);
-
-			transport->close();
-		}
-		catch (TException& tx) {
-			db.insertData(process);
-			manage.Register();
-			cout << "ERROR: " << tx.what() << endl;
-		}
+		manage.sendStoredData();
+			try {
+				transport->open();
+				cout << "Data Pushed" << endl;
+				val = client.pushProcessesInfo(process);
+				transport->close();
+			}
+			catch (TException& tx) {
+				db.insertData(process);
+				
+				cout << "ERROR: " << tx.what() << endl;
+			}
 	}
 	tCompleted = true;
 }
@@ -510,8 +530,7 @@ void Manager::sendStoredData(){
 	RegisterDeviceServiceClient client(protocol);
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
-	DBHandler Dbh;
-	procF = Dbh.sendData();
+	procF = db.sendData();
 
 
 	for (auto i : procF)
@@ -521,21 +540,24 @@ void Manager::sendStoredData(){
 		proc.ramUsage = i.ramUsage;
 		proc.sentData = i.sentData;
 		proc.receiveData = i.receiveData;
+		proc.mac = i.mac;
+		proc.type = i.type;
+		proc.timestamp = i.timestamp;
 		proc.pid = i.pid;
 		process.push_back(proc);
 	}
 
-	boolean val = false;
-	try {
-		transport->open();
-		cout << "Data Pushed" << endl;
-		val = client.pushProcessesInfo(process);
-		transport->close();
-		//Dbh.deleteData();
-	}
-	catch (TException& tx) {
-		cout << "ERROR: " << tx.what() << endl;
-	}
+	bool val = false;
+		try {
+			transport->open();
+			cout << "Data Pushed" << endl;
+			val = client.pushProcessesInfo(process);
+			transport->close();
+			db.deleteData();
+		}
+		catch (TException& tx) {
+			cout << "ERROR: " << tx.what() << endl;
+		}
 
 }
 void Manager::Register(){
@@ -565,18 +587,17 @@ void Manager::Register(){
 	device.name = manage.getComputerName();
 
 
-	bool val = false;
-	try {
+		try {
 
-		transport->open();
-		val = client.registerDevice(device);
-		cout << "Registered" << endl;
-		transport->close();
-	}
+			transport->open();
+			regVal =client.registerDevice(device);
+			cout << "Registered" << endl;
+			transport->close();
+		}
 
-	catch (TException& tx) {
-		cout << "ERROR: " << tx.what() << endl;
-	}
+		catch (TException& tx) {
+			cout << "ERROR: " << tx.what() << endl;
+		}
 }
 void Manager::deviceClient(){
 	Manager manage;
@@ -602,15 +623,14 @@ void Manager::deviceClient(){
 	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];
-	device.name = manage.getComputerName();
+	device.name= manage.getComputerName();
+	
 
-
-	bool val = false;
 	do{
 		try {
 
 			transport->open();
-			val = client.registerDevice(device);
+			regVal = client.registerDevice(device);
 			cout << "Registered" << endl;
 
 			transport->close();
@@ -619,7 +639,7 @@ void Manager::deviceClient(){
 		catch (TException& tx) {
 			cout << "ERROR: " << tx.what() << endl;
 		}
-	} while (!val);
+	} while (!regVal);
 }
 
 void Manager::printError(TCHAR* msg)
