@@ -126,11 +126,6 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 	{
 		for (intIterator = eventIndices.begin(); intIterator != eventIndices.end(); ++intIterator)
 		{
-			if (!regVal)
-			{
-				Manager man;
-				man.Register();
-			}
 			try
 			{
 				transport->open();
@@ -322,8 +317,11 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 					Dbh.storeLogData(logList);
 					std::cout << "Stored Log Data" << std::endl;
 				}
-				//Manager man;
-				//man.deviceClient();
+				if (!regVal)
+				{
+					Manager man;
+					man.Register();
+				}
 			}
 		}
 		Sleep(timeInMinute * 60000);
