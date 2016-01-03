@@ -33,8 +33,6 @@ public:
 	string getTime(); 
 	string getComputerName();
 	void Register();
-	double getSystemMem();
-	double getUsedMem();
 	void printError(TCHAR* msg);
 };
 
