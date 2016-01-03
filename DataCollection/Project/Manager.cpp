@@ -7,6 +7,7 @@
 #include "wininet.h"
 #include <Iphlpapi.h>
 #include <Assert.h>
+#include <Windows.h>
 #pragma comment(lib, "iphlpapi.lib")
 
 
@@ -709,3 +710,31 @@ string Manager::getTime() {
 
 	return str;
 }
+
+double Manager::getSystemMem(){
+	MEMORYSTATUSEX statex;
+
+	statex.dwLength = sizeof(statex); // I misunderstand that
+
+	GlobalMemoryStatusEx(&statex);
+	return (float)statex.ullTotalPhys / (1024 * 1024*1024);
+
+}
+
+double Manager::getUsedMem(){
+	MEMORYSTATUSEX memInfo;
+	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+	GlobalMemoryStatusEx(&memInfo);
+	double totalVirtualMem = memInfo.ullTotalPageFile;
+
+	double totalPhysMem = memInfo.ullTotalPhys;
+
+	double physMemUsed = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
+
+	return physMemUsed/(1024*1024*1024);
+
+}
+
+
+
+
