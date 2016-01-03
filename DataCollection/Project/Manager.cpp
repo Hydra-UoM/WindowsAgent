@@ -648,7 +648,7 @@ void Manager::deviceClient(){
 
 			transport->open();
 			regVal = client.registerDevice(device);
-			cout << "Registered" << endl;
+			cout << "Registered Initially!!" << endl;
 
 			transport->close();
 		}

@@ -45,7 +45,7 @@ public:
 	double getTotalMemory() {
 		// Your implementation goes here
 		printf("getTotalMemory\n");
-		return manage.GetTotalMemory();
+		return ((manage.getUsedMem() / manage.getSystemMem()) * 100);
 	}
 
 	int64_t getFreeMemory() {
