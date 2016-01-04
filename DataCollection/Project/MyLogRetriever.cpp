@@ -48,8 +48,11 @@ DWORD MyLogRetriever::EnumerateResultsOnEventIDs(EVT_HANDLE hResults, vector<int
 				{
 					if (outputLogStructure->EventID == *it)
 					{
-						myLogStructures[numberOfAvailableEvents] = outputLogStructure;
-						numberOfAvailableEvents++;
+						if (numberOfAvailableEvents < 800)
+						{
+							myLogStructures[numberOfAvailableEvents] = outputLogStructure;
+							numberOfAvailableEvents++;
+						}
 					}
 					else
 					{
@@ -386,8 +389,11 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults,std::vector<DWORD>*pr
 				{
 					if (outputLogStructure->executionProcessID == (*process_id)[i])
 					{
-						myLogStructures[numberOfAvailableEvents] = outputLogStructure;
-						numberOfAvailableEvents++;
+						if (numberOfAvailableEvents < 800)
+						{
+							myLogStructures[numberOfAvailableEvents] = outputLogStructure;
+							numberOfAvailableEvents++;
+						}
 					}
 					else
 					{
@@ -456,8 +462,11 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults)
 			if (status == ERROR_SUCCESS)
 			{ // added later
 				//cout << numberOfAvailableEvents << endl; // need to check
-				myLogStructures[numberOfAvailableEvents] = outputLogStructure;
-				numberOfAvailableEvents++;
+				if (numberOfAvailableEvents < 800)
+				{
+					myLogStructures[numberOfAvailableEvents] = outputLogStructure;
+					numberOfAvailableEvents++;
+				}
 			} // added later
 			if (ERROR_SUCCESS == status) // PrintEvent
 			{
@@ -526,8 +535,11 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults, int logonType)
 				int int_logonType = std::stoi(myLogonType, &sz);
 				if (int_logonType == logonType)
 				{
-					myLogStructures[numberOfAvailableEvents] = outputLogStructure;
-					numberOfAvailableEvents++;
+					if (numberOfAvailableEvents < 800)
+					{
+						myLogStructures[numberOfAvailableEvents] = outputLogStructure;
+						numberOfAvailableEvents++;
+					}
 				}
 			} // added later
 			if (ERROR_SUCCESS == status) // PrintEvent

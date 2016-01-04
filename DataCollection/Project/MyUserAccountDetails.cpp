@@ -63,8 +63,6 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 	NET_API_STATUS nStatus;
 
 	LPTSTR sStringSid = NULL;
-
-	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 	TCHAR  infoBuf[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
 	// Get and display the name of the computer. 
@@ -80,12 +78,12 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 		printError(TEXT("GetUserName"));
 	usri4_name = infoBuf;
 	//_tprintf(TEXT("\nUser name:          %s\n"), infoBuf);
-
 	// Call the NetUserGetInfo function.
 	LPCWSTR servername = NULL;
 	LPCWSTR username = infoBuf;//L"Jeyatharshini";
 	nStatus = NetUserGetInfo(servername, username, dwLevel, (LPBYTE *)& pBuf);
-	// If the call succeeds, print the user information.
+	
+	// This is not succeed in service:???
 	if (nStatus == NERR_Success)
 	{
 		if (pBuf != NULL)
@@ -152,7 +150,6 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 			
 			//wprintf(L"\tHome directory drive letter: %s\n",pBuf4->usri4_home_dir_drive);
 			usri4_password_expired = pBuf4->usri4_password_expired;
-			
 			myCurrentUserAccountStructure = new MyUserAccountDetailsStructure(computerName, usri4_name, usri4_password_age, usri4_priv,
 				usri4_flags, usri4_usr_comment, usri4_parms, usri4_last_logon, usri4_last_logoff,
 				usri4_acct_expires, usri4_max_storage, usri4_units_per_week, usri4_logon_hours,
@@ -161,14 +158,20 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 		}
 		// Otherwise, print the system error.
 		//
+
 		else
+		{
 			fprintf(stderr, "NetUserGetinfo failed with error: %d\n", nStatus);
+		}
 		//
 		// Free the allocated memory.
 		//
 	}
-	//myCurrentUserAccountStructure->print();
-	myUserAccountDetailsStruct userString = myCurrentUserAccountStructure->toUserDetailsStruct(summarizationLevel);
+	myUserAccountDetailsStruct userString;
+	if (myCurrentUserAccountStructure != NULL)
+	{
+		userString = myCurrentUserAccountStructure->toUserDetailsStruct(summarizationLevel);
+	}
 	if (pBuf != NULL)
 		NetApiBufferFree(pBuf);
 	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
