@@ -416,8 +416,11 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcess(string logType
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", process_name, timeGapInMilliSeconds);
 	myLogRetriever.getSetOfProcessIDs(process_name);
-	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
+	if (myLogRetriever.process_id->size() > 0)
+	{
+		myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+		logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
+	}
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -441,8 +444,11 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcessWithSecurityCon
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
 	myLogRetriever.getSetOfProcessIDs(process_name);
-	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
+	if (myLogRetriever.process_id->size() > 0)
+	{
+		myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+		logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
+	}
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }

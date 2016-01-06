@@ -380,9 +380,11 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults,std::vector<DWORD>*pr
 			status = l.getStatus(outputLogStructure);
 			if (status == ERROR_SUCCESS)
 			{ // added later
-				for (int i = 0; i < process_id->size(); i++)
+				std::vector<DWORD>::iterator it;
+				for (it = process_id->begin(); it != process_id->end(); ++it)
 				{
-					if (outputLogStructure->executionProcessID == (*process_id)[i])
+					cout << (*it) << endl;
+					if (outputLogStructure->executionProcessID == (*it))
 					{
 						myLogStructures.push_back(outputLogStructure);
 						numberOfAvailableEvents++;
@@ -599,12 +601,6 @@ bool MyLogRetriever::getSetOfProcessIDs(string process_name)
 	processName = process_name;
 	if (getSetOfProcessID(process_name, process_id))
 	{
-		/**
-		for (int i = 0; i < (*process_id).size(); i++)
-		{
-			cout << (*process_id)[i] << endl;
-		}
-		*/
 		return true;
 	}
 	else
@@ -655,36 +651,50 @@ vector<myStruct::myLogStructure> MyLogRetriever::getAllLogsForAProcess(std::stri
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever1.handleLogRetrivalInfo("Security", str_securityLevel, process_name, timePeriodInMilliSeconds1);
 	myLogRetriever1.getSetOfProcessIDs(process_name);
-	myLogRetriever1.getEvents(myLogRetriever1.lpcwstrLogType, myLogRetriever1.pwsQuery, myLogRetriever1.process_id);
-	logStructSecurityList = myLogRetriever1.returnResultedEventWithStruct(myLogRetriever1.myLogStructures, summarizationLevel);
+	if (myLogRetriever1.process_id->size() > 0)
+	{
+		myLogRetriever1.getEvents(myLogRetriever1.lpcwstrLogType, myLogRetriever1.pwsQuery, myLogRetriever1.process_id);
+		logStructSecurityList = myLogRetriever1.returnResultedEventWithStruct(myLogRetriever1.myLogStructures, summarizationLevel);
+	}
 
 	MyLogRetriever myLogRetriever2("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructApplicationList;
 	myLogRetriever2.handleLogRetrivalInfo("Application", str_securityLevel, process_name, timePeriodInMilliSeconds1);
 	myLogRetriever1.getSetOfProcessIDs(process_name);
-	myLogRetriever2.getEvents(myLogRetriever2.lpcwstrLogType, myLogRetriever2.pwsQuery, myLogRetriever2.process_id);
-	logStructApplicationList = myLogRetriever2.returnResultedEventWithStruct(myLogRetriever2.myLogStructures, summarizationLevel);
+	if (myLogRetriever2.process_id->size() > 0)
+	{
+		myLogRetriever2.getEvents(myLogRetriever2.lpcwstrLogType, myLogRetriever2.pwsQuery, myLogRetriever2.process_id);
+		logStructApplicationList = myLogRetriever2.returnResultedEventWithStruct(myLogRetriever2.myLogStructures, summarizationLevel);
+	}
 
 	MyLogRetriever myLogRetriever3("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructSetupList;
 	myLogRetriever3.handleLogRetrivalInfo("Setup", str_securityLevel, process_name, timePeriodInMilliSeconds1);
 	myLogRetriever3.getSetOfProcessIDs(process_name);
-	myLogRetriever3.getEvents(myLogRetriever3.lpcwstrLogType, myLogRetriever3.pwsQuery, myLogRetriever3.process_id);
-	logStructSetupList = myLogRetriever3.returnResultedEventWithStruct(myLogRetriever3.myLogStructures, summarizationLevel);
-
+	if (myLogRetriever3.process_id->size() > 0)
+	{
+		myLogRetriever3.getEvents(myLogRetriever3.lpcwstrLogType, myLogRetriever3.pwsQuery, myLogRetriever3.process_id);
+		logStructSetupList = myLogRetriever3.returnResultedEventWithStruct(myLogRetriever3.myLogStructures, summarizationLevel);
+	}
 	MyLogRetriever myLogRetriever4("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructSystemList;
 	myLogRetriever4.handleLogRetrivalInfo("System", str_securityLevel, process_name, timePeriodInMilliSeconds1);
 	myLogRetriever4.getSetOfProcessIDs(process_name);
-	myLogRetriever4.getEvents(myLogRetriever4.lpcwstrLogType, myLogRetriever4.pwsQuery, myLogRetriever4.process_id);
-	logStructSystemList = myLogRetriever4.returnResultedEventWithStruct(myLogRetriever4.myLogStructures, summarizationLevel);
+	if (myLogRetriever4.process_id->size() > 0)
+	{
+		myLogRetriever4.getEvents(myLogRetriever4.lpcwstrLogType, myLogRetriever4.pwsQuery, myLogRetriever4.process_id);
+		logStructSystemList = myLogRetriever4.returnResultedEventWithStruct(myLogRetriever4.myLogStructures, summarizationLevel);
+	}
 
 	MyLogRetriever myLogRetriever5("USER_DEFINED");
 	vector<myStruct::myLogStructure>logStructOperationalList;
 	myLogRetriever5.handleLogRetrivalInfo("Operational", str_securityLevel, process_name, timePeriodInMilliSeconds1);
 	myLogRetriever5.getSetOfProcessIDs(process_name);
-	myLogRetriever5.getEvents(myLogRetriever5.lpcwstrLogType, myLogRetriever5.pwsQuery, myLogRetriever5.process_id);
-	logStructOperationalList = myLogRetriever5.returnResultedEventWithStruct(myLogRetriever5.myLogStructures, summarizationLevel);
+	if (myLogRetriever5.process_id->size() > 0)
+	{
+		myLogRetriever5.getEvents(myLogRetriever5.lpcwstrLogType, myLogRetriever5.pwsQuery, myLogRetriever5.process_id);
+		logStructOperationalList = myLogRetriever5.returnResultedEventWithStruct(myLogRetriever5.myLogStructures, summarizationLevel);
+	}
 	
 	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSetupList.size() + logStructSystemList.size() + logStructOperationalList.size());
 	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
