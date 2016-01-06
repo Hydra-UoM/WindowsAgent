@@ -1,4 +1,4 @@
-﻿Build started 1/6/2016 3:34:44 PM.
+﻿Build started 1/6/2016 10:10:36 PM.
      1>Project "E:\AAA_2_list1_git\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\local\boost_1_59_0 /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows" /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D _CONSOLE /D _VARIADIC_MAX=8 /D _RELEASE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt centralNodeServiceV8_constants.cpp centralNodeServiceV8_types.cpp CPU.cpp Data.cpp DBHandler.cpp GetProcessID.cpp IO.cpp Manager.cpp Memory.cpp MyAccessRequestInformation.cpp MyAccountForWhichLogonFailed.cpp MyAdditionalInformation.cpp MyApplicationInformation.cpp MyCalloutInformation.cpp MyChangeInformation.cpp MyDBHandler.cpp MyDetailedAuthenticationInformation.cpp MyErrorInformation.cpp MyFailureInformation.cpp MyFilterInformation.cpp MyImpersonationLevel.cpp MyLayerInformation.cpp MyLogManager.cpp MyLogonType.cpp MyLogRetriever.cpp MyLogStructure.cpp MyLogStructureMaker.cpp MyNetworkInformation.cpp MyNewLogon.cpp MyObject.cpp MyProcessInformation.cpp MyProviderInformation.cpp MyRuleInformation.cpp MySubject.cpp MyTimeStamp.cpp MyUserAccountDetails.cpp MyUserAccountDetailsStructure.cpp ProcessStats.cpp ProcessStats_server.skeleton.cpp Process_constants.cpp Process_types.cpp RegisterDeviceService.cpp stdafx.cpp
@@ -59,7 +59,7 @@
      1>MyLogManager.cpp(895): warning C4101: 'num1' : unreferenced local variable
          MyLogonType.cpp
          MyLogRetriever.cpp
-     1>MyLogRetriever.cpp(1044): warning C4065: switch statement contains 'default' but no 'case' labels
+     1>MyLogRetriever.cpp(1038): warning C4065: switch statement contains 'default' but no 'case' labels
          MyLogStructure.cpp
          MyLogStructureMaker.cpp
          MyNetworkInformation.cpp
@@ -137,4 +137,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:01:11.57
+Time Elapsed 00:01:17.67
