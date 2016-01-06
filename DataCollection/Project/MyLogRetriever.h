@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include "GetProcessID.h"
 #include "WindowsAgentConstants.h"
 
@@ -41,32 +42,31 @@ public:
 		int timePeriodInMilliSeconds1);
 	std::wstring stringToWidestring(const std::string& s);
 	string assignSecurityConstraint(string logType, string str_securityLevel);
-	DWORD EnumerateResultsOnEventIDs(EVT_HANDLE hResults, vector<int>eventIDs);
+	//DWORD EnumerateResultsOnEventIDs(EVT_HANDLE hResults, vector<int>eventIDs);
 	vector<myStruct::myLogStructure>handleSuccessLoginEvents(int timePeriodInMilliSeconds1, int summarizationLevel);
 	vector<myStruct::myLogStructure>handleFailedLoginEvents(int timePeriodInMilliSeconds1, int summarizationLevel);
-	void handleFirewallEvents(int timePeriodInMilliSeconds1,int totalTimePeriodInMillisecond1);
-	void handleAccountUsage(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
-	void groupPolicyEditorsEvents(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
-	void windowsDefenderEvents(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
-	void mobileDeviceEvents(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
-	void printingServicesEvents(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
-	void systemOrServiceFailures(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
-	vector<myStruct::myLogStructure> clearingEventLogs(int timePeriodInMilliSeconds1, int summarizationLevel, int totalTimePeriodInMillisecond1);
-	vector<myStruct::myLogStructure> windowsUpdateErrors(int timePeriodInMilliSeconds1, int summarizationLevel, int totalTimePeriodInMillisecond1);
-	vector<myStruct::myLogStructure> applicationCrashes(int timePeriodInMilliSeconds1, int summarizationLevel, int totalTimePeriodInMillisecond1);
-	vector<myStruct::myLogStructure> softwareAndServicesInstallation(int timePeriodInMilliSeconds1, int summarizationLevel, int totalTimePeriodInMillisecond1);
+	void handleFirewallEvents(int timePeriodInMilliSeconds1);
+	void handleAccountUsage(int timePeriodInMilliSeconds1);
+	void groupPolicyEditorsEvents(int timePeriodInMilliSeconds1);
+	void windowsDefenderEvents(int timePeriodInMilliSeconds1);
+	void mobileDeviceEvents(int timePeriodInMilliSeconds1);
+	void printingServicesEvents(int timePeriodInMilliSeconds1);
+	void systemOrServiceFailures(int timePeriodInMilliSeconds1);
+	vector<myStruct::myLogStructure> clearingEventLogs(int timePeriodInMilliSeconds1, int summarizationLevel);
+	vector<myStruct::myLogStructure> windowsUpdateErrors(int timePeriodInMilliSeconds1, int summarizationLevel);
+	vector<myStruct::myLogStructure> applicationCrashes(int timePeriodInMilliSeconds1, int summarizationLevel);
+	vector<myStruct::myLogStructure> softwareAndServicesInstallation(int timePeriodInMilliSeconds1, int summarizationLevel);
 	vector<myStruct::myLogStructure> applicationWhitelisting(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1);
 	vector<myStruct::myLogStructure> getRemoteLoginEvents(int timePeriodInMilliSeconds1, int summarizationLevel);
 
-	void printResultedEvent(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
-	vector<myStruct::myLogStructure> returnResultedEventWithStruct(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents);
-	vector<myStruct::myLogStructure> returnResultedEventWithStruct(MyLogStructure*myResultedLogStructures[], int numberOfFilteredEvents, int summarizationLevel);
+	void printResultedEvent(list<MyLogStructure*>myResultedLogStructures);
+	vector<myStruct::myLogStructure> returnResultedEventWithStruct(list<MyLogStructure*>myResultedLogStructures);
+	vector<myStruct::myLogStructure> returnResultedEventWithStruct(list<MyLogStructure*>myResultedLogStructures, int summarizationLevel);
 	//summarization getSummarization();
 	//void getLogs(int summarizationLevel1, int timePeriodInMilliSeconds1);
 
 	~MyLogRetriever(void);
 
-	int summarizationLevel;
 	string string_query;
 	boolean isLevelConstraintAvailable;
 	boolean isProcessIDConstraintAvailable;
@@ -77,15 +77,8 @@ public:
 	LPCWSTR pwsQuery;
 	std::vector<DWORD>*process_id;
 	int timePeriodInMilliSeconds;
-	list<int>whiteListEntries;
-	int whiteListLength;
-	int noOfBytesToBeSent = 0;
-	int noOfTotalBytesToBeSent = 0;
-	int totalTimePeriodInMillisecond = 0;
 
-	MyLogStructure*myLogStructures[800];
-	int totalNumberOfEvents = 0;
-
+	list<MyLogStructure*>myLogStructures;
 	int numberOfAvailableEvents = 0;
 	string processName = "";
 	string eventCategory = "";

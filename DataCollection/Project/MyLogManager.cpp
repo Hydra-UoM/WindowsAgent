@@ -396,7 +396,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcesses(string log
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	/**
 	int i = 0;
 	for (iteratorStruct = logStructList.begin(); iteratorStruct != logStructList.end(); iteratorStruct++)
@@ -417,7 +417,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcess(string logType
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", process_name, timeGapInMilliSeconds);
 	myLogRetriever.getSetOfProcessIDs(process_name);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -429,7 +429,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcessesWithSecurit
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -442,7 +442,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcessWithSecurityCon
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
 	myLogRetriever.getSetOfProcessIDs(process_name);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -513,9 +513,9 @@ vector<myStruct::myLogStructure> MyLogManager::getFirewallEvents(int timeGapInMi
 	MyLogRetriever myLogRetriever("FIREWALL_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.handleFirewallEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.handleFirewallEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -525,9 +525,9 @@ vector<myStruct::myLogStructure> MyLogManager::getAccountUsage(int timeGapInMill
 	MyLogRetriever myLogRetriever("ACCOUNT_USAGE");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.handleAccountUsage(timeGapInMilliSeconds, 50000);
+	myLogRetriever.handleAccountUsage(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -537,9 +537,9 @@ vector<myStruct::myLogStructure> MyLogManager::getGroupPolicyEditors(int timeGap
 	MyLogRetriever myLogRetriever("GROUP_POLICY_EDITORS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.groupPolicyEditorsEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.groupPolicyEditorsEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -549,9 +549,9 @@ vector<myStruct::myLogStructure> MyLogManager::getWindowsDefenderEvents(int time
 	MyLogRetriever myLogRetriever("WINDOWS_DEFENDER_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.windowsDefenderEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.windowsDefenderEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -561,9 +561,9 @@ vector<myStruct::myLogStructure> MyLogManager::getMobileDeviceEvents(int timeGap
 	MyLogRetriever myLogRetriever("MOBILE_DEVICE_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.mobileDeviceEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.mobileDeviceEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -573,9 +573,9 @@ vector<myStruct::myLogStructure> MyLogManager::getPrintingServicesEvents(int tim
 	MyLogRetriever myLogRetriever("PRINTING_SERVICES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.printingServicesEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.printingServicesEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -585,9 +585,9 @@ vector<myStruct::myLogStructure> MyLogManager::getSystemOrServiceFailures(int ti
 	MyLogRetriever myLogRetriever("SYSTEM_OR_SERVICE_FAILURES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.systemOrServiceFailures(timeGapInMilliSeconds, 50000);
+	myLogRetriever.systemOrServiceFailures(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -597,7 +597,7 @@ vector<myStruct::myLogStructure> MyLogManager::getClearingEventLogs(int timeGapI
 	MyLogRetriever myLogRetriever("CLEARING_EVENT_LOGS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.clearingEventLogs(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.clearingEventLogs(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -607,7 +607,7 @@ vector<myStruct::myLogStructure> MyLogManager::getWindowsUpdateErrors(int timeGa
 	MyLogRetriever myLogRetriever("WINDOWS_UPDATE_ERRORS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.windowsUpdateErrors(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.windowsUpdateErrors(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -617,7 +617,7 @@ vector<myStruct::myLogStructure> MyLogManager::getApplicationCrashes(int timeGap
 	MyLogRetriever myLogRetriever("APPLICATION_CRASHES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.applicationCrashes(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.applicationCrashes(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -627,7 +627,7 @@ vector<myStruct::myLogStructure> MyLogManager::getSoftwareAndServicesInstallatio
 	MyLogRetriever myLogRetriever("SOFTWARE_AND_SERVICES_INSTALLATION");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.softwareAndServicesInstallation(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.softwareAndServicesInstallation(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
