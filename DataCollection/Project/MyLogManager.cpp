@@ -334,6 +334,81 @@ void MyLogManager::stopExecution()
 	isNotCompleted = true;
 }
 
+vector<myStruct::myLogStructure> MyLogManager::getAllLogs(int timePeriodInMilliSeconds1, int summarizationLevel)
+{
+	vector<myStruct::myLogStructure>logStructList;
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAllProcesses("Security", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAllProcesses("Application", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAllProcesses("System", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAllProcesses("Setup", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAllProcesses("Operational", timePeriodInMilliSeconds1, summarizationLevel);
+
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSystemList.size() + logStructSetupList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+
+	return logStructList;
+}
+
+vector<myStruct::myLogStructure> MyLogManager::getAllLogsWithSecurityConstraint(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel)
+{
+	vector<myStruct::myLogStructure>logStructList;
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAllProcessesWithSecurityConstraint("Security", str_securityLevel,timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAllProcessesWithSecurityConstraint("Application", str_securityLevel,timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAllProcessesWithSecurityConstraint("System", str_securityLevel,timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAllProcessesWithSecurityConstraint("Setup", str_securityLevel, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAllProcessesWithSecurityConstraint("Operational", str_securityLevel, timePeriodInMilliSeconds1, summarizationLevel);
+
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSystemList.size() + logStructSetupList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+
+	return logStructList;
+}
+
+vector<myStruct::myLogStructure> MyLogManager::getAllLogsForAProcess(int timePeriodInMilliSeconds1, int summarizationLevel, std::string process_name)
+{
+	vector<myStruct::myLogStructure>logStructList;
+
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAProcess("Security", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAProcess("Application", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAProcess("Setup", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAProcess("System", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAProcess("Operational", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSetupList.size() + logStructSystemList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+	return logStructList;
+}
+
+vector<myStruct::myLogStructure> MyLogManager::getAllLogsForAProcessWithSecurityConstraint(string securityLevel, string process_name, int timeGapInMilliSeconds, int summarizationLevel)
+{
+	vector<myStruct::myLogStructure>logStructList;
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAProcessWithSecurityConstraint("Security", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAProcessWithSecurityConstraint("Application", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAProcessWithSecurityConstraint("Setup", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAProcessWithSecurityConstraint("System", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAProcessWithSecurityConstraint("Operational", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSetupList.size() + logStructSystemList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+	return logStructList;
+}
+
 vector<myStruct::myLogStructure> MyLogManager::getLogs(int timeGapInMilliSeconds, int64_t summarizationLevel, string logType, string process_name, string securityLevel)
 {
 	MyLogRetriever myLogRetriever("USER_DEFINED");
@@ -343,22 +418,22 @@ vector<myStruct::myLogStructure> MyLogManager::getLogs(int timeGapInMilliSeconds
 		{
 			if (securityLevel.compare("") == 0) // without constraint
 			{
-				return myLogRetriever.getAllLogs("ALL", timeGapInMilliSeconds, summarizationLevel);
+				return getAllLogs(timeGapInMilliSeconds, summarizationLevel);
 			}
 			else // with constraint
 			{
-				return myLogRetriever.getAllLogs(securityLevel, timeGapInMilliSeconds, summarizationLevel);
+				return getAllLogsWithSecurityConstraint(securityLevel, timeGapInMilliSeconds, summarizationLevel);
 			}
 		}
 		else // need to send all logs for a process
 		{
 			if (securityLevel.compare("") == 0) // without constraint
 			{
-				return myLogRetriever.getAllLogsForAProcess("ALL", timeGapInMilliSeconds, summarizationLevel, process_name);
+				return getAllLogsForAProcess(timeGapInMilliSeconds, summarizationLevel, process_name);
 			}
 			else // with constraint
 			{
-				return myLogRetriever.getAllLogsForAProcess(securityLevel, timeGapInMilliSeconds, summarizationLevel, process_name);
+				return getAllLogsForAProcessWithSecurityConstraint(securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
 			}
 		}
 	}

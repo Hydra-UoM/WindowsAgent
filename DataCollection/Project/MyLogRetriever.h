@@ -22,8 +22,6 @@ class MyLogRetriever
 {
 public:
 	MyLogRetriever(std::string eventCategory1);
-	vector<myStruct::myLogStructure> getAllLogsForAProcess(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel, std::string process_name);
-	vector<myStruct::myLogStructure> getAllLogs(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel);
 
 	BOOL IsKeyEvent(HANDLE hStdIn);
 	void getEvents(LPCWSTR pwsPath, LPCWSTR pwsQuery, std::vector<DWORD>*process_id);
