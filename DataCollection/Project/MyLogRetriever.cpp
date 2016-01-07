@@ -8,164 +8,6 @@ MyLogRetriever::MyLogRetriever(std::string eventCategory1)
 {
 	eventCategory = eventCategory1;
 }
-/**
-DWORD MyLogRetriever::EnumerateResultsOnEventIDs(EVT_HANDLE hResults, vector<int>eventIDs)
-{
-	DWORD status = ERROR_SUCCESS;
-	EVT_HANDLE hEvents[ARRAY_SIZE];
-	DWORD dwReturned = 0;
-	while (true)//GetAsyncKeyState(VK_ESCAPE) != true
-	{
-		// Get a block of events from the result set.
-		BOOL e = EvtNext(hResults, ARRAY_SIZE, hEvents, TIME_OUT, 0, &dwReturned);
-		if (!e)
-		{
-			status = GetLastError();
-			if (ERROR_NO_MORE_ITEMS != status)
-			{
-				wprintf(L"EvtNext failed with %lu\n", status);
-			}
-			goto cleanup;
-		}
-
-		// For each event, call the PrintEvent function which renders the
-		// event for display.
-		//wprintf(L"dwReturned %lu\n", dwReturned);
-		for (DWORD i = 0; i < dwReturned; i++)
-		{
-			//status = PrintEventSystemData(hEvents[i]);
-
-			MyLogStructureMaker l(hEvents[i]);
-			//pBuffer = (LPWSTR)malloc(dwBufferSize * sizeof(WCHAR));
-
-			MyLogStructure*outputLogStructure = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			//myLogStructures[numberOfAvailableEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			status = l.getStatus(outputLogStructure);
-			if (status == ERROR_SUCCESS){ // added later
-				vector<int>::iterator it = eventIDs.begin();
-				int count = 0;
-				while (count < whiteListLength)
-				{
-					if (outputLogStructure->EventID == *it)
-					{
-						myLogStructures.push_back(outputLogStructure);
-						numberOfAvailableEvents++;
-					}
-					else
-					{
-						// just leave the event
-					}
-					count++;
-					++it;
-				}
-			} // added later
-			if (ERROR_SUCCESS == status) // PrintEvent
-			{
-				EvtClose(hEvents[i]);
-				hEvents[i] = NULL;
-			}
-			else
-			{
-				goto cleanup;
-			}
-		}
-		// I put to get only first ARRAY_SIZE number of events
-		//getchar();
-		//goto cleanup;
-	}
-cleanup:
-
-	// Closes any events in case an error occurred above.
-	for (DWORD i = 0; i < dwReturned; i++)
-	{
-		if (NULL != hEvents[i])
-			EvtClose(hEvents[i]);
-	}
-	return status;
-}
-void MyLogRetriever::getEventsOnEventID(LPCWSTR pwsPath, LPCWSTR pwsQuery, list<int>eventIDs)
-{
-DWORD status = ERROR_SUCCESS;
-EVT_HANDLE hSubscription = NULL;
-HANDLE hEventLog = NULL;
-
-HANDLE aWaitHandles[2];
-DWORD dwWait = 0;
-DWORD dwLastRecordNumber = 0;
-
-// Get a handle for console input, so you can break out of the loop.
-aWaitHandles[0] = GetStdHandle(STD_INPUT_HANDLE);
-if (INVALID_HANDLE_VALUE == aWaitHandles[0])
-{
-wprintf(L"GetStdHandle failed with %lu.\n", GetLastError());
-goto cleanup;
-}
-
-// Get a handle to a manual reset event object that the subscription will signal
-// when events become available that match your query criteria.
-aWaitHandles[1] = CreateEvent(NULL, TRUE, TRUE, NULL);
-if (NULL == aWaitHandles[1])
-{
-wprintf(L"CreateEvent failed with %lu.\n", GetLastError());
-goto cleanup;
-}
-
-// Subscribe to events.
-hSubscription = EvtSubscribe(NULL, aWaitHandles[1], pwsPath, pwsQuery, NULL, NULL, NULL, EvtSubscribeStartAtOldestRecord);
-if (NULL == hSubscription)
-{
-status = GetLastError();
-
-if (ERROR_EVT_CHANNEL_NOT_FOUND == status)
-wprintf(L"Channel %s was not found.\n", pwsPath);
-else if (ERROR_EVT_INVALID_QUERY == status)
-wprintf(L"The query %s was not found.\n", pwsQuery);
-else
-wprintf(L"EvtSubscribe failed with %lu.\n", status);
-goto cleanup;
-}
-
-// Loop until the user presses a key or there is an error && no more waits. Only the existing past events
-while (true)//GetAsyncKeyState(VK_ESCAPE) != true
-{
-dwWait = WaitForMultipleObjects(sizeof(aWaitHandles) / sizeof(HANDLE), aWaitHandles, FALSE, INFINITE);
-
-if (0 == dwWait - WAIT_OBJECT_0)  // Console input. If press key go out
-{
-if (IsKeyEvent(aWaitHandles[0]))
-break;
-}
-else if (1 == dwWait - WAIT_OBJECT_0) // Query results
-{
-//std::cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n";
-status = EnumerateResultsOnEventIDs(hSubscription, eventIDs);
-if (ERROR_NO_MORE_ITEMS != status)
-{
-//std::cout << "***********End Before Break******************\n";
-break;
-
-}
-break;// no more waits. Only the existing past events
-ResetEvent(aWaitHandles[1]);
-}
-else
-{
-if (WAIT_FAILED == dwWait)
-{
-wprintf(L"WaitForSingleObject failed with %lu\n", GetLastError());
-}
-break;
-}
-}
-cleanup:
-
-if (hSubscription)
-EvtClose(hSubscription);
-
-if (aWaitHandles[1])
-CloseHandle(aWaitHandles[1]);
-}
-*/
 
 void MyLogRetriever::getEvents(LPCWSTR pwsPath, LPCWSTR pwsQuery, std::vector<DWORD>*process_id)
 {
@@ -376,7 +218,6 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults,std::vector<DWORD>*pr
 			//pBuffer = (LPWSTR)malloc(dwBufferSize * sizeof(WCHAR));
 
 			MyLogStructure*outputLogStructure = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			//myLogStructures[numberOfAvailableEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
 			status = l.getStatus(outputLogStructure);
 			if (status == ERROR_SUCCESS)
 			{ // added later
@@ -386,7 +227,6 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults,std::vector<DWORD>*pr
 					if (outputLogStructure->executionProcessID == (*it))
 					{
 						myLogStructures.push_back(outputLogStructure);
-						numberOfAvailableEvents++;
 					}
 					else
 					{
@@ -449,13 +289,10 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults)
 			//pBuffer = (LPWSTR)malloc(dwBufferSize * sizeof(WCHAR));
 
 			MyLogStructure*outputLogStructure = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			//myLogStructures[numberOfAvailableEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
 			status = l.getStatus(outputLogStructure);
 			if (status == ERROR_SUCCESS)
 			{ // added later
-				//cout << numberOfAvailableEvents << endl; // need to check
 					myLogStructures.push_back(outputLogStructure);
-					numberOfAvailableEvents++;
 			} // added later
 			if (ERROR_SUCCESS == status) // PrintEvent
 			{
@@ -512,19 +349,16 @@ DWORD MyLogRetriever::EnumerateResults(EVT_HANDLE hResults, int logonType)
 			//pBuffer = (LPWSTR)malloc(dwBufferSize * sizeof(WCHAR));
 
 			MyLogStructure*outputLogStructure = (MyLogStructure*)malloc(sizeof(MyLogStructure));
-			//myLogStructures[numberOfAvailableEvents] = (MyLogStructure*)malloc(sizeof(MyLogStructure));
 			status = l.getStatus(outputLogStructure);
 
 			if (status == ERROR_SUCCESS)
 			{ // added later
-				//cout << numberOfAvailableEvents << endl; // need to check
 				string myLogonType = CW2A((outputLogStructure->myLogonType)->Logon_Type);
 				std::string::size_type sz;   // alias of size_t
 				int int_logonType = std::stoi(myLogonType, &sz);
 				if (int_logonType == logonType)
 				{
 					myLogStructures.push_back(outputLogStructure);
-					numberOfAvailableEvents++;
 				}
 			} // added later
 			if (ERROR_SUCCESS == status) // PrintEvent
@@ -588,7 +422,8 @@ std::wstring MyLogRetriever::stringToWidestring(const std::string& s)
 
 void MyLogRetriever::releaseMemory()
 {
-	for (int i = 0; i < numberOfAvailableEvents; i++)
+	std::list<MyLogStructure*>::iterator it;
+	for (it = myLogStructures.begin(); it != myLogStructures.end(); ++it)
 	{
 		//free(myLogStructures[i]);
 	}
@@ -844,7 +679,6 @@ return whiteListEntries;
 */
 vector<myLogStructure>MyLogRetriever::handleSuccessLoginEvents(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	wstring wsLogType = stringToWidestring("Security");
 	lpcwstrLogType = wsLogType.c_str();
@@ -856,15 +690,12 @@ vector<myLogStructure>MyLogRetriever::handleSuccessLoginEvents(int timePeriodInM
 	pwsQuery = wsCons.c_str();
 
 	getEvents(lpcwstrLogType, pwsQuery);
-	//printResultedEvent(myLogStructures, numberOfAvailableEvents);
 	return returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	//numberOfAvailableEvents = 0;
 }
 
 vector<myLogStructure>MyLogRetriever::handleFailedLoginEvents(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
-	numberOfAvailableEvents = 0;
 	wstring wsLogType = stringToWidestring("Security");
 	lpcwstrLogType = wsLogType.c_str();
 
@@ -887,9 +718,7 @@ vector<myLogStructure>MyLogRetriever::handleFailedLoginEvents(int timePeriodInMi
 	pwsQuery = wsCons.c_str();
 
 	getEvents(lpcwstrLogType, pwsQuery);
-	//printResultedEvent(myLogStructures, numberOfAvailableEvents);
 	return returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	//numberOfAvailableEvents = 0;
 }
 
 string  MyLogRetriever::assignSecurityConstraint(string logType, string str_securityLevel)
@@ -1075,8 +904,6 @@ string  MyLogRetriever::assignSecurityConstraint(string logType, string str_secu
 
 void MyLogRetriever::handleFirewallEvents(int timePeriodInMilliSeconds1)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1092,8 +919,6 @@ void MyLogRetriever::handleFirewallEvents(int timePeriodInMilliSeconds1)
 
 void MyLogRetriever::handleAccountUsage(int timePeriodInMilliSeconds1)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1109,8 +934,6 @@ void MyLogRetriever::handleAccountUsage(int timePeriodInMilliSeconds1)
 
 void MyLogRetriever::groupPolicyEditorsEvents(int timePeriodInMilliSeconds1)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1127,8 +950,6 @@ void MyLogRetriever::groupPolicyEditorsEvents(int timePeriodInMilliSeconds1)
 
 void MyLogRetriever::windowsDefenderEvents(int timePeriodInMilliSeconds1)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1145,8 +966,6 @@ void MyLogRetriever::windowsDefenderEvents(int timePeriodInMilliSeconds1)
 
 void MyLogRetriever::mobileDeviceEvents(int timePeriodInMilliSeconds1)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1204,7 +1023,6 @@ void MyLogRetriever::getLogs(int summarizationLevel1, int timePeriodInMilliSecon
 
 vector<myStruct::myLogStructure> MyLogRetriever::clearingEventLogs(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
-	// valid for 23 events only
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1233,7 +1051,6 @@ vector<myStruct::myLogStructure> MyLogRetriever::clearingEventLogs(int timePerio
 	//wcout << pwsQuery << endl;
 
 	getEvents(lpcwstrLogType, pwsQuery);
-	//localLast = myLogStructures[numberOfAvailableEvents - 1]->toLogString();
 	partial2 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
 
 	vector<myStruct::myLogStructure>logsListToReturn;
@@ -1245,8 +1062,6 @@ vector<myStruct::myLogStructure> MyLogRetriever::clearingEventLogs(int timePerio
 
 vector<myStruct::myLogStructure> MyLogRetriever::windowsUpdateErrors(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1259,14 +1074,8 @@ vector<myStruct::myLogStructure> MyLogRetriever::windowsUpdateErrors(int timePer
 	pwsQuery = wsCons.c_str();
 	getEvents(lpcwstrLogType, pwsQuery);
 	vector<myStruct::myLogStructure>partial1;
-	if (numberOfAvailableEvents != 0)
-	{
-		//localFirst = myLogStructures[0]->toLogString();
-		partial1 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	}
-	int partialNumberOfEvents1 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
-
+	partial1 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
+	
 	vector<myStruct::myLogStructure>partial2;
 	lpcwstrLogType = L"Setup";
 	//string strSecurityLevelConstraint = "";
@@ -1276,24 +1085,18 @@ vector<myStruct::myLogStructure> MyLogRetriever::windowsUpdateErrors(int timePer
 	wsCons = stringToWidestring(string_query);
 	pwsQuery = wsCons.c_str();
 	getEvents(lpcwstrLogType, pwsQuery);
-	//localLast = myLogStructures[numberOfAvailableEvents - 1]->toLogString();
 	partial2 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	int partialNumberOfEvents2 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
 
 	vector<myStruct::myLogStructure>logsListToReturn;
 	logsListToReturn.reserve(partial1.size() + partial2.size());
 	logsListToReturn.insert(logsListToReturn.end(), partial1.begin(), partial1.end());
 	logsListToReturn.insert(logsListToReturn.end(), partial2.begin(), partial2.end());
 
-	numberOfAvailableEvents = numberOfAvailableEvents + partialNumberOfEvents1 + partialNumberOfEvents2;
 	return logsListToReturn;
 }
 
 vector<myStruct::myLogStructure> MyLogRetriever::applicationCrashes(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1306,12 +1109,7 @@ vector<myStruct::myLogStructure> MyLogRetriever::applicationCrashes(int timePeri
 	pwsQuery = wsCons.c_str();
 	getEvents(lpcwstrLogType, pwsQuery);
 	vector<myStruct::myLogStructure>partial1;
-	if (numberOfAvailableEvents != 0)
-	{
-		partial1 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	}
-	int partialNumberOfEvents1 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
+	partial1 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
 
 	vector<myStruct::myLogStructure>partial2;
 	lpcwstrLogType = L"Application";
@@ -1323,22 +1121,17 @@ vector<myStruct::myLogStructure> MyLogRetriever::applicationCrashes(int timePeri
 	pwsQuery = wsCons.c_str();
 	getEvents(lpcwstrLogType, pwsQuery);
 	partial2 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	int partialNumberOfEvents2 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
 
 	vector<myStruct::myLogStructure>logsListToReturn;
 	logsListToReturn.reserve(partial1.size() + partial2.size());
 	logsListToReturn.insert(logsListToReturn.end(), partial1.begin(), partial1.end());
 	logsListToReturn.insert(logsListToReturn.end(), partial2.begin(), partial2.end());
 
-	numberOfAvailableEvents = partialNumberOfEvents1 + partialNumberOfEvents2;
 	return logsListToReturn;
 }
 
 vector<myStruct::myLogStructure> MyLogRetriever::softwareAndServicesInstallation(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
-	// valid for 23 events only
-	numberOfAvailableEvents = 0;
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
 	isLevelConstraintAvailable = false;
 	isProcessIDConstraintAvailable = false;
@@ -1351,12 +1144,7 @@ vector<myStruct::myLogStructure> MyLogRetriever::softwareAndServicesInstallation
 	pwsQuery = wsCons.c_str();
 	getEvents(lpcwstrLogType, pwsQuery);
 	vector<myStruct::myLogStructure>partial1;
-	if (numberOfAvailableEvents != 0)
-	{
-		partial1 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	}
-	int partialNumberOfEvents1 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
+	partial1 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
 
 	vector<myLogStructure>partial2;
 	lpcwstrLogType = L"Application";
@@ -1367,13 +1155,7 @@ vector<myStruct::myLogStructure> MyLogRetriever::softwareAndServicesInstallation
 	wsCons = stringToWidestring(string_query);
 	pwsQuery = wsCons.c_str();
 	getEvents(lpcwstrLogType, pwsQuery);
-	if (numberOfAvailableEvents != 0)
-	{
-		//localFirst = myLogStructures[0]->toLogString();
-		partial2 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	}
-	int partialNumberOfEvents2 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
+	partial2 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
 
 	vector<myStruct::myLogStructure>partial3;
 	lpcwstrLogType = L"Setup";
@@ -1386,8 +1168,6 @@ vector<myStruct::myLogStructure> MyLogRetriever::softwareAndServicesInstallation
 	getEvents(lpcwstrLogType, pwsQuery);
 
 	partial3 = returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	int partialNumberOfEvents3 = numberOfAvailableEvents;
-	numberOfAvailableEvents = 0;
 
 	vector<myStruct::myLogStructure>logsListToReturn;
 	logsListToReturn.reserve(partial1.size() + partial2.size() + partial3.size());
@@ -1395,14 +1175,12 @@ vector<myStruct::myLogStructure> MyLogRetriever::softwareAndServicesInstallation
 	logsListToReturn.insert(logsListToReturn.end(), partial2.begin(), partial2.end());
 	logsListToReturn.insert(logsListToReturn.end(), partial3.begin(), partial3.end());
 
-	numberOfAvailableEvents = partialNumberOfEvents1 + partialNumberOfEvents2 + partialNumberOfEvents3;
 	return logsListToReturn;
 }
 
 vector<myStruct::myLogStructure>MyLogRetriever::getRemoteLoginEvents(int timePeriodInMilliSeconds1, int summarizationLevel)
 {
 	timePeriodInMilliSeconds = timePeriodInMilliSeconds1;
-	numberOfAvailableEvents = 0;
 	wstring wsLogType = stringToWidestring("Security");
 	lpcwstrLogType = wsLogType.c_str();
 
@@ -1414,9 +1192,7 @@ vector<myStruct::myLogStructure>MyLogRetriever::getRemoteLoginEvents(int timePer
 	pwsQuery = wsCons.c_str();
 
 	getEvents(lpcwstrLogType, pwsQuery, 10);
-	//printResultedEvent(myLogStructures, numberOfAvailableEvents);
 	return returnResultedEventWithStruct(myLogStructures, summarizationLevel);
-	//numberOfAvailableEvents = 0;
 }
 
 vector<myStruct::myLogStructure> MyLogRetriever::applicationWhitelisting(int timePeriodInMilliSeconds1, int totalTimePeriodInMillisecond1) // need to implement

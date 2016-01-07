@@ -79,7 +79,6 @@ public:
 	int timePeriodInMilliSeconds;
 
 	list<MyLogStructure*>myLogStructures;
-	int numberOfAvailableEvents = 0;
 	string processName = "";
 	string eventCategory = "";
 };
