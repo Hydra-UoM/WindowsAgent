@@ -825,7 +825,7 @@ void MyLogStructureMaker::extractEventMessageString(std::unique_ptr<MyLogStructu
 			}
 			outputLog->myProviderInformation = new MyProviderInformation(Provider_ID, Provider_Name);
 		}
-		if (wcscmp(arrayOfSplitted[i].c_str(), L"Change Information") == 0)// There is Change Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Change Information") == 0)// There is Change Information type
 		{
 			outputLog->isAvailableMyChangeInformation = true;
 			i++;
@@ -842,7 +842,7 @@ void MyLogStructureMaker::extractEventMessageString(std::unique_ptr<MyLogStructu
 			}
 			outputLog->myChangeInformation = new MyChangeInformation(Change_Type);
 		}
-		if (wcscmp(arrayOfSplitted[i].c_str(), L"Access Request Information") == 0)// There is Access Request Information type
+		if (i < noOfSplitedStrings && wcscmp(arrayOfSplitted[i].c_str(), L"Access Request Information") == 0)// There is Access Request Information type
 		{
 			outputLog->isAvailableMyAccessRequestInformation = true;
 			i++;
