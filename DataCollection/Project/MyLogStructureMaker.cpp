@@ -266,7 +266,7 @@ void MyLogStructureMaker::extractEventMessageString(std::unique_ptr<MyLogStructu
 		}
 	}
 	outputLog->message = arrayOfSplitted[0].c_str();
-	//wprintf(L"Splitted: %ls\n", arrayOfSplitted[2].c_str());
+	//wprintf(L"Splitted: %ls\n", outputLog->message);
 	//wprintf(L"Splitted: %d\n", wcscmp(arrayOfSplitted[1].c_str(), L"Subject"));
 	//wprintf(L"Splitted: %d\n", arrayOfSplitted[1].compare(L"Subject")); // same - 0 // Appl : -1
 
@@ -597,7 +597,7 @@ void MyLogStructureMaker::extractEventMessageString(std::unique_ptr<MyLogStructu
 		{
 			outputLog->isAvailableMyProcessInformation = true;
 			i = i++;
-			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Process ID") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Caller Process ID") == 0))
+			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Process ID") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Caller Process ID") == 0) || wcscmp(arrayOfSplitted[i].c_str(), L"New Process ID") == 0)
 			{
 				i++;
 				Process_ID = arrayOfSplitted[i].c_str();
@@ -608,7 +608,7 @@ void MyLogStructureMaker::extractEventMessageString(std::unique_ptr<MyLogStructu
 			{
 				Process_ID = L"";
 			}
-			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Process Name") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Caller Process Name") == 0))
+			if (i < noOfSplitedStrings && (wcscmp(arrayOfSplitted[i].c_str(), L"Process Name") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"Caller Process Name") == 0 || wcscmp(arrayOfSplitted[i].c_str(), L"New Process Name") == 0))
 			{
 				i++;
 				Process_Name = arrayOfSplitted[i].c_str();

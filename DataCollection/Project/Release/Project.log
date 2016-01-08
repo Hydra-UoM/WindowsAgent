@@ -1,87 +1,6 @@
-﻿Build started 1/8/2016 9:49:35 AM.
+﻿Build started 1/8/2016 10:58:21 PM.
      1>Project "E:\From_git\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\local\boost_1_59_0 /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows" /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D _CONSOLE /D _VARIADIC_MAX=8 /D _RELEASE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt centralNodeServiceV8_constants.cpp centralNodeServiceV8_types.cpp CPU.cpp Data.cpp DBHandler.cpp GetProcessID.cpp IO.cpp Manager.cpp Memory.cpp MyAccessRequestInformation.cpp MyAccountForWhichLogonFailed.cpp MyAdditionalInformation.cpp MyApplicationInformation.cpp MyCalloutInformation.cpp MyChangeInformation.cpp MyDBHandler.cpp MyDetailedAuthenticationInformation.cpp MyErrorInformation.cpp MyFailureInformation.cpp MyFilterInformation.cpp MyImpersonationLevel.cpp MyLayerInformation.cpp MyLogManager.cpp MyLogonType.cpp MyLogRetriever.cpp MyLogStructure.cpp MyLogStructureMaker.cpp MyNetworkInformation.cpp MyNewLogon.cpp MyObject.cpp MyProcessInformation.cpp MyProviderInformation.cpp MyRuleInformation.cpp MySubject.cpp MyTimeStamp.cpp MyUserAccountDetails.cpp MyUserAccountDetailsStructure.cpp ProcessStats.cpp ProcessStats_server.skeleton.cpp Process_constants.cpp Process_types.cpp RegisterDeviceService.cpp stdafx.cpp
-         centralNodeServiceV8_constants.cpp
-         centralNodeServiceV8_types.cpp
-         CPU.cpp
-         Data.cpp
-     1>Data.cpp(390): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>Data.cpp(331): warning C4101: 'createTime' : unreferenced local variable
-     1>Data.cpp(334): warning C4101: 'userTime' : unreferenced local variable
-     1>Data.cpp(332): warning C4101: 'exitTime' : unreferenced local variable
-     1>Data.cpp(333): warning C4101: 'kernelTime' : unreferenced local variable
-     1>Data.cpp(572): warning C4018: '<' : signed/unsigned mismatch
-     1>Data.cpp(584): warning C4018: '<' : signed/unsigned mismatch
-     1>Data.cpp(596): warning C4018: '<' : signed/unsigned mismatch
-     1>Data.cpp(608): warning C4018: '<' : signed/unsigned mismatch
-         DBHandler.cpp
-     1>DBHandler.cpp(157): warning C4244: 'argument' : conversion from 'double' to 'char', possible loss of data
-         GetProcessID.cpp
-         IO.cpp
-         Manager.cpp
-     1>Manager.cpp(41): warning C4101: 'num2' : unreferenced local variable
-     1>Manager.cpp(41): warning C4101: 'num1' : unreferenced local variable
-     1>Manager.cpp(728): warning C4244: 'initializing' : conversion from 'DWORDLONG' to 'double', possible loss of data
-     1>Manager.cpp(730): warning C4244: 'initializing' : conversion from 'DWORDLONG' to 'double', possible loss of data
-     1>Manager.cpp(732): warning C4244: 'initializing' : conversion from 'DWORDLONG' to 'double', possible loss of data
-         Memory.cpp
-         MyAccessRequestInformation.cpp
-         MyAccountForWhichLogonFailed.cpp
-         MyAdditionalInformation.cpp
-         MyApplicationInformation.cpp
-         MyCalloutInformation.cpp
-         MyChangeInformation.cpp
-         MyDBHandler.cpp
-     1>MyDBHandler.cpp(77): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>MyDBHandler.cpp(99): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>MyDBHandler.cpp(121): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>MyDBHandler.cpp(564): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>MyDBHandler.cpp(582): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>MyDBHandler.cpp(600): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-         MyDetailedAuthenticationInformation.cpp
-         MyErrorInformation.cpp
-         MyFailureInformation.cpp
-         MyFilterInformation.cpp
-         Compiling...
-         MyImpersonationLevel.cpp
-         MyLayerInformation.cpp
-         MyLogManager.cpp
-     1>MyLogManager.cpp(421): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(425): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(432): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(436): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(446): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(450): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(457): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(461): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(970): warning C4101: 'num2' : unreferenced local variable
-     1>MyLogManager.cpp(970): warning C4101: 'num1' : unreferenced local variable
-         MyLogonType.cpp
-         MyLogRetriever.cpp
-     1>MyLogRetriever.cpp(749): warning C4065: switch statement contains 'default' but no 'case' labels
-         MyLogStructure.cpp
-         MyLogStructureMaker.cpp
-         MyNetworkInformation.cpp
-         MyNewLogon.cpp
-         MyObject.cpp
-         MyProcessInformation.cpp
-         MyProviderInformation.cpp
-         MyRuleInformation.cpp
-         MySubject.cpp
-         MyTimeStamp.cpp
-         MyUserAccountDetails.cpp
-         MyUserAccountDetailsStructure.cpp
-         ProcessStats.cpp
-         ProcessStats_server.skeleton.cpp
-     1>e:\from_git\windowsagent\datacollection\project\Objects.h(219): warning C4244: '=' : conversion from 'DWORD' to 'float', possible loss of data
-     1>ProcessStats_server.skeleton.cpp(226): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
-         Process_constants.cpp
-         Compiling...
-         Process_types.cpp
-         RegisterDeviceService.cpp
-         stdafx.cpp
-       Link:
+     1>Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\From_git\WindowsAgent\DataCollection\Release\Project.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\local\boost_1_59_0\stage\lib /LIBPATH:"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\Release" sqlite3.lib "libboost_thread-vc120-mt-gd-1_59.lib" "libboost_chrono-vc120-mt-gd-1_59.lib" libthrift.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\From_git\WindowsAgent\DataCollection\Release\Project.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\From_git\WindowsAgent\DataCollection\Release\Project.lib" /MACHINE:X86 /SAFESEH Release\centralNodeServiceV8_constants.obj
          Release\centralNodeServiceV8_types.obj
          Release\CPU.obj
@@ -137,4 +56,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:01:22.97
+Time Elapsed 00:00:23.88
