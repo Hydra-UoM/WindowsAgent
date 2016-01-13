@@ -26,8 +26,9 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
     hContext = EvtCreateRenderContext(0, NULL, EvtRenderContextSystem);
     if (NULL == hContext)
     {
-        wprintf(L"EvtCreateRenderContext failed with %lu\n", status = GetLastError());
-		//outputLogStructure = nullptr;
+		status = GetLastError(); // added 13.1.16
+		cout << "EvtCreateRenderContext failed with" << status << endl;
+		outputLogStructure = nullptr;
         goto cleanup;
     }
 
@@ -49,17 +50,17 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
             }
             else
             {
-                wprintf(L"malloc failed\n");
+				cout << "malloc failed\n" << endl;
                 status = ERROR_OUTOFMEMORY;
-				//outputLogStructure = nullptr;
+				outputLogStructure = nullptr;
                 goto cleanup;
             }
         }
 
         if (ERROR_SUCCESS != (status = GetLastError()))
         {
-            wprintf(L"EvtRender failed with %d\n", GetLastError());
-			//outputLogStructure = nullptr;
+			cout << "EvtRender failed with " << GetLastError() << endl;
+			outputLogStructure = nullptr;
             goto cleanup;
         }
     }
@@ -68,20 +69,31 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
 	LPCWSTR providerName = pRenderedValues[EvtSystemProviderName].StringVal;
 	EVT_HANDLE hProviderMetadata = EvtOpenPublisherMetadata(NULL, pRenderedValues[EvtSystemProviderName].StringVal, NULL, 0, 0);
 	LPWSTR pwsMessage = NULL; // message
-	if (NULL == hProviderMetadata)
+
+	// initialize with empty strings
+	eventMessageString = L"";
+	levelMessageString = L"";
+	taskMessageString = L"";
+	opCodeMessageString = L"";
+	channelMessageString = L"";
+	providerMessageString = L"";
+
+	if (NULL != hProviderMetadata)
     {
-        wprintf(L"EvtOpenPublisherMetadata failed with %d\n", GetLastError());
-		//outputLogStructure = nullptr;
-        goto cleanup;
+		eventMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageEvent);
+		levelMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageLevel);
+		taskMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageTask);
+		opCodeMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageOpcode);
+		channelMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageChannel);
+		providerMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageProvider);
     }
+	else
+	{
+		cout << "EvtOpenPublisherMetadata failed with " << GetLastError() << endl;
+		//goto cleanup;
+	}
 
-	eventMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageEvent);
 
-	levelMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageLevel);
-	taskMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageTask);
-	opCodeMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageOpcode);
-	channelMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageChannel);
-	providerMessageString = GetMessageString(hProviderMetadata, hEvent, EvtFormatMessageProvider);
 
 	version = (EvtVarTypeNull == pRenderedValues[EvtSystemVersion].Type) ? 0 : pRenderedValues[EvtSystemVersion].ByteVal;
 	level = (EvtVarTypeNull == pRenderedValues[EvtSystemLevel].Type) ? 0 : pRenderedValues[EvtSystemLevel].ByteVal;
@@ -116,7 +128,7 @@ DWORD MyLogStructureMaker::getStatus(MyLogStructure*outputLogStructure)
 		auto outputLog = std::make_unique<MyLogStructure>(/**eventMessageString, */levelMessageString, taskMessageString, opCodeMessageString, channelMessageString,
 			providerMessageString, version, level, task, opCode, keywords, eventRecordID, executionProcessID, executionThreadID,
 			channel, computer, EventID, timeStamp);
-		extractEventMessageString(outputLog);
+			extractEventMessageString(outputLog);
 
 		*outputLogStructure = *(outputLog.get());
 		//wprintf(L"Message: %ls\n", outputLog->message);
@@ -169,14 +181,14 @@ LPWSTR MyLogStructureMaker::GetMessageString(EVT_HANDLE hMetadata, EVT_HANDLE hE
             }
             else
             {
-                wprintf(L"malloc failed\n");
+				cout << "malloc failed\n" << endl;
             }
         }
         else if (ERROR_EVT_MESSAGE_NOT_FOUND == status || ERROR_EVT_MESSAGE_ID_NOT_FOUND == status)
             ;
         else
         {
-            wprintf(L"EvtFormatMessage failed with %u\n", status);
+            cout << "EvtFormatMessage failed with " << status << endl;
         }
     }
 

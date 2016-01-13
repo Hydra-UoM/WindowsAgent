@@ -1,59 +1,9 @@
-﻿Build started 1/8/2016 10:58:21 PM.
+﻿Build started 1/13/2016 2:08:18 PM.
      1>Project "E:\From_git\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\From_git\WindowsAgent\DataCollection\Release\Project.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\local\boost_1_59_0\stage\lib /LIBPATH:"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\Release" sqlite3.lib "libboost_thread-vc120-mt-gd-1_59.lib" "libboost_chrono-vc120-mt-gd-1_59.lib" libthrift.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\From_git\WindowsAgent\DataCollection\Release\Project.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\From_git\WindowsAgent\DataCollection\Release\Project.lib" /MACHINE:X86 /SAFESEH Release\centralNodeServiceV8_constants.obj
-         Release\centralNodeServiceV8_types.obj
-         Release\CPU.obj
-         Release\Data.obj
-         Release\DBHandler.obj
-         Release\GetProcessID.obj
-         Release\IO.obj
-         Release\Manager.obj
-         Release\Memory.obj
-         Release\MyAccessRequestInformation.obj
-         Release\MyAccountForWhichLogonFailed.obj
-         Release\MyAdditionalInformation.obj
-         Release\MyApplicationInformation.obj
-         Release\MyCalloutInformation.obj
-         Release\MyChangeInformation.obj
-         Release\MyDBHandler.obj
-         Release\MyDetailedAuthenticationInformation.obj
-         Release\MyErrorInformation.obj
-         Release\MyFailureInformation.obj
-         Release\MyFilterInformation.obj
-         Release\MyImpersonationLevel.obj
-         Release\MyLayerInformation.obj
-         Release\MyLogManager.obj
-         Release\MyLogonType.obj
-         Release\MyLogRetriever.obj
-         Release\MyLogStructure.obj
-         Release\MyLogStructureMaker.obj
-         Release\MyNetworkInformation.obj
-         Release\MyNewLogon.obj
-         Release\MyObject.obj
-         Release\MyProcessInformation.obj
-         Release\MyProviderInformation.obj
-         Release\MyRuleInformation.obj
-         Release\MySubject.obj
-         Release\MyTimeStamp.obj
-         Release\MyUserAccountDetails.obj
-         Release\MyUserAccountDetailsStructure.obj
-         Release\ProcessStats.obj
-         Release\ProcessStats_server.skeleton.obj
-         Release\Process_constants.obj
-         Release\Process_types.obj
-         Release\RegisterDeviceService.obj
-         Release\stdafx.obj
-         Generating code
-     1>e:\from_git\windowsagent\datacollection\project\mydbhandler.cpp(392): warning C4715: 'MyDBHandler::retrieveCurrentUserData' : not all control paths return a value
-     1>e:\from_git\windowsagent\datacollection\project\manager.cpp(59): warning C4715: 'Manager::ConfigFile' : not all control paths return a value
-     1>e:\from_git\windowsagent\datacollection\project\mylogmanager.cpp(987): warning C4715: 'MyLogManager::ConfigFile' : not all control paths return a value
-     1>e:\from_git\windowsagent\datacollection\project\mydbhandler.cpp(434): warning C4715: 'MyDBHandler::retrieveUsersData' : not all control paths return a value
-     1>e:\from_git\windowsagent\datacollection\project\mydbhandler.cpp(558): warning C4715: 'MyDBHandler::retrieveLogData' : not all control paths return a value
-         Finished generating code
          Project.vcxproj -> E:\From_git\WindowsAgent\DataCollection\Release\Project.exe
      1>Done Building Project "E:\From_git\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:23.88
+Time Elapsed 00:00:00.15

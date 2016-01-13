@@ -150,13 +150,13 @@
     <ClInclude Include="WindowsAgentConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="centralNodeServiceV8_constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="centralNodeServiceV8_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RegisterDeviceService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="centralNodeServiceV10_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="centralNodeServiceV10_types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -278,16 +278,16 @@
     <ClCompile Include="MyNewLogon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="centralNodeServiceV8_constants.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="centralNodeServiceV8_types.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RegisterDeviceService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="centralNodeServiceV10_constants.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="centralNodeServiceV10_types.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

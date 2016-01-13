@@ -8,7 +8,7 @@
 #define RegisterDeviceService_H
 
 #include <thrift/TDispatchProcessor.h>
-#include "centralNodeServiceV8_types.h"
+#include "centralNodeServiceV10_types.h"
 
 namespace HydraCN {
 
@@ -16,6 +16,7 @@ class RegisterDeviceServiceIf {
  public:
   virtual ~RegisterDeviceServiceIf() {}
   virtual bool registerDevice(const Device& device) = 0;
+  virtual bool getCommands(const Device& device) = 0;
   virtual bool pushProcessesInfo(const std::vector<ThriftAgentProcessInfo> & processes) = 0;
   virtual bool pushLogInfo(const std::vector<myLogStructure> & logInfo) = 0;
   virtual bool pushUsersInfo(const std::vector<myUserAccountDetailsStruct> & usersInfo) = 0;
@@ -51,6 +52,10 @@ class RegisterDeviceServiceNull : virtual public RegisterDeviceServiceIf {
  public:
   virtual ~RegisterDeviceServiceNull() {}
   bool registerDevice(const Device& /* device */) {
+    bool _return = false;
+    return _return;
+  }
+  bool getCommands(const Device& /* device */) {
     bool _return = false;
     return _return;
   }
@@ -194,6 +199,126 @@ class RegisterDeviceService_registerDevice_presult {
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
   friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_registerDevice_presult& obj);
+};
+
+typedef struct _RegisterDeviceService_getCommands_args__isset {
+  _RegisterDeviceService_getCommands_args__isset() : device(false) {}
+  bool device :1;
+} _RegisterDeviceService_getCommands_args__isset;
+
+class RegisterDeviceService_getCommands_args {
+ public:
+
+  static const char* ascii_fingerprint; // = "2777DAAC6BF25455A28C2672DEAA17C2";
+  static const uint8_t binary_fingerprint[16]; // = {0x27,0x77,0xDA,0xAC,0x6B,0xF2,0x54,0x55,0xA2,0x8C,0x26,0x72,0xDE,0xAA,0x17,0xC2};
+
+  RegisterDeviceService_getCommands_args(const RegisterDeviceService_getCommands_args&);
+  RegisterDeviceService_getCommands_args& operator=(const RegisterDeviceService_getCommands_args&);
+  RegisterDeviceService_getCommands_args() {
+  }
+
+  virtual ~RegisterDeviceService_getCommands_args() throw();
+  Device device;
+
+  _RegisterDeviceService_getCommands_args__isset __isset;
+
+  void __set_device(const Device& val);
+
+  bool operator == (const RegisterDeviceService_getCommands_args & rhs) const
+  {
+    if (!(device == rhs.device))
+      return false;
+    return true;
+  }
+  bool operator != (const RegisterDeviceService_getCommands_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RegisterDeviceService_getCommands_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_getCommands_args& obj);
+};
+
+
+class RegisterDeviceService_getCommands_pargs {
+ public:
+
+  static const char* ascii_fingerprint; // = "2777DAAC6BF25455A28C2672DEAA17C2";
+  static const uint8_t binary_fingerprint[16]; // = {0x27,0x77,0xDA,0xAC,0x6B,0xF2,0x54,0x55,0xA2,0x8C,0x26,0x72,0xDE,0xAA,0x17,0xC2};
+
+
+  virtual ~RegisterDeviceService_getCommands_pargs() throw();
+  const Device* device;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_getCommands_pargs& obj);
+};
+
+typedef struct _RegisterDeviceService_getCommands_result__isset {
+  _RegisterDeviceService_getCommands_result__isset() : success(false) {}
+  bool success :1;
+} _RegisterDeviceService_getCommands_result__isset;
+
+class RegisterDeviceService_getCommands_result {
+ public:
+
+  static const char* ascii_fingerprint; // = "D9D3B4421B1F23CB4063C80B484E7909";
+  static const uint8_t binary_fingerprint[16]; // = {0xD9,0xD3,0xB4,0x42,0x1B,0x1F,0x23,0xCB,0x40,0x63,0xC8,0x0B,0x48,0x4E,0x79,0x09};
+
+  RegisterDeviceService_getCommands_result(const RegisterDeviceService_getCommands_result&);
+  RegisterDeviceService_getCommands_result& operator=(const RegisterDeviceService_getCommands_result&);
+  RegisterDeviceService_getCommands_result() : success(0) {
+  }
+
+  virtual ~RegisterDeviceService_getCommands_result() throw();
+  bool success;
+
+  _RegisterDeviceService_getCommands_result__isset __isset;
+
+  void __set_success(const bool val);
+
+  bool operator == (const RegisterDeviceService_getCommands_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const RegisterDeviceService_getCommands_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const RegisterDeviceService_getCommands_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_getCommands_result& obj);
+};
+
+typedef struct _RegisterDeviceService_getCommands_presult__isset {
+  _RegisterDeviceService_getCommands_presult__isset() : success(false) {}
+  bool success :1;
+} _RegisterDeviceService_getCommands_presult__isset;
+
+class RegisterDeviceService_getCommands_presult {
+ public:
+
+  static const char* ascii_fingerprint; // = "D9D3B4421B1F23CB4063C80B484E7909";
+  static const uint8_t binary_fingerprint[16]; // = {0xD9,0xD3,0xB4,0x42,0x1B,0x1F,0x23,0xCB,0x40,0x63,0xC8,0x0B,0x48,0x4E,0x79,0x09};
+
+
+  virtual ~RegisterDeviceService_getCommands_presult() throw();
+  bool* success;
+
+  _RegisterDeviceService_getCommands_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+  friend std::ostream& operator<<(std::ostream& out, const RegisterDeviceService_getCommands_presult& obj);
 };
 
 typedef struct _RegisterDeviceService_pushProcessesInfo_args__isset {
@@ -824,6 +949,9 @@ class RegisterDeviceServiceClient : virtual public RegisterDeviceServiceIf {
   bool registerDevice(const Device& device);
   void send_registerDevice(const Device& device);
   bool recv_registerDevice();
+  bool getCommands(const Device& device);
+  void send_getCommands(const Device& device);
+  bool recv_getCommands();
   bool pushProcessesInfo(const std::vector<ThriftAgentProcessInfo> & processes);
   void send_pushProcessesInfo(const std::vector<ThriftAgentProcessInfo> & processes);
   bool recv_pushProcessesInfo();
@@ -855,6 +983,7 @@ class RegisterDeviceServiceProcessor : public ::apache::thrift::TDispatchProcess
   typedef std::map<std::string, ProcessFunction> ProcessMap;
   ProcessMap processMap_;
   void process_registerDevice(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_getCommands(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_pushProcessesInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_pushLogInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_pushUsersInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -864,6 +993,7 @@ class RegisterDeviceServiceProcessor : public ::apache::thrift::TDispatchProcess
   RegisterDeviceServiceProcessor(boost::shared_ptr<RegisterDeviceServiceIf> iface) :
     iface_(iface) {
     processMap_["registerDevice"] = &RegisterDeviceServiceProcessor::process_registerDevice;
+    processMap_["getCommands"] = &RegisterDeviceServiceProcessor::process_getCommands;
     processMap_["pushProcessesInfo"] = &RegisterDeviceServiceProcessor::process_pushProcessesInfo;
     processMap_["pushLogInfo"] = &RegisterDeviceServiceProcessor::process_pushLogInfo;
     processMap_["pushUsersInfo"] = &RegisterDeviceServiceProcessor::process_pushUsersInfo;
@@ -904,6 +1034,15 @@ class RegisterDeviceServiceMultiface : virtual public RegisterDeviceServiceIf {
       ifaces_[i]->registerDevice(device);
     }
     return ifaces_[i]->registerDevice(device);
+  }
+
+  bool getCommands(const Device& device) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->getCommands(device);
+    }
+    return ifaces_[i]->getCommands(device);
   }
 
   bool pushProcessesInfo(const std::vector<ThriftAgentProcessInfo> & processes) {

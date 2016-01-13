@@ -624,6 +624,7 @@ void Manager::deviceClient(){
 	line = manage.ConfigFile();
 	istringstream ss(line);
 	string token;
+	bool commandVal;
 
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
@@ -641,6 +642,7 @@ void Manager::deviceClient(){
 	device.type = type;
 	device.group = fileRead[1];
 	device.name= manage.getComputerName();
+
 	
 
 	do{
@@ -649,6 +651,8 @@ void Manager::deviceClient(){
 			transport->open();
 			regVal = client.registerDevice(device);
 			cout << "Registered Initially!!" << endl;
+			commandVal = client.getCommands(device);
+			cout << "Command Function Called!!" << endl;
 
 			transport->close();
 		}
