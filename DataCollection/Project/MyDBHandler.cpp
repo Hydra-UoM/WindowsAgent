@@ -253,12 +253,12 @@ void MyDBHandler::storeLogData(std::vector<myStruct::myLogStructure>logList)
 
 				sqlite3_step(pointer);   // prepare statemnt Ready 
 				sqlite3_reset(pointer);
-				printf("Data inserted successfully\n");
 				isAvailableLogData = true;
 			}
 			sqlite3_finalize(pointer);
 		}
 		sqlite3_close(database);
+		printf("Data inserted successfully\n");
 	}
 }
 
@@ -300,12 +300,12 @@ void MyDBHandler::storeUsersData(std::vector<myStruct::myUserAccountDetailsStruc
 
 				sqlite3_step(pointer);   // prepare statemnt Ready 
 				sqlite3_reset(pointer);
-				printf("Data inserted successfully\n");
 				isAvailableUsersData = true;
 			}
 			sqlite3_finalize(pointer);
 		}
 		sqlite3_close(database);
+		printf("Data inserted successfully\n");
 	}
 }
 
@@ -342,9 +342,9 @@ void MyDBHandler::storeCurrentUserData(myStruct::myUserAccountDetailsStruct curr
 
 			sqlite3_step(pointer);   // prepare statemnt Ready 
 			sqlite3_reset(pointer);
-			printf("Data inserted successfully\n");
 			isAvailableCurrentUserData = true;
 		}
+		printf("Data inserted successfully\n");
 		sqlite3_finalize(pointer);
 		sqlite3_close(database);
 	}

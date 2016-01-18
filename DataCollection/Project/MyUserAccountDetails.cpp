@@ -33,13 +33,13 @@ MyUserAccountDetails::MyUserAccountDetails()
 
 myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUserInformation(int summarizationLevel)
 {
-	LPWSTR  computerName;
-	LPWSTR usri4_name;
+	LPWSTR  computerName = L"";
+	LPWSTR usri4_name = L"";
 	DWORD usri4_password_age;
 	DWORD usri4_priv;
 	DWORD usri4_flags;
-	LPWSTR usri4_usr_comment;
-	LPWSTR usri4_parms;
+	LPWSTR usri4_usr_comment = L"";
+	LPWSTR usri4_parms = L"";
 	DWORD usri4_last_logon;
 	DWORD usri4_last_logoff;
 	DWORD usri4_acct_expires;
@@ -51,7 +51,7 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 	DWORD usri4_country_code;
 	DWORD usri4_code_page;
 	DWORD usri4_primary_group_id;
-	LPWSTR usri4_profile;
+	LPWSTR usri4_profile = L"";
 	DWORD usri4_password_expired;
 	DWORD usri4_auth_flags;
 
@@ -63,16 +63,17 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 	NET_API_STATUS nStatus;
 
 	LPTSTR sStringSid = NULL;
-	TCHAR  infoBuf[INFO_BUFFER_SIZE];
+	TCHAR  infoBuf2[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
 	// Get and display the name of the computer. 
 	bufCharCount = INFO_BUFFER_SIZE;
-	if (!GetComputerName(infoBuf, &bufCharCount))
+	if (!GetComputerName(infoBuf2, &bufCharCount))
 		printError(TEXT("GetComputerName"));
-	computerName = infoBuf;
+	computerName = infoBuf2;
 	//_tprintf(TEXT("\tComputer name:      %s\n"), infoBuf);
 
 	// Get and display the user name. 
+	TCHAR  infoBuf[INFO_BUFFER_SIZE];
 	bufCharCount = INFO_BUFFER_SIZE;
 	if (!GetUserName(infoBuf, &bufCharCount))
 		printError(TEXT("GetUserName"));
@@ -89,7 +90,7 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 		if (pBuf != NULL)
 		{
 			pBuf4 = (LPUSER_INFO_4)pBuf;
-			usri4_name = pBuf4->usri4_name;
+			//usri4_name = pBuf4->usri4_name;
 			//wprintf(L"\tPassword: %s\n", pBuf4->usri4_password);
 			usri4_password_age = pBuf4->usri4_password_age;
 
@@ -150,11 +151,6 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 			
 			//wprintf(L"\tHome directory drive letter: %s\n",pBuf4->usri4_home_dir_drive);
 			usri4_password_expired = pBuf4->usri4_password_expired;
-			myCurrentUserAccountStructure = new MyUserAccountDetailsStructure(computerName, usri4_name, usri4_password_age, usri4_priv,
-				usri4_flags, usri4_usr_comment, usri4_parms, usri4_last_logon, usri4_last_logoff,
-				usri4_acct_expires, usri4_max_storage, usri4_units_per_week, usri4_logon_hours,
-				usri4_bad_pw_count, usri4_num_logons, usri4_country_code, usri4_code_page,
-				usri4_primary_group_id, usri4_profile, usri4_password_expired, usri4_auth_flags);
 		}
 		// Otherwise, print the system error.
 		//
@@ -167,6 +163,11 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 		// Free the allocated memory.
 		//
 	}
+	myCurrentUserAccountStructure = new MyUserAccountDetailsStructure(computerName, usri4_name, usri4_password_age, usri4_priv,
+		usri4_flags, usri4_usr_comment, usri4_parms, usri4_last_logon, usri4_last_logoff,
+		usri4_acct_expires, usri4_max_storage, usri4_units_per_week, usri4_logon_hours,
+		usri4_bad_pw_count, usri4_num_logons, usri4_country_code, usri4_code_page,
+		usri4_primary_group_id, usri4_profile, usri4_password_expired, usri4_auth_flags);
 	myUserAccountDetailsStruct userString;
 	if (myCurrentUserAccountStructure != NULL)
 	{
