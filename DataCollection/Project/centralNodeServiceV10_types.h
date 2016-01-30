@@ -141,7 +141,7 @@ class Device {
 void swap(Device &a, Device &b);
 
 typedef struct _ThriftAgentProcessInfo__isset {
-  _ThriftAgentProcessInfo__isset() : name(false), packageName(false), ramUsage(false), cpuUsage(false), sentData(false), receiveData(false), pid(false), type(false), mac(false), timestamp(false) {}
+  _ThriftAgentProcessInfo__isset() : name(false), packageName(false), ramUsage(false), cpuUsage(false), sentData(false), receiveData(false), pid(false), type(false), mac(false), timestamp(false), URLs(false) {}
   bool name :1;
   bool packageName :1;
   bool ramUsage :1;
@@ -152,13 +152,14 @@ typedef struct _ThriftAgentProcessInfo__isset {
   bool type :1;
   bool mac :1;
   bool timestamp :1;
+  bool URLs :1;
 } _ThriftAgentProcessInfo__isset;
 
 class ThriftAgentProcessInfo {
  public:
 
-  static const char* ascii_fingerprint; // = "B5A481DA4A2115245806EC4F209A4094";
-  static const uint8_t binary_fingerprint[16]; // = {0xB5,0xA4,0x81,0xDA,0x4A,0x21,0x15,0x24,0x58,0x06,0xEC,0x4F,0x20,0x9A,0x40,0x94};
+  static const char* ascii_fingerprint; // = "40456E6D5B67D49BBB9A788AA6949F6F";
+  static const uint8_t binary_fingerprint[16]; // = {0x40,0x45,0x6E,0x6D,0x5B,0x67,0xD4,0x9B,0xBB,0x9A,0x78,0x8A,0xA6,0x94,0x9F,0x6F};
 
   ThriftAgentProcessInfo(const ThriftAgentProcessInfo&);
   ThriftAgentProcessInfo& operator=(const ThriftAgentProcessInfo&);
@@ -176,6 +177,7 @@ class ThriftAgentProcessInfo {
   std::string type;
   std::string mac;
   std::string timestamp;
+  std::vector<std::string>  URLs;
 
   _ThriftAgentProcessInfo__isset __isset;
 
@@ -199,6 +201,8 @@ class ThriftAgentProcessInfo {
 
   void __set_timestamp(const std::string& val);
 
+  void __set_URLs(const std::vector<std::string> & val);
+
   bool operator == (const ThriftAgentProcessInfo & rhs) const
   {
     if (!(name == rhs.name))
@@ -220,6 +224,8 @@ class ThriftAgentProcessInfo {
     if (!(mac == rhs.mac))
       return false;
     if (!(timestamp == rhs.timestamp))
+      return false;
+    if (!(URLs == rhs.URLs))
       return false;
     return true;
   }

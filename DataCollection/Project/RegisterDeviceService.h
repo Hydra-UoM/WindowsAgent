@@ -329,8 +329,8 @@ typedef struct _RegisterDeviceService_pushProcessesInfo_args__isset {
 class RegisterDeviceService_pushProcessesInfo_args {
  public:
 
-  static const char* ascii_fingerprint; // = "5242EB2EDC2E66E2C2886424293E29FD";
-  static const uint8_t binary_fingerprint[16]; // = {0x52,0x42,0xEB,0x2E,0xDC,0x2E,0x66,0xE2,0xC2,0x88,0x64,0x24,0x29,0x3E,0x29,0xFD};
+  static const char* ascii_fingerprint; // = "175EAA2D5EEECDCCC68AE13255E25B63";
+  static const uint8_t binary_fingerprint[16]; // = {0x17,0x5E,0xAA,0x2D,0x5E,0xEE,0xCD,0xCC,0xC6,0x8A,0xE1,0x32,0x55,0xE2,0x5B,0x63};
 
   RegisterDeviceService_pushProcessesInfo_args(const RegisterDeviceService_pushProcessesInfo_args&);
   RegisterDeviceService_pushProcessesInfo_args& operator=(const RegisterDeviceService_pushProcessesInfo_args&);
@@ -366,8 +366,8 @@ class RegisterDeviceService_pushProcessesInfo_args {
 class RegisterDeviceService_pushProcessesInfo_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "5242EB2EDC2E66E2C2886424293E29FD";
-  static const uint8_t binary_fingerprint[16]; // = {0x52,0x42,0xEB,0x2E,0xDC,0x2E,0x66,0xE2,0xC2,0x88,0x64,0x24,0x29,0x3E,0x29,0xFD};
+  static const char* ascii_fingerprint; // = "175EAA2D5EEECDCCC68AE13255E25B63";
+  static const uint8_t binary_fingerprint[16]; // = {0x17,0x5E,0xAA,0x2D,0x5E,0xEE,0xCD,0xCC,0xC6,0x8A,0xE1,0x32,0x55,0xE2,0x5B,0x63};
 
 
   virtual ~RegisterDeviceService_pushProcessesInfo_pargs() throw();

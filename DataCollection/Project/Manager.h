@@ -30,12 +30,13 @@ public:
 	static void sendStoredData();
 	string getMAC();
 	string getIP();
-	string getTime(); 
+	string getTime();
 	string getComputerName();
 	void Register();
 	double getSystemMem();
 	double getUsedMem();
 	void printError(TCHAR* msg);
+	static void getURLS();
 };
 
 #endif

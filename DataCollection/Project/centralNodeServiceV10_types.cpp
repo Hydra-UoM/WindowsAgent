@@ -248,8 +248,12 @@ void ThriftAgentProcessInfo::__set_timestamp(const std::string& val) {
   this->timestamp = val;
 }
 
-const char* ThriftAgentProcessInfo::ascii_fingerprint = "B5A481DA4A2115245806EC4F209A4094";
-const uint8_t ThriftAgentProcessInfo::binary_fingerprint[16] = {0xB5,0xA4,0x81,0xDA,0x4A,0x21,0x15,0x24,0x58,0x06,0xEC,0x4F,0x20,0x9A,0x40,0x94};
+void ThriftAgentProcessInfo::__set_URLs(const std::vector<std::string> & val) {
+  this->URLs = val;
+}
+
+const char* ThriftAgentProcessInfo::ascii_fingerprint = "40456E6D5B67D49BBB9A788AA6949F6F";
+const uint8_t ThriftAgentProcessInfo::binary_fingerprint[16] = {0x40,0x45,0x6E,0x6D,0x5B,0x67,0xD4,0x9B,0xBB,0x9A,0x78,0x8A,0xA6,0x94,0x9F,0x6F};
 
 uint32_t ThriftAgentProcessInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -351,6 +355,26 @@ uint32_t ThriftAgentProcessInfo::read(::apache::thrift::protocol::TProtocol* ipr
           xfer += iprot->skip(ftype);
         }
         break;
+      case 11:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->URLs.clear();
+            uint32_t _size2;
+            ::apache::thrift::protocol::TType _etype5;
+            xfer += iprot->readListBegin(_etype5, _size2);
+            this->URLs.resize(_size2);
+            uint32_t _i6;
+            for (_i6 = 0; _i6 < _size2; ++_i6)
+            {
+              xfer += iprot->readString(this->URLs[_i6]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.URLs = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -408,6 +432,18 @@ uint32_t ThriftAgentProcessInfo::write(::apache::thrift::protocol::TProtocol* op
   xfer += oprot->writeString(this->timestamp);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("URLs", ::apache::thrift::protocol::T_LIST, 11);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRING, static_cast<uint32_t>(this->URLs.size()));
+    std::vector<std::string> ::const_iterator _iter7;
+    for (_iter7 = this->URLs.begin(); _iter7 != this->URLs.end(); ++_iter7)
+    {
+      xfer += oprot->writeString((*_iter7));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   oprot->decrementRecursionDepth();
@@ -426,34 +462,37 @@ void swap(ThriftAgentProcessInfo &a, ThriftAgentProcessInfo &b) {
   swap(a.type, b.type);
   swap(a.mac, b.mac);
   swap(a.timestamp, b.timestamp);
+  swap(a.URLs, b.URLs);
   swap(a.__isset, b.__isset);
 }
 
-ThriftAgentProcessInfo::ThriftAgentProcessInfo(const ThriftAgentProcessInfo& other2) {
-  name = other2.name;
-  packageName = other2.packageName;
-  ramUsage = other2.ramUsage;
-  cpuUsage = other2.cpuUsage;
-  sentData = other2.sentData;
-  receiveData = other2.receiveData;
-  pid = other2.pid;
-  type = other2.type;
-  mac = other2.mac;
-  timestamp = other2.timestamp;
-  __isset = other2.__isset;
+ThriftAgentProcessInfo::ThriftAgentProcessInfo(const ThriftAgentProcessInfo& other8) {
+  name = other8.name;
+  packageName = other8.packageName;
+  ramUsage = other8.ramUsage;
+  cpuUsage = other8.cpuUsage;
+  sentData = other8.sentData;
+  receiveData = other8.receiveData;
+  pid = other8.pid;
+  type = other8.type;
+  mac = other8.mac;
+  timestamp = other8.timestamp;
+  URLs = other8.URLs;
+  __isset = other8.__isset;
 }
-ThriftAgentProcessInfo& ThriftAgentProcessInfo::operator=(const ThriftAgentProcessInfo& other3) {
-  name = other3.name;
-  packageName = other3.packageName;
-  ramUsage = other3.ramUsage;
-  cpuUsage = other3.cpuUsage;
-  sentData = other3.sentData;
-  receiveData = other3.receiveData;
-  pid = other3.pid;
-  type = other3.type;
-  mac = other3.mac;
-  timestamp = other3.timestamp;
-  __isset = other3.__isset;
+ThriftAgentProcessInfo& ThriftAgentProcessInfo::operator=(const ThriftAgentProcessInfo& other9) {
+  name = other9.name;
+  packageName = other9.packageName;
+  ramUsage = other9.ramUsage;
+  cpuUsage = other9.cpuUsage;
+  sentData = other9.sentData;
+  receiveData = other9.receiveData;
+  pid = other9.pid;
+  type = other9.type;
+  mac = other9.mac;
+  timestamp = other9.timestamp;
+  URLs = other9.URLs;
+  __isset = other9.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const ThriftAgentProcessInfo& obj) {
@@ -469,6 +508,7 @@ std::ostream& operator<<(std::ostream& out, const ThriftAgentProcessInfo& obj) {
   out << ", " << "type=" << to_string(obj.type);
   out << ", " << "mac=" << to_string(obj.mac);
   out << ", " << "timestamp=" << to_string(obj.timestamp);
+  out << ", " << "URLs=" << to_string(obj.URLs);
   out << ")";
   return out;
 }
@@ -903,55 +943,55 @@ void swap(myUserAccountDetailsStruct &a, myUserAccountDetailsStruct &b) {
   swap(a.__isset, b.__isset);
 }
 
-myUserAccountDetailsStruct::myUserAccountDetailsStruct(const myUserAccountDetailsStruct& other4) {
-  computerName = other4.computerName;
-  usri4_name = other4.usri4_name;
-  usri4_password_age = other4.usri4_password_age;
-  usri4_priv = other4.usri4_priv;
-  usri4_flags = other4.usri4_flags;
-  usri4_usr_comment = other4.usri4_usr_comment;
-  usri4_parms = other4.usri4_parms;
-  usri4_last_logon = other4.usri4_last_logon;
-  usri4_last_logoff = other4.usri4_last_logoff;
-  usri4_acct_expires = other4.usri4_acct_expires;
-  usri4_max_storage = other4.usri4_max_storage;
-  usri4_units_per_week = other4.usri4_units_per_week;
-  usri4_logon_hours = other4.usri4_logon_hours;
-  usri4_bad_pw_count = other4.usri4_bad_pw_count;
-  usri4_num_logons = other4.usri4_num_logons;
-  usri4_country_code = other4.usri4_country_code;
-  usri4_code_page = other4.usri4_code_page;
-  usri4_primary_group_id = other4.usri4_primary_group_id;
-  usri4_profile = other4.usri4_profile;
-  usri4_password_expired = other4.usri4_password_expired;
-  usri4_auth_flags = other4.usri4_auth_flags;
-  mac = other4.mac;
-  __isset = other4.__isset;
+myUserAccountDetailsStruct::myUserAccountDetailsStruct(const myUserAccountDetailsStruct& other10) {
+  computerName = other10.computerName;
+  usri4_name = other10.usri4_name;
+  usri4_password_age = other10.usri4_password_age;
+  usri4_priv = other10.usri4_priv;
+  usri4_flags = other10.usri4_flags;
+  usri4_usr_comment = other10.usri4_usr_comment;
+  usri4_parms = other10.usri4_parms;
+  usri4_last_logon = other10.usri4_last_logon;
+  usri4_last_logoff = other10.usri4_last_logoff;
+  usri4_acct_expires = other10.usri4_acct_expires;
+  usri4_max_storage = other10.usri4_max_storage;
+  usri4_units_per_week = other10.usri4_units_per_week;
+  usri4_logon_hours = other10.usri4_logon_hours;
+  usri4_bad_pw_count = other10.usri4_bad_pw_count;
+  usri4_num_logons = other10.usri4_num_logons;
+  usri4_country_code = other10.usri4_country_code;
+  usri4_code_page = other10.usri4_code_page;
+  usri4_primary_group_id = other10.usri4_primary_group_id;
+  usri4_profile = other10.usri4_profile;
+  usri4_password_expired = other10.usri4_password_expired;
+  usri4_auth_flags = other10.usri4_auth_flags;
+  mac = other10.mac;
+  __isset = other10.__isset;
 }
-myUserAccountDetailsStruct& myUserAccountDetailsStruct::operator=(const myUserAccountDetailsStruct& other5) {
-  computerName = other5.computerName;
-  usri4_name = other5.usri4_name;
-  usri4_password_age = other5.usri4_password_age;
-  usri4_priv = other5.usri4_priv;
-  usri4_flags = other5.usri4_flags;
-  usri4_usr_comment = other5.usri4_usr_comment;
-  usri4_parms = other5.usri4_parms;
-  usri4_last_logon = other5.usri4_last_logon;
-  usri4_last_logoff = other5.usri4_last_logoff;
-  usri4_acct_expires = other5.usri4_acct_expires;
-  usri4_max_storage = other5.usri4_max_storage;
-  usri4_units_per_week = other5.usri4_units_per_week;
-  usri4_logon_hours = other5.usri4_logon_hours;
-  usri4_bad_pw_count = other5.usri4_bad_pw_count;
-  usri4_num_logons = other5.usri4_num_logons;
-  usri4_country_code = other5.usri4_country_code;
-  usri4_code_page = other5.usri4_code_page;
-  usri4_primary_group_id = other5.usri4_primary_group_id;
-  usri4_profile = other5.usri4_profile;
-  usri4_password_expired = other5.usri4_password_expired;
-  usri4_auth_flags = other5.usri4_auth_flags;
-  mac = other5.mac;
-  __isset = other5.__isset;
+myUserAccountDetailsStruct& myUserAccountDetailsStruct::operator=(const myUserAccountDetailsStruct& other11) {
+  computerName = other11.computerName;
+  usri4_name = other11.usri4_name;
+  usri4_password_age = other11.usri4_password_age;
+  usri4_priv = other11.usri4_priv;
+  usri4_flags = other11.usri4_flags;
+  usri4_usr_comment = other11.usri4_usr_comment;
+  usri4_parms = other11.usri4_parms;
+  usri4_last_logon = other11.usri4_last_logon;
+  usri4_last_logoff = other11.usri4_last_logoff;
+  usri4_acct_expires = other11.usri4_acct_expires;
+  usri4_max_storage = other11.usri4_max_storage;
+  usri4_units_per_week = other11.usri4_units_per_week;
+  usri4_logon_hours = other11.usri4_logon_hours;
+  usri4_bad_pw_count = other11.usri4_bad_pw_count;
+  usri4_num_logons = other11.usri4_num_logons;
+  usri4_country_code = other11.usri4_country_code;
+  usri4_code_page = other11.usri4_code_page;
+  usri4_primary_group_id = other11.usri4_primary_group_id;
+  usri4_profile = other11.usri4_profile;
+  usri4_password_expired = other11.usri4_password_expired;
+  usri4_auth_flags = other11.usri4_auth_flags;
+  mac = other11.mac;
+  __isset = other11.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myUserAccountDetailsStruct& obj) {
@@ -1073,15 +1113,15 @@ void swap(myRuleInformation &a, myRuleInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myRuleInformation::myRuleInformation(const myRuleInformation& other6) {
-  ID = other6.ID;
-  Name = other6.Name;
-  __isset = other6.__isset;
+myRuleInformation::myRuleInformation(const myRuleInformation& other12) {
+  ID = other12.ID;
+  Name = other12.Name;
+  __isset = other12.__isset;
 }
-myRuleInformation& myRuleInformation::operator=(const myRuleInformation& other7) {
-  ID = other7.ID;
-  Name = other7.Name;
-  __isset = other7.__isset;
+myRuleInformation& myRuleInformation::operator=(const myRuleInformation& other13) {
+  ID = other13.ID;
+  Name = other13.Name;
+  __isset = other13.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myRuleInformation& obj) {
@@ -1217,19 +1257,19 @@ void swap(mySubject &a, mySubject &b) {
   swap(a.__isset, b.__isset);
 }
 
-mySubject::mySubject(const mySubject& other8) {
-  Security_ID = other8.Security_ID;
-  Account_Name = other8.Account_Name;
-  Account_Domain = other8.Account_Domain;
-  Logon_ID = other8.Logon_ID;
-  __isset = other8.__isset;
+mySubject::mySubject(const mySubject& other14) {
+  Security_ID = other14.Security_ID;
+  Account_Name = other14.Account_Name;
+  Account_Domain = other14.Account_Domain;
+  Logon_ID = other14.Logon_ID;
+  __isset = other14.__isset;
 }
-mySubject& mySubject::operator=(const mySubject& other9) {
-  Security_ID = other9.Security_ID;
-  Account_Name = other9.Account_Name;
-  Account_Domain = other9.Account_Domain;
-  Logon_ID = other9.Logon_ID;
-  __isset = other9.__isset;
+mySubject& mySubject::operator=(const mySubject& other15) {
+  Security_ID = other15.Security_ID;
+  Account_Name = other15.Account_Name;
+  Account_Domain = other15.Account_Domain;
+  Logon_ID = other15.Logon_ID;
+  __isset = other15.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const mySubject& obj) {
@@ -1333,15 +1373,15 @@ void swap(myProviderInformation &a, myProviderInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myProviderInformation::myProviderInformation(const myProviderInformation& other10) {
-  Provider_ID = other10.Provider_ID;
-  Provider_Name = other10.Provider_Name;
-  __isset = other10.__isset;
+myProviderInformation::myProviderInformation(const myProviderInformation& other16) {
+  Provider_ID = other16.Provider_ID;
+  Provider_Name = other16.Provider_Name;
+  __isset = other16.__isset;
 }
-myProviderInformation& myProviderInformation::operator=(const myProviderInformation& other11) {
-  Provider_ID = other11.Provider_ID;
-  Provider_Name = other11.Provider_Name;
-  __isset = other11.__isset;
+myProviderInformation& myProviderInformation::operator=(const myProviderInformation& other17) {
+  Provider_ID = other17.Provider_ID;
+  Provider_Name = other17.Provider_Name;
+  __isset = other17.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myProviderInformation& obj) {
@@ -1494,21 +1534,21 @@ void swap(myObject &a, myObject &b) {
   swap(a.__isset, b.__isset);
 }
 
-myObject::myObject(const myObject& other12) {
-  Object_Server = other12.Object_Server;
-  Object_Type = other12.Object_Type;
-  Object_Name = other12.Object_Name;
-  Handle_ID = other12.Handle_ID;
-  Resource_Attributes = other12.Resource_Attributes;
-  __isset = other12.__isset;
+myObject::myObject(const myObject& other18) {
+  Object_Server = other18.Object_Server;
+  Object_Type = other18.Object_Type;
+  Object_Name = other18.Object_Name;
+  Handle_ID = other18.Handle_ID;
+  Resource_Attributes = other18.Resource_Attributes;
+  __isset = other18.__isset;
 }
-myObject& myObject::operator=(const myObject& other13) {
-  Object_Server = other13.Object_Server;
-  Object_Type = other13.Object_Type;
-  Object_Name = other13.Object_Name;
-  Handle_ID = other13.Handle_ID;
-  Resource_Attributes = other13.Resource_Attributes;
-  __isset = other13.__isset;
+myObject& myObject::operator=(const myObject& other19) {
+  Object_Server = other19.Object_Server;
+  Object_Type = other19.Object_Type;
+  Object_Name = other19.Object_Name;
+  Handle_ID = other19.Handle_ID;
+  Resource_Attributes = other19.Resource_Attributes;
+  __isset = other19.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myObject& obj) {
@@ -1613,15 +1653,15 @@ void swap(myProcessInformation &a, myProcessInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myProcessInformation::myProcessInformation(const myProcessInformation& other14) {
-  Process_ID = other14.Process_ID;
-  Process_Name = other14.Process_Name;
-  __isset = other14.__isset;
+myProcessInformation::myProcessInformation(const myProcessInformation& other20) {
+  Process_ID = other20.Process_ID;
+  Process_Name = other20.Process_Name;
+  __isset = other20.__isset;
 }
-myProcessInformation& myProcessInformation::operator=(const myProcessInformation& other15) {
-  Process_ID = other15.Process_ID;
-  Process_Name = other15.Process_Name;
-  __isset = other15.__isset;
+myProcessInformation& myProcessInformation::operator=(const myProcessInformation& other21) {
+  Process_ID = other21.Process_ID;
+  Process_Name = other21.Process_Name;
+  __isset = other21.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myProcessInformation& obj) {
@@ -1774,21 +1814,21 @@ void swap(myNewLogon &a, myNewLogon &b) {
   swap(a.__isset, b.__isset);
 }
 
-myNewLogon::myNewLogon(const myNewLogon& other16) {
-  Security_ID = other16.Security_ID;
-  Account_Name = other16.Account_Name;
-  Account_Domain = other16.Account_Domain;
-  Logon_ID = other16.Logon_ID;
-  Logon_GUID = other16.Logon_GUID;
-  __isset = other16.__isset;
+myNewLogon::myNewLogon(const myNewLogon& other22) {
+  Security_ID = other22.Security_ID;
+  Account_Name = other22.Account_Name;
+  Account_Domain = other22.Account_Domain;
+  Logon_ID = other22.Logon_ID;
+  Logon_GUID = other22.Logon_GUID;
+  __isset = other22.__isset;
 }
-myNewLogon& myNewLogon::operator=(const myNewLogon& other17) {
-  Security_ID = other17.Security_ID;
-  Account_Name = other17.Account_Name;
-  Account_Domain = other17.Account_Domain;
-  Logon_ID = other17.Logon_ID;
-  Logon_GUID = other17.Logon_GUID;
-  __isset = other17.__isset;
+myNewLogon& myNewLogon::operator=(const myNewLogon& other23) {
+  Security_ID = other23.Security_ID;
+  Account_Name = other23.Account_Name;
+  Account_Domain = other23.Account_Domain;
+  Logon_ID = other23.Logon_ID;
+  Logon_GUID = other23.Logon_GUID;
+  __isset = other23.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myNewLogon& obj) {
@@ -1978,25 +2018,25 @@ void swap(myNetworkInformation &a, myNetworkInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myNetworkInformation::myNetworkInformation(const myNetworkInformation& other18) {
-  Direction = other18.Direction;
-  Source_Address = other18.Source_Address;
-  Source_Port = other18.Source_Port;
-  Destination_Address = other18.Destination_Address;
-  Destination_Port = other18.Destination_Port;
-  Protocol = other18.Protocol;
-  Workstation_Name = other18.Workstation_Name;
-  __isset = other18.__isset;
+myNetworkInformation::myNetworkInformation(const myNetworkInformation& other24) {
+  Direction = other24.Direction;
+  Source_Address = other24.Source_Address;
+  Source_Port = other24.Source_Port;
+  Destination_Address = other24.Destination_Address;
+  Destination_Port = other24.Destination_Port;
+  Protocol = other24.Protocol;
+  Workstation_Name = other24.Workstation_Name;
+  __isset = other24.__isset;
 }
-myNetworkInformation& myNetworkInformation::operator=(const myNetworkInformation& other19) {
-  Direction = other19.Direction;
-  Source_Address = other19.Source_Address;
-  Source_Port = other19.Source_Port;
-  Destination_Address = other19.Destination_Address;
-  Destination_Port = other19.Destination_Port;
-  Protocol = other19.Protocol;
-  Workstation_Name = other19.Workstation_Name;
-  __isset = other19.__isset;
+myNetworkInformation& myNetworkInformation::operator=(const myNetworkInformation& other25) {
+  Direction = other25.Direction;
+  Source_Address = other25.Source_Address;
+  Source_Port = other25.Source_Port;
+  Destination_Address = other25.Destination_Address;
+  Destination_Port = other25.Destination_Port;
+  Protocol = other25.Protocol;
+  Workstation_Name = other25.Workstation_Name;
+  __isset = other25.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myNetworkInformation& obj) {
@@ -2086,13 +2126,13 @@ void swap(myLogonType &a, myLogonType &b) {
   swap(a.__isset, b.__isset);
 }
 
-myLogonType::myLogonType(const myLogonType& other20) {
-  Logon_Type = other20.Logon_Type;
-  __isset = other20.__isset;
+myLogonType::myLogonType(const myLogonType& other26) {
+  Logon_Type = other26.Logon_Type;
+  __isset = other26.__isset;
 }
-myLogonType& myLogonType::operator=(const myLogonType& other21) {
-  Logon_Type = other21.Logon_Type;
-  __isset = other21.__isset;
+myLogonType& myLogonType::operator=(const myLogonType& other27) {
+  Logon_Type = other27.Logon_Type;
+  __isset = other27.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myLogonType& obj) {
@@ -2210,17 +2250,17 @@ void swap(myLayerInformation &a, myLayerInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myLayerInformation::myLayerInformation(const myLayerInformation& other22) {
-  Layer_ID = other22.Layer_ID;
-  Layer_Name = other22.Layer_Name;
-  Layer_Runtime_ID = other22.Layer_Runtime_ID;
-  __isset = other22.__isset;
+myLayerInformation::myLayerInformation(const myLayerInformation& other28) {
+  Layer_ID = other28.Layer_ID;
+  Layer_Name = other28.Layer_Name;
+  Layer_Runtime_ID = other28.Layer_Runtime_ID;
+  __isset = other28.__isset;
 }
-myLayerInformation& myLayerInformation::operator=(const myLayerInformation& other23) {
-  Layer_ID = other23.Layer_ID;
-  Layer_Name = other23.Layer_Name;
-  Layer_Runtime_ID = other23.Layer_Runtime_ID;
-  __isset = other23.__isset;
+myLayerInformation& myLayerInformation::operator=(const myLayerInformation& other29) {
+  Layer_ID = other29.Layer_ID;
+  Layer_Name = other29.Layer_Name;
+  Layer_Runtime_ID = other29.Layer_Runtime_ID;
+  __isset = other29.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myLayerInformation& obj) {
@@ -2306,13 +2346,13 @@ void swap(myImpersonationLevel &a, myImpersonationLevel &b) {
   swap(a.__isset, b.__isset);
 }
 
-myImpersonationLevel::myImpersonationLevel(const myImpersonationLevel& other24) {
-  Impersonation_Level = other24.Impersonation_Level;
-  __isset = other24.__isset;
+myImpersonationLevel::myImpersonationLevel(const myImpersonationLevel& other30) {
+  Impersonation_Level = other30.Impersonation_Level;
+  __isset = other30.__isset;
 }
-myImpersonationLevel& myImpersonationLevel::operator=(const myImpersonationLevel& other25) {
-  Impersonation_Level = other25.Impersonation_Level;
-  __isset = other25.__isset;
+myImpersonationLevel& myImpersonationLevel::operator=(const myImpersonationLevel& other31) {
+  Impersonation_Level = other31.Impersonation_Level;
+  __isset = other31.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myImpersonationLevel& obj) {
@@ -2498,25 +2538,25 @@ void swap(myFilterInformation &a, myFilterInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myFilterInformation::myFilterInformation(const myFilterInformation& other26) {
-  Filter_ID = other26.Filter_ID;
-  Filter_Name = other26.Filter_Name;
-  Filter_Type = other26.Filter_Type;
-  Runtime_ID = other26.Runtime_ID;
-  Filter_Runtime_ID = other26.Filter_Runtime_ID;
-  Filter_Layer_Name = other26.Filter_Layer_Name;
-  Filter_Layer_Runtime_ID = other26.Filter_Layer_Runtime_ID;
-  __isset = other26.__isset;
+myFilterInformation::myFilterInformation(const myFilterInformation& other32) {
+  Filter_ID = other32.Filter_ID;
+  Filter_Name = other32.Filter_Name;
+  Filter_Type = other32.Filter_Type;
+  Runtime_ID = other32.Runtime_ID;
+  Filter_Runtime_ID = other32.Filter_Runtime_ID;
+  Filter_Layer_Name = other32.Filter_Layer_Name;
+  Filter_Layer_Runtime_ID = other32.Filter_Layer_Runtime_ID;
+  __isset = other32.__isset;
 }
-myFilterInformation& myFilterInformation::operator=(const myFilterInformation& other27) {
-  Filter_ID = other27.Filter_ID;
-  Filter_Name = other27.Filter_Name;
-  Filter_Type = other27.Filter_Type;
-  Runtime_ID = other27.Runtime_ID;
-  Filter_Runtime_ID = other27.Filter_Runtime_ID;
-  Filter_Layer_Name = other27.Filter_Layer_Name;
-  Filter_Layer_Runtime_ID = other27.Filter_Layer_Runtime_ID;
-  __isset = other27.__isset;
+myFilterInformation& myFilterInformation::operator=(const myFilterInformation& other33) {
+  Filter_ID = other33.Filter_ID;
+  Filter_Name = other33.Filter_Name;
+  Filter_Type = other33.Filter_Type;
+  Runtime_ID = other33.Runtime_ID;
+  Filter_Runtime_ID = other33.Filter_Runtime_ID;
+  Filter_Layer_Name = other33.Filter_Layer_Name;
+  Filter_Layer_Runtime_ID = other33.Filter_Layer_Runtime_ID;
+  __isset = other33.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myFilterInformation& obj) {
@@ -2640,17 +2680,17 @@ void swap(myFailureInformation &a, myFailureInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myFailureInformation::myFailureInformation(const myFailureInformation& other28) {
-  Failure_Reason = other28.Failure_Reason;
-  Status = other28.Status;
-  Sub_Status = other28.Sub_Status;
-  __isset = other28.__isset;
+myFailureInformation::myFailureInformation(const myFailureInformation& other34) {
+  Failure_Reason = other34.Failure_Reason;
+  Status = other34.Status;
+  Sub_Status = other34.Sub_Status;
+  __isset = other34.__isset;
 }
-myFailureInformation& myFailureInformation::operator=(const myFailureInformation& other29) {
-  Failure_Reason = other29.Failure_Reason;
-  Status = other29.Status;
-  Sub_Status = other29.Sub_Status;
-  __isset = other29.__isset;
+myFailureInformation& myFailureInformation::operator=(const myFailureInformation& other35) {
+  Failure_Reason = other35.Failure_Reason;
+  Status = other35.Status;
+  Sub_Status = other35.Sub_Status;
+  __isset = other35.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myFailureInformation& obj) {
@@ -2736,13 +2776,13 @@ void swap(myErrorInformation &a, myErrorInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myErrorInformation::myErrorInformation(const myErrorInformation& other30) {
-  Reason = other30.Reason;
-  __isset = other30.__isset;
+myErrorInformation::myErrorInformation(const myErrorInformation& other36) {
+  Reason = other36.Reason;
+  __isset = other36.__isset;
 }
-myErrorInformation& myErrorInformation::operator=(const myErrorInformation& other31) {
-  Reason = other31.Reason;
-  __isset = other31.__isset;
+myErrorInformation& myErrorInformation::operator=(const myErrorInformation& other37) {
+  Reason = other37.Reason;
+  __isset = other37.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myErrorInformation& obj) {
@@ -2894,21 +2934,21 @@ void swap(myDetailedAuthenticationInformation &a, myDetailedAuthenticationInform
   swap(a.__isset, b.__isset);
 }
 
-myDetailedAuthenticationInformation::myDetailedAuthenticationInformation(const myDetailedAuthenticationInformation& other32) {
-  Logon_Process = other32.Logon_Process;
-  Authentication_Package = other32.Authentication_Package;
-  Transited_Services = other32.Transited_Services;
-  Package_Name = other32.Package_Name;
-  Key_Length = other32.Key_Length;
-  __isset = other32.__isset;
+myDetailedAuthenticationInformation::myDetailedAuthenticationInformation(const myDetailedAuthenticationInformation& other38) {
+  Logon_Process = other38.Logon_Process;
+  Authentication_Package = other38.Authentication_Package;
+  Transited_Services = other38.Transited_Services;
+  Package_Name = other38.Package_Name;
+  Key_Length = other38.Key_Length;
+  __isset = other38.__isset;
 }
-myDetailedAuthenticationInformation& myDetailedAuthenticationInformation::operator=(const myDetailedAuthenticationInformation& other33) {
-  Logon_Process = other33.Logon_Process;
-  Authentication_Package = other33.Authentication_Package;
-  Transited_Services = other33.Transited_Services;
-  Package_Name = other33.Package_Name;
-  Key_Length = other33.Key_Length;
-  __isset = other33.__isset;
+myDetailedAuthenticationInformation& myDetailedAuthenticationInformation::operator=(const myDetailedAuthenticationInformation& other39) {
+  Logon_Process = other39.Logon_Process;
+  Authentication_Package = other39.Authentication_Package;
+  Transited_Services = other39.Transited_Services;
+  Package_Name = other39.Package_Name;
+  Key_Length = other39.Key_Length;
+  __isset = other39.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myDetailedAuthenticationInformation& obj) {
@@ -2996,13 +3036,13 @@ void swap(myChangeInformation &a, myChangeInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myChangeInformation::myChangeInformation(const myChangeInformation& other34) {
-  Change_Type = other34.Change_Type;
-  __isset = other34.__isset;
+myChangeInformation::myChangeInformation(const myChangeInformation& other40) {
+  Change_Type = other40.Change_Type;
+  __isset = other40.__isset;
 }
-myChangeInformation& myChangeInformation::operator=(const myChangeInformation& other35) {
-  Change_Type = other35.Change_Type;
-  __isset = other35.__isset;
+myChangeInformation& myChangeInformation::operator=(const myChangeInformation& other41) {
+  Change_Type = other41.Change_Type;
+  __isset = other41.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myChangeInformation& obj) {
@@ -3103,15 +3143,15 @@ void swap(myCalloutInformation &a, myCalloutInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myCalloutInformation::myCalloutInformation(const myCalloutInformation& other36) {
-  Callout_ID = other36.Callout_ID;
-  Callout_Name = other36.Callout_Name;
-  __isset = other36.__isset;
+myCalloutInformation::myCalloutInformation(const myCalloutInformation& other42) {
+  Callout_ID = other42.Callout_ID;
+  Callout_Name = other42.Callout_Name;
+  __isset = other42.__isset;
 }
-myCalloutInformation& myCalloutInformation::operator=(const myCalloutInformation& other37) {
-  Callout_ID = other37.Callout_ID;
-  Callout_Name = other37.Callout_Name;
-  __isset = other37.__isset;
+myCalloutInformation& myCalloutInformation::operator=(const myCalloutInformation& other43) {
+  Callout_ID = other43.Callout_ID;
+  Callout_Name = other43.Callout_Name;
+  __isset = other43.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myCalloutInformation& obj) {
@@ -3213,15 +3253,15 @@ void swap(myApplicationInformation &a, myApplicationInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myApplicationInformation::myApplicationInformation(const myApplicationInformation& other38) {
-  Application_Process_ID = other38.Application_Process_ID;
-  Application_Name = other38.Application_Name;
-  __isset = other38.__isset;
+myApplicationInformation::myApplicationInformation(const myApplicationInformation& other44) {
+  Application_Process_ID = other44.Application_Process_ID;
+  Application_Name = other44.Application_Name;
+  __isset = other44.__isset;
 }
-myApplicationInformation& myApplicationInformation::operator=(const myApplicationInformation& other39) {
-  Application_Process_ID = other39.Application_Process_ID;
-  Application_Name = other39.Application_Name;
-  __isset = other39.__isset;
+myApplicationInformation& myApplicationInformation::operator=(const myApplicationInformation& other45) {
+  Application_Process_ID = other45.Application_Process_ID;
+  Application_Name = other45.Application_Name;
+  __isset = other45.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myApplicationInformation& obj) {
@@ -3340,17 +3380,17 @@ void swap(myAccountForWhichLogonFailed &a, myAccountForWhichLogonFailed &b) {
   swap(a.__isset, b.__isset);
 }
 
-myAccountForWhichLogonFailed::myAccountForWhichLogonFailed(const myAccountForWhichLogonFailed& other40) {
-  Security_ID = other40.Security_ID;
-  Account_Name = other40.Account_Name;
-  Account_Domain = other40.Account_Domain;
-  __isset = other40.__isset;
+myAccountForWhichLogonFailed::myAccountForWhichLogonFailed(const myAccountForWhichLogonFailed& other46) {
+  Security_ID = other46.Security_ID;
+  Account_Name = other46.Account_Name;
+  Account_Domain = other46.Account_Domain;
+  __isset = other46.__isset;
 }
-myAccountForWhichLogonFailed& myAccountForWhichLogonFailed::operator=(const myAccountForWhichLogonFailed& other41) {
-  Security_ID = other41.Security_ID;
-  Account_Name = other41.Account_Name;
-  Account_Domain = other41.Account_Domain;
-  __isset = other41.__isset;
+myAccountForWhichLogonFailed& myAccountForWhichLogonFailed::operator=(const myAccountForWhichLogonFailed& other47) {
+  Security_ID = other47.Security_ID;
+  Account_Name = other47.Account_Name;
+  Account_Domain = other47.Account_Domain;
+  __isset = other47.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myAccountForWhichLogonFailed& obj) {
@@ -3521,23 +3561,23 @@ void swap(myAccessRequestInformation &a, myAccessRequestInformation &b) {
   swap(a.__isset, b.__isset);
 }
 
-myAccessRequestInformation::myAccessRequestInformation(const myAccessRequestInformation& other42) {
-  Transaction_ID = other42.Transaction_ID;
-  Accesses = other42.Accesses;
-  Access_Reasons = other42.Access_Reasons;
-  Access_Mask = other42.Access_Mask;
-  Privileges_Used_For_Access_Check = other42.Privileges_Used_For_Access_Check;
-  Restricted_SID_Count = other42.Restricted_SID_Count;
-  __isset = other42.__isset;
+myAccessRequestInformation::myAccessRequestInformation(const myAccessRequestInformation& other48) {
+  Transaction_ID = other48.Transaction_ID;
+  Accesses = other48.Accesses;
+  Access_Reasons = other48.Access_Reasons;
+  Access_Mask = other48.Access_Mask;
+  Privileges_Used_For_Access_Check = other48.Privileges_Used_For_Access_Check;
+  Restricted_SID_Count = other48.Restricted_SID_Count;
+  __isset = other48.__isset;
 }
-myAccessRequestInformation& myAccessRequestInformation::operator=(const myAccessRequestInformation& other43) {
-  Transaction_ID = other43.Transaction_ID;
-  Accesses = other43.Accesses;
-  Access_Reasons = other43.Access_Reasons;
-  Access_Mask = other43.Access_Mask;
-  Privileges_Used_For_Access_Check = other43.Privileges_Used_For_Access_Check;
-  Restricted_SID_Count = other43.Restricted_SID_Count;
-  __isset = other43.__isset;
+myAccessRequestInformation& myAccessRequestInformation::operator=(const myAccessRequestInformation& other49) {
+  Transaction_ID = other49.Transaction_ID;
+  Accesses = other49.Accesses;
+  Access_Reasons = other49.Access_Reasons;
+  Access_Mask = other49.Access_Mask;
+  Privileges_Used_For_Access_Check = other49.Privileges_Used_For_Access_Check;
+  Restricted_SID_Count = other49.Restricted_SID_Count;
+  __isset = other49.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myAccessRequestInformation& obj) {
@@ -3711,23 +3751,23 @@ void swap(myTimeStamp &a, myTimeStamp &b) {
   swap(a.__isset, b.__isset);
 }
 
-myTimeStamp::myTimeStamp(const myTimeStamp& other44) {
-  month = other44.month;
-  day = other44.day;
-  year = other44.year;
-  hour = other44.hour;
-  minute = other44.minute;
-  second = other44.second;
-  __isset = other44.__isset;
+myTimeStamp::myTimeStamp(const myTimeStamp& other50) {
+  month = other50.month;
+  day = other50.day;
+  year = other50.year;
+  hour = other50.hour;
+  minute = other50.minute;
+  second = other50.second;
+  __isset = other50.__isset;
 }
-myTimeStamp& myTimeStamp::operator=(const myTimeStamp& other45) {
-  month = other45.month;
-  day = other45.day;
-  year = other45.year;
-  hour = other45.hour;
-  minute = other45.minute;
-  second = other45.second;
-  __isset = other45.__isset;
+myTimeStamp& myTimeStamp::operator=(const myTimeStamp& other51) {
+  month = other51.month;
+  day = other51.day;
+  year = other51.year;
+  hour = other51.hour;
+  minute = other51.minute;
+  second = other51.second;
+  __isset = other51.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myTimeStamp& obj) {
@@ -4377,79 +4417,79 @@ void swap(myLogStructure &a, myLogStructure &b) {
   swap(a.__isset, b.__isset);
 }
 
-myLogStructure::myLogStructure(const myLogStructure& other46) {
-  message = other46.message;
-  levelMessageString = other46.levelMessageString;
-  taskMessageString = other46.taskMessageString;
-  opCodeMessageString = other46.opCodeMessageString;
-  channelMessageString = other46.channelMessageString;
-  providerMessageString = other46.providerMessageString;
-  keywords = other46.keywords;
-  executionProcessID = other46.executionProcessID;
-  executionThreadID = other46.executionThreadID;
-  computer = other46.computer;
-  EventID = other46.EventID;
-  mySubject1 = other46.mySubject1;
-  myProviderInformation1 = other46.myProviderInformation1;
-  myObject1 = other46.myObject1;
-  myNetworkInformation1 = other46.myNetworkInformation1;
-  myLayerInformation1 = other46.myLayerInformation1;
-  myFilterInformation1 = other46.myFilterInformation1;
-  myChangeInformation1 = other46.myChangeInformation1;
-  myCalloutInformation1 = other46.myCalloutInformation1;
-  myApplicationInformation1 = other46.myApplicationInformation1;
-  myAccessRequestInformation1 = other46.myAccessRequestInformation1;
-  myRuleInformation1 = other46.myRuleInformation1;
-  myErrorInformation1 = other46.myErrorInformation1;
-  myProcessInformation1 = other46.myProcessInformation1;
-  myLogonType1 = other46.myLogonType1;
-  myImpersonationLevel1 = other46.myImpersonationLevel1;
-  myAccountForWhichLogonFailed1 = other46.myAccountForWhichLogonFailed1;
-  myFailureInformation1 = other46.myFailureInformation1;
-  myNewLogon1 = other46.myNewLogon1;
-  myDetailedAuthenticationInformation1 = other46.myDetailedAuthenticationInformation1;
-  myTimeStamp1 = other46.myTimeStamp1;
-  mac = other46.mac;
-  eventCategory = other46.eventCategory;
-  processName = other46.processName;
-  __isset = other46.__isset;
+myLogStructure::myLogStructure(const myLogStructure& other52) {
+  message = other52.message;
+  levelMessageString = other52.levelMessageString;
+  taskMessageString = other52.taskMessageString;
+  opCodeMessageString = other52.opCodeMessageString;
+  channelMessageString = other52.channelMessageString;
+  providerMessageString = other52.providerMessageString;
+  keywords = other52.keywords;
+  executionProcessID = other52.executionProcessID;
+  executionThreadID = other52.executionThreadID;
+  computer = other52.computer;
+  EventID = other52.EventID;
+  mySubject1 = other52.mySubject1;
+  myProviderInformation1 = other52.myProviderInformation1;
+  myObject1 = other52.myObject1;
+  myNetworkInformation1 = other52.myNetworkInformation1;
+  myLayerInformation1 = other52.myLayerInformation1;
+  myFilterInformation1 = other52.myFilterInformation1;
+  myChangeInformation1 = other52.myChangeInformation1;
+  myCalloutInformation1 = other52.myCalloutInformation1;
+  myApplicationInformation1 = other52.myApplicationInformation1;
+  myAccessRequestInformation1 = other52.myAccessRequestInformation1;
+  myRuleInformation1 = other52.myRuleInformation1;
+  myErrorInformation1 = other52.myErrorInformation1;
+  myProcessInformation1 = other52.myProcessInformation1;
+  myLogonType1 = other52.myLogonType1;
+  myImpersonationLevel1 = other52.myImpersonationLevel1;
+  myAccountForWhichLogonFailed1 = other52.myAccountForWhichLogonFailed1;
+  myFailureInformation1 = other52.myFailureInformation1;
+  myNewLogon1 = other52.myNewLogon1;
+  myDetailedAuthenticationInformation1 = other52.myDetailedAuthenticationInformation1;
+  myTimeStamp1 = other52.myTimeStamp1;
+  mac = other52.mac;
+  eventCategory = other52.eventCategory;
+  processName = other52.processName;
+  __isset = other52.__isset;
 }
-myLogStructure& myLogStructure::operator=(const myLogStructure& other47) {
-  message = other47.message;
-  levelMessageString = other47.levelMessageString;
-  taskMessageString = other47.taskMessageString;
-  opCodeMessageString = other47.opCodeMessageString;
-  channelMessageString = other47.channelMessageString;
-  providerMessageString = other47.providerMessageString;
-  keywords = other47.keywords;
-  executionProcessID = other47.executionProcessID;
-  executionThreadID = other47.executionThreadID;
-  computer = other47.computer;
-  EventID = other47.EventID;
-  mySubject1 = other47.mySubject1;
-  myProviderInformation1 = other47.myProviderInformation1;
-  myObject1 = other47.myObject1;
-  myNetworkInformation1 = other47.myNetworkInformation1;
-  myLayerInformation1 = other47.myLayerInformation1;
-  myFilterInformation1 = other47.myFilterInformation1;
-  myChangeInformation1 = other47.myChangeInformation1;
-  myCalloutInformation1 = other47.myCalloutInformation1;
-  myApplicationInformation1 = other47.myApplicationInformation1;
-  myAccessRequestInformation1 = other47.myAccessRequestInformation1;
-  myRuleInformation1 = other47.myRuleInformation1;
-  myErrorInformation1 = other47.myErrorInformation1;
-  myProcessInformation1 = other47.myProcessInformation1;
-  myLogonType1 = other47.myLogonType1;
-  myImpersonationLevel1 = other47.myImpersonationLevel1;
-  myAccountForWhichLogonFailed1 = other47.myAccountForWhichLogonFailed1;
-  myFailureInformation1 = other47.myFailureInformation1;
-  myNewLogon1 = other47.myNewLogon1;
-  myDetailedAuthenticationInformation1 = other47.myDetailedAuthenticationInformation1;
-  myTimeStamp1 = other47.myTimeStamp1;
-  mac = other47.mac;
-  eventCategory = other47.eventCategory;
-  processName = other47.processName;
-  __isset = other47.__isset;
+myLogStructure& myLogStructure::operator=(const myLogStructure& other53) {
+  message = other53.message;
+  levelMessageString = other53.levelMessageString;
+  taskMessageString = other53.taskMessageString;
+  opCodeMessageString = other53.opCodeMessageString;
+  channelMessageString = other53.channelMessageString;
+  providerMessageString = other53.providerMessageString;
+  keywords = other53.keywords;
+  executionProcessID = other53.executionProcessID;
+  executionThreadID = other53.executionThreadID;
+  computer = other53.computer;
+  EventID = other53.EventID;
+  mySubject1 = other53.mySubject1;
+  myProviderInformation1 = other53.myProviderInformation1;
+  myObject1 = other53.myObject1;
+  myNetworkInformation1 = other53.myNetworkInformation1;
+  myLayerInformation1 = other53.myLayerInformation1;
+  myFilterInformation1 = other53.myFilterInformation1;
+  myChangeInformation1 = other53.myChangeInformation1;
+  myCalloutInformation1 = other53.myCalloutInformation1;
+  myApplicationInformation1 = other53.myApplicationInformation1;
+  myAccessRequestInformation1 = other53.myAccessRequestInformation1;
+  myRuleInformation1 = other53.myRuleInformation1;
+  myErrorInformation1 = other53.myErrorInformation1;
+  myProcessInformation1 = other53.myProcessInformation1;
+  myLogonType1 = other53.myLogonType1;
+  myImpersonationLevel1 = other53.myImpersonationLevel1;
+  myAccountForWhichLogonFailed1 = other53.myAccountForWhichLogonFailed1;
+  myFailureInformation1 = other53.myFailureInformation1;
+  myNewLogon1 = other53.myNewLogon1;
+  myDetailedAuthenticationInformation1 = other53.myDetailedAuthenticationInformation1;
+  myTimeStamp1 = other53.myTimeStamp1;
+  mac = other53.mac;
+  eventCategory = other53.eventCategory;
+  processName = other53.processName;
+  __isset = other53.__isset;
   return *this;
 }
 std::ostream& operator<<(std::ostream& out, const myLogStructure& obj) {
