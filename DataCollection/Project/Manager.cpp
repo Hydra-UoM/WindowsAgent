@@ -7,6 +7,16 @@
 #include "wininet.h"
 #include <Iphlpapi.h>
 #include <Assert.h>
+#include <Windows.h>
+#include<iostream>
+#include <Oleacc.h>
+#include <comdef.h>
+#include <string>
+#include <ctime>
+#include <vector> 
+#pragma comment( lib,"Oleacc.lib")
+HWINEVENTHOOK LHook = 0;
+
 #pragma comment(lib, "iphlpapi.lib")
 
 
@@ -22,6 +32,8 @@ bool tCompleted = false;
 bool tRetired;
 bool regVal = false;
 DBHandler db;
+vector<string> url;
+double receiveData=0.0;
 Manager::Manager()
 {
 }
@@ -132,6 +144,109 @@ string Manager::getIP(){
 	free(AdapterInfo);
 	return address;
 }
+
+
+std::string& BstrToStdString(const BSTR bstr, std::string& dst, int cp = CP_UTF8)
+{
+	if (!bstr)
+	{
+		// define NULL functionality. I just clear the target.
+		dst.clear();
+		return dst;
+	}
+
+	// request content length in single-chars through a terminating
+	//  nullchar in the BSTR. note: BSTR's support imbedded nullchars,
+	//  so this will only convert through the first nullchar.
+	int res = WideCharToMultiByte(cp, 0, bstr, -1, NULL, 0, NULL, NULL);
+	if (res > 0)
+	{
+		dst.resize(res);
+		WideCharToMultiByte(cp, 0, bstr, -1, &dst[0], res, NULL, NULL);
+	}
+	else
+	{    // no content. clear target
+		dst.clear();
+	}
+	return dst;
+}
+
+// conversion with temp.
+std::string BstrToStdString(BSTR bstr, int cp = CP_UTF8)
+{
+	std::string str;
+	BstrToStdString(bstr, str, cp);
+	return str;
+}
+
+void CALLBACK WinEventProc(HWINEVENTHOOK hWinEventHook, DWORD event, HWND hwnd, LONG idObject, LONG idChild, DWORD dwEventThread, DWORD dwmsEventTime) {
+
+	IAccessible* pAcc = NULL;
+	VARIANT varChild;
+	HRESULT hr = AccessibleObjectFromEvent(hwnd, idObject, idChild, &pAcc, &varChild);
+	if ((hr == S_OK) && (pAcc != NULL)) {
+		BSTR bstrValue = SysAllocString(L"");
+		pAcc->get_accValue(varChild, &bstrValue);
+		char className[500];
+		GetClassName(hwnd, (LPWSTR)className, 500);
+
+		if (event == EVENT_OBJECT_VALUECHANGE){
+			if (strcmp(className, "Chrome_WidgetWin_1") != 0) {
+				std::string str = BstrToStdString(bstrValue);
+				std::string prefix("http");
+				//std::string prefix2("www")
+				if (!str.compare(0, prefix.size(), prefix)){
+					//cout << "URL:" << str << "\n" << endl;
+					
+					url.push_back(str);
+					
+				}
+
+			}
+		}
+		SysFreeString(bstrValue);
+		pAcc->Release();
+	}
+}
+void Hook() {
+	if (LHook != 0) return;
+	CoInitialize(NULL);
+	LHook = SetWinEventHook(EVENT_OBJECT_FOCUS, EVENT_OBJECT_VALUECHANGE, 0, WinEventProc, 0, 0, WINEVENT_OUTOFCONTEXT | WINEVENT_SKIPOWNPROCESS);
+}
+void Unhook() {
+	if (LHook == 0) return;
+	UnhookWinEvent(LHook);
+	CoUninitialize();
+}
+
+void Manager::getURLS(){
+	MSG msg;
+	Hook();
+
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	vector<string>().swap(url);
+	Unhook();
+}
+void Manager::getSysReceiveData(double samples){
+	
+	Manager manage;
+	while (tRetired==true){
+		double data=0.0;
+		for (int i = 0; i < samples + 1.0; i++)
+		{
+			data += manage.GetTotalNetDownload();
+			Sleep(30000);
+		}
+		receiveData = floor((data / (samples + 2.0))*100 + 0.5) / 100.0;
+		
+	}
+	
+}
+
 vector<ProcessF> Manager::FilterAllProcesses(double value1, double value2, double value3, double value4)
 {
 	vector<ProcessF> temp;
@@ -160,9 +275,18 @@ void Manager::retire(){
 	while (!tCompleted){}
 	tCompleted = false;
 }
-//filter all average processes by maximum sample , CPU usage,Memory usage,Network Download ,Network Upload
+//filter all average processes by maximum sample , CPU usage,Memory usage,Network Download ,Network Upload, Processes
 void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, double value3, double value4, vector<string> processList)
 {
+
+	auto urlfunc = &Manager::getURLS;
+	std::thread thread2(urlfunc);
+	thread2.detach();
+
+	auto datafunc = &Manager::getSysReceiveData;
+	std::thread thread3(datafunc, samples);
+	thread3.detach();
+
 	string line;
 	Manager manage;
 	vector<string> fileRead;
@@ -173,20 +297,24 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		fileRead.push_back(token);
 	}
 	
-	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));
-	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
-	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
-	RegisterDeviceServiceClient client(protocol);
+	
 	Data d;
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
 	d.MAX_SAMPLES = samples;
+	boost::shared_ptr<TTransport> socket(new TSocket(fileRead[0], 9091));
+	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+	RegisterDeviceServiceClient client(protocol);
 
+	string prj = "Project";
+	string  fir = "firefox";
 	while (tRetired == true){
 
-		
+
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
+		 
 		for (int i = 0; i < samples + 2; i++)
 		{
 			d.GetData();
@@ -195,7 +323,8 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		proc.mac = manage.getMAC();
 		proc.type = "Windows";
 		proc.timestamp = manage.getTime();
-
+		proc.totalReceivedData = receiveData;
+		
 
 		if (!processList.empty()){
 
@@ -204,25 +333,42 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 				for (std::vector<string>::iterator it = processList.begin(); it != processList.end(); ++it) {
 
 					if (get<0>(i).c_str() == *it){
-
+						
 						//if a process haves the values equal or bigger than the user input the process is contained in temp
-						if (get<0>(i).c_str() == "Project" || get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
+						if (get<0>(i).c_str() == prj || (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4))
 						{
-							proc.name = get<0>(i);
-							proc.cpuUsage = get<5>(i);
-							proc.ramUsage = (get<4>(i));
-							proc.sentData = (get<8>(i));
-							proc.receiveData = (get<9>(i));
-							proc.pid = std::to_string(get<1>(i));
+							if (get<0>(i).c_str() == fir)
+							{
+								proc.name = get<0>(i);
+								proc.cpuUsage = get<5>(i);
+								proc.ramUsage = (get<4>(i));
+								proc.sentData = (get<8>(i));
+								proc.receiveData = (get<9>(i));
+								proc.pid = std::to_string(get<1>(i));
+								for (auto i : url) {
+									proc.URLs.push_back(i);
 
-							cout << proc.name << endl;
-							cout << proc.cpuUsage << endl;
-							cout << proc.ramUsage << endl;
-							cout << proc.sentData << endl;
-							cout << proc.receiveData << endl;
-							cout << proc.pid << endl;
+								}
 
-							process.push_back(proc);
+								vector<string>().swap(url);
+								cout << proc.name;
+								process.push_back(proc);
+
+
+							}
+							
+
+							else{
+								vector<string>().swap(proc.URLs);
+								proc.name = get<0>(i);
+								proc.cpuUsage = get<5>(i);
+								proc.ramUsage = (get<4>(i));
+								proc.sentData = (get<8>(i));
+								proc.receiveData = (get<9>(i));
+								proc.pid = std::to_string(get<1>(i));
+
+								process.push_back(proc);
+							}
 						}
 					}
 				}
@@ -232,39 +378,64 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		if (processList.empty()){
 			for (auto i : d.myData)
 			{
-				if (get<0>(i).c_str() == "Project"|| get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4)
+				if (get<0>(i).c_str()== prj || (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4))
 				{
+					if (get<0>(i).c_str() == fir)
+					{
+						proc.name = get<0>(i);
+						proc.cpuUsage = get<5>(i);
+						proc.ramUsage = (get<4>(i));
+						proc.sentData = (get<8>(i));
+						proc.receiveData = (get<9>(i));
+						proc.pid = std::to_string(get<1>(i));
+					      for (auto i : url) {
+							proc.URLs.push_back(i);
+							
+					     }
+					
+					vector<string>().swap(url);
+					    cout << proc.name;
+						process.push_back(proc);
+					
 
+					}
+					
 
-					proc.name = get<0>(i);
-					proc.cpuUsage = get<5>(i);
-					proc.ramUsage = (get<4>(i));
-					proc.sentData = (get<8>(i));
-					proc.receiveData = (get<9>(i));
-					proc.pid = std::to_string(get<1>(i));
-					process.push_back(proc);
+					else{
+						vector<string>().swap(proc.URLs);
+						proc.name = get<0>(i);
+						proc.cpuUsage = get<5>(i);
+						proc.ramUsage = (get<4>(i));
+						proc.sentData = (get<8>(i));
+						proc.receiveData = (get<9>(i));
+						proc.pid = std::to_string(get<1>(i));
+						process.push_back(proc);
+						
+					}
 				}
 			}
 		}
-
-		manage.sendStoredData();
 		
+			  manage.sendStoredData();
+			  cout << receiveData << "\n";
 			try {
 				
 				if (regVal == false){
 					manage.Register();
 				}
 
-				transport->open();
-				val = client.pushProcessesInfo(process);
-				cout << "Data Pushed" << endl;
-				transport->close();
+				if (regVal == true){
+					transport->open();
+					val = client.pushProcessesInfo(process);
+					cout << "Data Pushed" << endl;
+					transport->close();
+				}
 			}
 			catch (TException& tx) {
 				regVal = false;
 				db.createTable();
 			   db.insertData(process);
-				cout << "ERROR: " << tx.what() << endl;
+				//cout << "ERROR: " << tx.what() << endl;
 			}
 
 	}
@@ -572,7 +743,7 @@ void Manager::sendStoredData(){
 			db.deleteData();
 		}
 		catch (TException& tx) {
-			cout << "ERROR: " << tx.what() << endl;
+			//cout << "ERROR: " << tx.what() << endl;
 		}
 
 }
@@ -612,7 +783,7 @@ void Manager::Register(){
 		}
 
 		catch (TException& tx) {
-			cout << "ERROR: " << tx.what() << endl;
+			//cout << "ERROR: " << tx.what() << endl;
 		}
 }
 void Manager::deviceClient(){
@@ -623,6 +794,7 @@ void Manager::deviceClient(){
 	line = manage.ConfigFile();
 	istringstream ss(line);
 	string token;
+	bool commandVal;
 
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
@@ -640,6 +812,7 @@ void Manager::deviceClient(){
 	device.type = type;
 	device.group = fileRead[1];
 	device.name= manage.getComputerName();
+
 	
 
 	do{
@@ -647,15 +820,29 @@ void Manager::deviceClient(){
 
 			transport->open();
 			regVal = client.registerDevice(device);
-			cout << "Registered" << endl;
+			cout << "Registered Initially!!" << endl;
+			transport->close();
+		}
+
+		catch (TException& tx) {
+			//cout << "ERROR: " << tx.what() << endl;
+		}
+	} while (!regVal);
+
+	do{
+		try {
+
+			transport->open();
+			commandVal = client.getCommands(device);
+			cout << "Command Function Called!!" << endl;
 
 			transport->close();
 		}
 
 		catch (TException& tx) {
-			cout << "ERROR: " << tx.what() << endl;
+			//cout << "ERROR: " << tx.what() << endl;
 		}
-	} while (!regVal);
+	} while (!commandVal);
 }
 
 void Manager::printError(TCHAR* msg)
@@ -709,3 +896,31 @@ string Manager::getTime() {
 
 	return str;
 }
+
+double Manager::getSystemMem(){
+	MEMORYSTATUSEX statex;
+
+	statex.dwLength = sizeof(statex); 
+
+	GlobalMemoryStatusEx(&statex);
+	return (float)statex.ullTotalPhys / (1024 * 1024*1024);
+
+}
+
+double Manager::getUsedMem(){
+	MEMORYSTATUSEX memInfo;
+	memInfo.dwLength = sizeof(MEMORYSTATUSEX);
+	GlobalMemoryStatusEx(&memInfo);
+	double totalVirtualMem = memInfo.ullTotalPageFile;
+
+	double totalPhysMem = memInfo.ullTotalPhys;
+
+	double physMemUsed = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
+
+	return physMemUsed/(1024*1024*1024);
+
+}
+
+
+
+

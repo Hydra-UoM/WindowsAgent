@@ -1,9 +1,11 @@
-﻿Build started 1/2/2016 6:19:57 PM.
-     1>Project "E:\AAA\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
+﻿Build started 1/3/2016 7:59:02 PM.
+     1>Project "C:\Users\Niro\Documents\GitHub\WindowsAgent\DataCollection\Project\Project.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\local\boost_1_59_0 /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows" /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D _CONSOLE /D _VARIADIC_MAX=8 /D _RELEASE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt centralNodeServiceV8_constants.cpp centralNodeServiceV8_types.cpp CPU.cpp Data.cpp DBHandler.cpp GetProcessID.cpp IO.cpp Manager.cpp Memory.cpp MyAccessRequestInformation.cpp MyAccountForWhichLogonFailed.cpp MyAdditionalInformation.cpp MyApplicationInformation.cpp MyCalloutInformation.cpp MyChangeInformation.cpp MyDBHandler.cpp MyDetailedAuthenticationInformation.cpp MyErrorInformation.cpp MyFailureInformation.cpp MyFilterInformation.cpp MyImpersonationLevel.cpp MyLayerInformation.cpp MyLogManager.cpp MyLogonType.cpp MyLogRetriever.cpp MyLogStructure.cpp MyLogStructureMaker.cpp MyNetworkInformation.cpp MyNewLogon.cpp MyObject.cpp MyProcessInformation.cpp MyProviderInformation.cpp MyRuleInformation.cpp MySubject.cpp MyTimeStamp.cpp MyUserAccountDetails.cpp MyUserAccountDetailsStructure.cpp ProcessStats.cpp ProcessStats_server.skeleton.cpp Process_constants.cpp Process_types.cpp RegisterDeviceService.cpp stdafx.cpp
+         F:\Project\VC\bin\CL.exe /c /IC:\local\boost_1_59_0 /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src\thrift\windows" /I"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\src" /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D _CONSOLE /D _VARIADIC_MAX=8 /D _RELEASE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt centralNodeServiceV8_constants.cpp centralNodeServiceV8_types.cpp CPU.cpp Data.cpp DBHandler.cpp GetProcessID.cpp IO.cpp Manager.cpp Memory.cpp MyAccessRequestInformation.cpp MyAccountForWhichLogonFailed.cpp MyAdditionalInformation.cpp MyApplicationInformation.cpp MyCalloutInformation.cpp MyChangeInformation.cpp MyDBHandler.cpp MyDetailedAuthenticationInformation.cpp MyErrorInformation.cpp MyFailureInformation.cpp MyFilterInformation.cpp MyImpersonationLevel.cpp MyLayerInformation.cpp MyLogManager.cpp MyLogonType.cpp MyLogRetriever.cpp MyLogStructure.cpp MyLogStructureMaker.cpp MyNetworkInformation.cpp MyNewLogon.cpp MyObject.cpp MyProcessInformation.cpp MyProviderInformation.cpp MyRuleInformation.cpp MySubject.cpp MyTimeStamp.cpp MyUserAccountDetails.cpp MyUserAccountDetailsStructure.cpp ProcessStats.cpp ProcessStats_server.skeleton.cpp Process_constants.cpp Process_types.cpp RegisterDeviceService.cpp stdafx.cpp
          centralNodeServiceV8_constants.cpp
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\centralNodeServiceV8_types.h(12): fatal error C1083: Cannot open include file: 'thrift/Thrift.h': No such file or directory
          centralNodeServiceV8_types.cpp
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\centralNodeServiceV8_types.h(12): fatal error C1083: Cannot open include file: 'thrift/Thrift.h': No such file or directory
          CPU.cpp
          Data.cpp
      1>Data.cpp(390): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
@@ -16,12 +18,11 @@
      1>Data.cpp(596): warning C4018: '<' : signed/unsigned mismatch
      1>Data.cpp(608): warning C4018: '<' : signed/unsigned mismatch
          DBHandler.cpp
-     1>DBHandler.cpp(157): warning C4244: 'argument' : conversion from 'double' to 'char', possible loss of data
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\RegisterDeviceService.h(10): fatal error C1083: Cannot open include file: 'thrift/TDispatchProcessor.h': No such file or directory
          GetProcessID.cpp
          IO.cpp
          Manager.cpp
-     1>Manager.cpp(40): warning C4101: 'num2' : unreferenced local variable
-     1>Manager.cpp(40): warning C4101: 'num1' : unreferenced local variable
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\RegisterDeviceService.h(10): fatal error C1083: Cannot open include file: 'thrift/TDispatchProcessor.h': No such file or directory
          Memory.cpp
          MyAccessRequestInformation.cpp
          MyAccountForWhichLogonFailed.cpp
@@ -44,16 +45,7 @@
          MyImpersonationLevel.cpp
          MyLayerInformation.cpp
          MyLogManager.cpp
-     1>MyLogManager.cpp(352): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(356): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(363): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(367): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(377): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(381): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(388): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(392): warning C4244: 'argument' : conversion from 'int64_t' to 'int', possible loss of data
-     1>MyLogManager.cpp(895): warning C4101: 'num2' : unreferenced local variable
-     1>MyLogManager.cpp(895): warning C4101: 'num1' : unreferenced local variable
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\RegisterDeviceService.h(10): fatal error C1083: Cannot open include file: 'thrift/TDispatchProcessor.h': No such file or directory
          MyLogonType.cpp
          MyLogRetriever.cpp
      1>MyLogRetriever.cpp(385): warning C4018: '<' : signed/unsigned mismatch
@@ -71,68 +63,20 @@
          MyUserAccountDetails.cpp
          MyUserAccountDetailsStructure.cpp
          ProcessStats.cpp
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\ProcessStats.h(10): fatal error C1083: Cannot open include file: 'thrift/TDispatchProcessor.h': No such file or directory
          ProcessStats_server.skeleton.cpp
-     1>e:\aaa\windowsagent\datacollection\project\Objects.h(219): warning C4244: '=' : conversion from 'DWORD' to 'float', possible loss of data
-     1>ProcessStats_server.skeleton.cpp(226): warning C4244: 'argument' : conversion from 'const int64_t' to 'int', possible loss of data
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\Objects.h(219): warning C4244: '=' : conversion from 'DWORD' to 'float', possible loss of data
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\ProcessStats.h(10): fatal error C1083: Cannot open include file: 'thrift/TDispatchProcessor.h': No such file or directory
          Process_constants.cpp
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\Process_types.h(12): fatal error C1083: Cannot open include file: 'thrift/Thrift.h': No such file or directory
          Compiling...
          Process_types.cpp
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\Process_types.h(12): fatal error C1083: Cannot open include file: 'thrift/Thrift.h': No such file or directory
          RegisterDeviceService.cpp
+     1>c:\users\niro\documents\github\windowsagent\datacollection\project\RegisterDeviceService.h(10): fatal error C1083: Cannot open include file: 'thrift/TDispatchProcessor.h': No such file or directory
          stdafx.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\AAA\WindowsAgent\DataCollection\Release\Project.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\local\boost_1_59_0\stage\lib /LIBPATH:"C:\Users\Jeyatharshini\Documents\thrift-0.9.2\lib\cpp\Release" sqlite3.lib "libboost_thread-vc120-mt-gd-1_59.lib" "libboost_chrono-vc120-mt-gd-1_59.lib" libthrift.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='requireAdministrator' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\AAA\WindowsAgent\DataCollection\Release\Project.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\AAA\WindowsAgent\DataCollection\Release\Project.lib" /MACHINE:X86 /SAFESEH Release\centralNodeServiceV8_constants.obj
-         Release\centralNodeServiceV8_types.obj
-         Release\CPU.obj
-         Release\Data.obj
-         Release\DBHandler.obj
-         Release\GetProcessID.obj
-         Release\IO.obj
-         Release\Manager.obj
-         Release\Memory.obj
-         Release\MyAccessRequestInformation.obj
-         Release\MyAccountForWhichLogonFailed.obj
-         Release\MyAdditionalInformation.obj
-         Release\MyApplicationInformation.obj
-         Release\MyCalloutInformation.obj
-         Release\MyChangeInformation.obj
-         Release\MyDBHandler.obj
-         Release\MyDetailedAuthenticationInformation.obj
-         Release\MyErrorInformation.obj
-         Release\MyFailureInformation.obj
-         Release\MyFilterInformation.obj
-         Release\MyImpersonationLevel.obj
-         Release\MyLayerInformation.obj
-         Release\MyLogManager.obj
-         Release\MyLogonType.obj
-         Release\MyLogRetriever.obj
-         Release\MyLogStructure.obj
-         Release\MyLogStructureMaker.obj
-         Release\MyNetworkInformation.obj
-         Release\MyNewLogon.obj
-         Release\MyObject.obj
-         Release\MyProcessInformation.obj
-         Release\MyProviderInformation.obj
-         Release\MyRuleInformation.obj
-         Release\MySubject.obj
-         Release\MyTimeStamp.obj
-         Release\MyUserAccountDetails.obj
-         Release\MyUserAccountDetailsStructure.obj
-         Release\ProcessStats.obj
-         Release\ProcessStats_server.skeleton.obj
-         Release\Process_constants.obj
-         Release\Process_types.obj
-         Release\RegisterDeviceService.obj
-         Release\stdafx.obj
-         Generating code
-     1>e:\aaa\windowsagent\datacollection\project\mydbhandler.cpp(392): warning C4715: 'MyDBHandler::retrieveCurrentUserData' : not all control paths return a value
-     1>e:\aaa\windowsagent\datacollection\project\manager.cpp(58): warning C4715: 'Manager::ConfigFile' : not all control paths return a value
-     1>e:\aaa\windowsagent\datacollection\project\mylogmanager.cpp(912): warning C4715: 'MyLogManager::ConfigFile' : not all control paths return a value
-     1>e:\aaa\windowsagent\datacollection\project\mydbhandler.cpp(434): warning C4715: 'MyDBHandler::retrieveUsersData' : not all control paths return a value
-     1>e:\aaa\windowsagent\datacollection\project\mydbhandler.cpp(558): warning C4715: 'MyDBHandler::retrieveLogData' : not all control paths return a value
-         Finished generating code
-         Project.vcxproj -> E:\AAA\WindowsAgent\DataCollection\Release\Project.exe
-     1>Done Building Project "E:\AAA\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\Niro\Documents\GitHub\WindowsAgent\DataCollection\Project\Project.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:01:09.95
+Time Elapsed 00:00:27.01
