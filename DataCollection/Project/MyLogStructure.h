@@ -60,13 +60,13 @@ public:
 	myStruct::myLogStructure toStruct(int summarizationLevel, string processName1, string eventCategory1);
 
 	//private:
-	const wchar_t* message; // change it into wstring from const wchar_t* makes exception
+	const wchar_t* message = L""; // change it into wstring from const wchar_t* makes exception
 	//LPWSTR eventMessageString;
-	LPWSTR levelMessageString;
-	LPWSTR taskMessageString;
-	LPWSTR opCodeMessageString;
-	LPWSTR channelMessageString;
-	LPWSTR providerMessageString;
+	LPWSTR levelMessageString = L"";
+	LPWSTR taskMessageString = L"";
+	LPWSTR opCodeMessageString = L"";
+	LPWSTR channelMessageString = L"";
+	LPWSTR providerMessageString = L"";
 
 	int version;
 	int level;
@@ -76,8 +76,8 @@ public:
 	UINT64 eventRecordID;
 	UINT32 executionProcessID;
 	UINT32 executionThreadID;
-	const wchar_t* channel;
-	LPCWSTR computer;
+	const wchar_t* channel = L"";
+	LPCWSTR computer = L"";
 	DWORD EventID;
 	MyTimeStamp timeStamp;
 	//WCHAR* processImageName;

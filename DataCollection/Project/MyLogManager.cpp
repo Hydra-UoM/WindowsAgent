@@ -157,140 +157,134 @@ void MyLogManager::getLogRelatedInformation(int16_t timeInMinute, int16_t summar
 				switch (eventIndex)
 				{
 				case 18:
+					//std::cout << "18:USER_DEFINED" << std::endl;
 					logList = MyLogManager::getLogs(timeInMinute * 60000, summarizationLevel, logType, process_name, securityLevel);
 					logListToBeSent = changeLogListFormatToBeSent(logList/**,"USER_DEFINED",process_name*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed18" << std::endl;
+					std::cout << "18:PUSHED_USER_DEFINED" << std::endl;
 					break;
 				case 17:
+					//std::cout << "17:LOGON_FAILURES" << std::endl;
 					logList = MyLogManager::getLogonFailures(timeInMinute * 60000, summarizationLevel);
 					logListToBeSent = changeLogListFormatToBeSent(logList/**,"LOGON_FAILURES", ""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed17" << std::endl;
+					//std::cout << "17:PUSHED_LOGON_FAILURES" << std::endl;
 					break;
 				case 25:
+					//std::cout << "25:SUCCESS_LOGIN" << std::endl;
 					logList = MyLogManager::getSuccessLoginInformation(timeInMinute * 60000, summarizationLevel);
 					logListToBeSent = changeLogListFormatToBeSent(logList/**, "SUCCESS_LOGIN",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed25" << std::endl;
+					//std::cout << "25:PUSHED_SUCCESS_LOGIN" << std::endl;
 					break;
 				case 27:
+					//std::cout << "27:FIREWALL_EVENTS" << std::endl;
 					logList = MyLogManager::getFirewallEvents(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**, "FIREWALL_EVENTS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed27" << std::endl;
+					//std::cout << "27:PUSHED_FIREWALL_EVENTS" << std::endl;
 
 					break;
 				case 28:
+					//std::cout << "28:ACCOUNT_USAGE" << std::endl;
 					logList = MyLogManager::getAccountUsage(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**,"ACCOUNT_USAGE",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed28" << std::endl;
+					//std::cout << "28:PUSHED_ACCOUNT_USAGE" << std::endl;
 
 					break;
 				case 29:
+					//std::cout << "29:GROUP_POLICY_EDITORS" << std::endl;
 					logList = MyLogManager::getGroupPolicyEditors(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent(logList/**,"GROUP_POLICY_EDITORS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed29" << std::endl;
+					//std::cout << "29:PUSHED_GROUP_POLICY_EDITORS" << std::endl;
 
 					break;
 				case 30:
+					//std::cout << "30:WINDOWS_DEFENDER_EVENTS" << std::endl;
 					logList = MyLogManager::getWindowsDefenderEvents(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent(logList/**,"WINDOWS_DEFENDER_EVENTS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed30" << std::endl;
-
+					//std::cout << "30:PUSHED_WINDOWS_DEFENDER_EVENTS" << std::endl;
 					break;
 				case 31:
+					//std::cout << "31:MOBILE_DEVICE_EVENTS" << std::endl;
 					logList = MyLogManager::getMobileDeviceEvents(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent(logList/**, "MOBILE_DEVICE_EVENTS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed31" << std::endl;
-
+					//std::cout << "31:PUSHED_MOBILE_DEVICE_EVENTS" << std::endl;
 					break;
 				case 32:
+					//std::cout << "32:PRINTING_SERVICES" << std::endl;
 					logList = MyLogManager::getPrintingServicesEvents(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent(logList/**,"PRINTING_SERVICES",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed32" << std::endl;
-
+					//std::cout << "32:PUSHED_PRINTING_SERVICES" << std::endl;
 					break;
 				case 33:
+					//std::cout << "33:SYSTEM_OR_SERVICE_FAILURES" << std::endl;
 					logList = MyLogManager::getSystemOrServiceFailures(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**,"SYSTEM_OR_SERVICE_FAILURES",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed33" << std::endl;
-
+					//std::cout << "33:PUSHED_SYSTEM_OR_SERVICE_FAILURES" << std::endl;
 					break;
 				case 34:
+					//std::cout << "34:CLEARING_EVENT_LOGS" << std::endl;
 					logList = MyLogManager::getClearingEventLogs(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**,"CLEARING_EVENT_LOGS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed34" << std::endl;
-
+					//std::cout << "34:PUSHED_CLEARING_EVENT_LOGS" << std::endl;
 					break;
 				case 35:
+					//std::cout << "35:WINDOWS_UPDATE_ERRORS" << std::endl;
 					logList = MyLogManager::getWindowsUpdateErrors(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**, "WINDOWS_UPDATE_ERRORS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed35" << std::endl;
-
+					//std::cout << "35:PUSHED_WINDOWS_UPDATE_ERRORS" << std::endl;
 					break;
 				case 36:
+					//std::cout << "36:APPLICATION_CRASHES" << std::endl;
 					logList = MyLogManager::getApplicationCrashes(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**,"APPLICATION_CRASHES",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed36" << std::endl;
-
+					//std::cout << "36:PUSHED_APPLICATION_CRASHES" << std::endl;
 					break;
 				case 37:
+					//std::cout << "37:SOFTWARE_AND_SERVICES_INSTALLATION" << std::endl;
 					logList = MyLogManager::getSoftwareAndServicesInstallation(timeInMinute * 60000, summarizationLevel);
-
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**, "SOFTWARE_AND_SERVICES_INSTALLATION",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed37" << std::endl;
-
+					//std::cout << "37:PUSHED_SOFTWARE_AND_SERVICES_INSTALLATION" << std::endl;
 					break;
 				case 38:
+					//std::cout << "38:REMOTE_LOGIN_EVENTS" << std::endl;
 					logList = MyLogManager::getRemoteLoginEvents(timeInMinute * 60000, summarizationLevel);
 					logListToBeSent = changeLogListFormatToBeSent
 						(logList/**, "REMOTE_LOGIN_EVENTS",""*/);
 					client.pushLogInfoTest1(logListToBeSent);
-					std::cout << "Pushed38" << std::endl;
-
+					//std::cout << "38:PUSHED_REMOTE_LOGIN_EVENTS" << std::endl;
 					break;
 				case 22:
+					//std::cout << "22:CURRENT_LOGGED_IN_USER" << std::endl;
 					getCurrentLoggedInUserInfo = MyLogManager::getCurrentLoggedInUser(summarizationLevel);
-
 					getCurrentLoggedInUserInfoToBeSent = changeUserInfoFormatToBeSent(getCurrentLoggedInUserInfo);
 					client.pushCurrentUserInfo(getCurrentLoggedInUserInfoToBeSent);
-					std::cout << "pushed22" << std::endl;
-
+					//std::cout << "22:PUSHED_CURRENT_LOGGED_IN_USER" << std::endl;
 					break;
 				case 23:
+					//std::cout << "23:ALL_USERS" << std::endl;
 					getAllUserInformationList = MyLogManager::getAllUserInformation(summarizationLevel);
-
 					getAllUserInformationListToBeSent = changeUserInfoListFormatToBeSent(getAllUserInformationList);
 					client.pushUsersInfo(getAllUserInformationListToBeSent);
-					std::cout << "pushed23" << std::endl;
+					//std::cout << "23:PUSHED_ALL_USERS" << std::endl;
 					break;
 				}
 				transport->close();
@@ -340,6 +334,81 @@ void MyLogManager::stopExecution()
 	isNotCompleted = true;
 }
 
+vector<myStruct::myLogStructure> MyLogManager::getAllLogs(int timePeriodInMilliSeconds1, int summarizationLevel)
+{
+	vector<myStruct::myLogStructure>logStructList;
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAllProcesses("Security", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAllProcesses("Application", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAllProcesses("System", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAllProcesses("Setup", timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAllProcesses("Operational", timePeriodInMilliSeconds1, summarizationLevel);
+
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSystemList.size() + logStructSetupList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+
+	return logStructList;
+}
+
+vector<myStruct::myLogStructure> MyLogManager::getAllLogsWithSecurityConstraint(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel)
+{
+	vector<myStruct::myLogStructure>logStructList;
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAllProcessesWithSecurityConstraint("Security", str_securityLevel,timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAllProcessesWithSecurityConstraint("Application", str_securityLevel,timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAllProcessesWithSecurityConstraint("System", str_securityLevel,timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAllProcessesWithSecurityConstraint("Setup", str_securityLevel, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAllProcessesWithSecurityConstraint("Operational", str_securityLevel, timePeriodInMilliSeconds1, summarizationLevel);
+
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSystemList.size() + logStructSetupList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+
+	return logStructList;
+}
+
+vector<myStruct::myLogStructure> MyLogManager::getAllLogsForAProcess(int timePeriodInMilliSeconds1, int summarizationLevel, std::string process_name)
+{
+	vector<myStruct::myLogStructure>logStructList;
+
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAProcess("Security", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAProcess("Application", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAProcess("Setup", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAProcess("System", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAProcess("Operational", process_name, timePeriodInMilliSeconds1, summarizationLevel);
+	
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSetupList.size() + logStructSystemList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+	return logStructList;
+}
+
+vector<myStruct::myLogStructure> MyLogManager::getAllLogsForAProcessWithSecurityConstraint(string securityLevel, string process_name, int timeGapInMilliSeconds, int summarizationLevel)
+{
+	vector<myStruct::myLogStructure>logStructList;
+	vector<myStruct::myLogStructure>logStructSecurityList = getLogsForAProcessWithSecurityConstraint("Security", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructApplicationList = getLogsForAProcessWithSecurityConstraint("Application", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSetupList = getLogsForAProcessWithSecurityConstraint("Setup", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructSystemList = getLogsForAProcessWithSecurityConstraint("System", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+	vector<myStruct::myLogStructure>logStructOperationalList = getLogsForAProcessWithSecurityConstraint("Operational", securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
+
+	logStructList.reserve(logStructSecurityList.size() + logStructApplicationList.size() + logStructSetupList.size() + logStructSystemList.size() + logStructOperationalList.size());
+	logStructList.insert(logStructList.end(), logStructSecurityList.begin(), logStructSecurityList.end());
+	logStructList.insert(logStructList.end(), logStructApplicationList.begin(), logStructApplicationList.end());
+	logStructList.insert(logStructList.end(), logStructSetupList.begin(), logStructSetupList.end());
+	logStructList.insert(logStructList.end(), logStructSystemList.begin(), logStructSystemList.end());
+	logStructList.insert(logStructList.end(), logStructOperationalList.begin(), logStructOperationalList.end());
+	return logStructList;
+}
+
 vector<myStruct::myLogStructure> MyLogManager::getLogs(int timeGapInMilliSeconds, int64_t summarizationLevel, string logType, string process_name, string securityLevel)
 {
 	MyLogRetriever myLogRetriever("USER_DEFINED");
@@ -349,22 +418,22 @@ vector<myStruct::myLogStructure> MyLogManager::getLogs(int timeGapInMilliSeconds
 		{
 			if (securityLevel.compare("") == 0) // without constraint
 			{
-				return myLogRetriever.getAllLogs("ALL", timeGapInMilliSeconds, summarizationLevel);
+				return getAllLogs(timeGapInMilliSeconds, summarizationLevel);
 			}
 			else // with constraint
 			{
-				return myLogRetriever.getAllLogs(securityLevel, timeGapInMilliSeconds, summarizationLevel);
+				return getAllLogsWithSecurityConstraint(securityLevel, timeGapInMilliSeconds, summarizationLevel);
 			}
 		}
 		else // need to send all logs for a process
 		{
 			if (securityLevel.compare("") == 0) // without constraint
 			{
-				return myLogRetriever.getAllLogsForAProcess("ALL", timeGapInMilliSeconds, summarizationLevel, process_name);
+				return getAllLogsForAProcess(timeGapInMilliSeconds, summarizationLevel, process_name);
 			}
 			else // with constraint
 			{
-				return myLogRetriever.getAllLogsForAProcess(securityLevel, timeGapInMilliSeconds, summarizationLevel, process_name);
+				return getAllLogsForAProcessWithSecurityConstraint(securityLevel, process_name, timeGapInMilliSeconds, summarizationLevel);
 			}
 		}
 	}
@@ -402,7 +471,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcesses(string log
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	/**
 	int i = 0;
 	for (iteratorStruct = logStructList.begin(); iteratorStruct != logStructList.end(); iteratorStruct++)
@@ -422,8 +491,11 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcess(string logType
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, "ALL", process_name, timeGapInMilliSeconds);
 	myLogRetriever.getSetOfProcessIDs(process_name);
-	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	if (myLogRetriever.process_id->size() > 0)
+	{
+		myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+		logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
+	}
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -435,7 +507,7 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAllProcessesWithSecurit
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -447,8 +519,11 @@ vector<myStruct::myLogStructure> MyLogManager::getLogsForAProcessWithSecurityCon
 	//vector<myStruct::myLogStructure>::iterator iteratorStruct;
 	myLogRetriever.handleLogRetrivalInfo(logType, securityLevel, timeGapInMilliSeconds);
 	myLogRetriever.getSetOfProcessIDs(process_name);
-	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	if (myLogRetriever.process_id->size() > 0)
+	{
+		myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery, myLogRetriever.process_id);
+		logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
+	}
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -519,9 +594,9 @@ vector<myStruct::myLogStructure> MyLogManager::getFirewallEvents(int timeGapInMi
 	MyLogRetriever myLogRetriever("FIREWALL_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.handleFirewallEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.handleFirewallEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -531,9 +606,9 @@ vector<myStruct::myLogStructure> MyLogManager::getAccountUsage(int timeGapInMill
 	MyLogRetriever myLogRetriever("ACCOUNT_USAGE");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.handleAccountUsage(timeGapInMilliSeconds, 50000);
+	myLogRetriever.handleAccountUsage(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -543,9 +618,9 @@ vector<myStruct::myLogStructure> MyLogManager::getGroupPolicyEditors(int timeGap
 	MyLogRetriever myLogRetriever("GROUP_POLICY_EDITORS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.groupPolicyEditorsEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.groupPolicyEditorsEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures,summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -555,9 +630,9 @@ vector<myStruct::myLogStructure> MyLogManager::getWindowsDefenderEvents(int time
 	MyLogRetriever myLogRetriever("WINDOWS_DEFENDER_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.windowsDefenderEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.windowsDefenderEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -567,9 +642,9 @@ vector<myStruct::myLogStructure> MyLogManager::getMobileDeviceEvents(int timeGap
 	MyLogRetriever myLogRetriever("MOBILE_DEVICE_EVENTS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.mobileDeviceEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.mobileDeviceEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -579,9 +654,9 @@ vector<myStruct::myLogStructure> MyLogManager::getPrintingServicesEvents(int tim
 	MyLogRetriever myLogRetriever("PRINTING_SERVICES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.printingServicesEvents(timeGapInMilliSeconds, 50000);
+	myLogRetriever.printingServicesEvents(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -591,9 +666,9 @@ vector<myStruct::myLogStructure> MyLogManager::getSystemOrServiceFailures(int ti
 	MyLogRetriever myLogRetriever("SYSTEM_OR_SERVICE_FAILURES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	myLogRetriever.systemOrServiceFailures(timeGapInMilliSeconds, 50000);
+	myLogRetriever.systemOrServiceFailures(timeGapInMilliSeconds);
 	myLogRetriever.getEvents(myLogRetriever.lpcwstrLogType, myLogRetriever.pwsQuery);
-	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, myLogRetriever.numberOfAvailableEvents, summarizationLevel);
+	logStructList = myLogRetriever.returnResultedEventWithStruct(myLogRetriever.myLogStructures, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -603,7 +678,7 @@ vector<myStruct::myLogStructure> MyLogManager::getClearingEventLogs(int timeGapI
 	MyLogRetriever myLogRetriever("CLEARING_EVENT_LOGS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.clearingEventLogs(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.clearingEventLogs(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -613,7 +688,7 @@ vector<myStruct::myLogStructure> MyLogManager::getWindowsUpdateErrors(int timeGa
 	MyLogRetriever myLogRetriever("WINDOWS_UPDATE_ERRORS");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.windowsUpdateErrors(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.windowsUpdateErrors(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -623,7 +698,7 @@ vector<myStruct::myLogStructure> MyLogManager::getApplicationCrashes(int timeGap
 	MyLogRetriever myLogRetriever("APPLICATION_CRASHES");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.applicationCrashes(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.applicationCrashes(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }
@@ -633,7 +708,7 @@ vector<myStruct::myLogStructure> MyLogManager::getSoftwareAndServicesInstallatio
 	MyLogRetriever myLogRetriever("SOFTWARE_AND_SERVICES_INSTALLATION");
 	vector<myStruct::myLogStructure>logStructList;
 	vector<myStruct::myLogStructure>::iterator iteratorStruct;
-	logStructList = myLogRetriever.softwareAndServicesInstallation(timeGapInMilliSeconds, summarizationLevel, 50000);
+	logStructList = myLogRetriever.softwareAndServicesInstallation(timeGapInMilliSeconds, summarizationLevel);
 	myLogRetriever.releaseMemory();
 	return logStructList;
 }

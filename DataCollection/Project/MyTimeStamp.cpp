@@ -17,8 +17,8 @@ MyTimeStamp::MyTimeStamp(ULONGLONG ullTimeStamp1,SYSTEMTIME& st1,FILETIME& ft1):
 		month = st.wMonth;
 		day = st.wDay;
 		year = st.wYear;
-		hour = st.wHour;
-		minute = st.wMinute;
+		minute = (st.wMinute + 30) % 60;
+		hour = (st.wHour + 5) + (st.wMinute + 30) / 60;
 		second = st.wSecond;
 }
 

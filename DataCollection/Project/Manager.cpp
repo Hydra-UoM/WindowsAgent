@@ -33,7 +33,10 @@ bool tRetired;
 bool regVal = false;
 DBHandler db;
 vector<string> url;
+<<<<<<< HEAD
 double receiveData=0.0;
+=======
+>>>>>>> origin/master
 Manager::Manager()
 {
 }
@@ -194,12 +197,20 @@ void CALLBACK WinEventProc(HWINEVENTHOOK hWinEventHook, DWORD event, HWND hwnd, 
 			if (strcmp(className, "Chrome_WidgetWin_1") != 0) {
 				std::string str = BstrToStdString(bstrValue);
 				std::string prefix("http");
+<<<<<<< HEAD
 				//std::string prefix2("www")
 				if (!str.compare(0, prefix.size(), prefix)){
 					//cout << "URL:" << str << "\n" << endl;
 					
 					url.push_back(str);
 					
+=======
+				if (!str.compare(0, prefix.size(), prefix)){
+					//cout << "URL:" << str << "\n" << endl;
+
+					url.push_back(str);
+
+>>>>>>> origin/master
 				}
 
 			}
@@ -228,6 +239,7 @@ void Manager::getURLS(){
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+<<<<<<< HEAD
 	vector<string>().swap(url);
 	Unhook();
 }
@@ -246,6 +258,11 @@ void Manager::getSysReceiveData(double samples){
 	}
 	
 }
+=======
+
+	Unhook();
+}
+>>>>>>> origin/master
 
 vector<ProcessF> Manager::FilterAllProcesses(double value1, double value2, double value3, double value4)
 {
@@ -279,6 +296,7 @@ void Manager::retire(){
 void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, double value3, double value4, vector<string> processList)
 {
 
+<<<<<<< HEAD
 	auto urlfunc = &Manager::getURLS;
 	std::thread thread2(urlfunc);
 	thread2.detach();
@@ -287,6 +305,12 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	std::thread thread3(datafunc, samples);
 	thread3.detach();
 
+=======
+	auto memfunc = &Manager::getURLS;
+	std::thread thread2(memfunc);
+	thread2.detach();
+
+>>>>>>> origin/master
 	string line;
 	Manager manage;
 	vector<string> fileRead;
@@ -296,8 +320,13 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
 	}
+<<<<<<< HEAD
 	
 	
+=======
+
+
+>>>>>>> origin/master
 	Data d;
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -306,6 +335,12 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 	boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
 	boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
 	RegisterDeviceServiceClient client(protocol);
+<<<<<<< HEAD
+=======
+
+	string prj = "Project";
+	string  fir = "firefox";
+>>>>>>> origin/master
 
 	string prj = "Project";
 	string  fir = "firefox";
@@ -325,6 +360,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		proc.timestamp = manage.getTime();
 		proc.totalReceivedData = receiveData;
 		
+
 
 		if (!processList.empty()){
 
@@ -356,7 +392,11 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 
 
 							}
+<<<<<<< HEAD
 							
+=======
+
+>>>>>>> origin/master
 
 							else{
 								vector<string>().swap(proc.URLs);
@@ -378,7 +418,11 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 		if (processList.empty()){
 			for (auto i : d.myData)
 			{
+<<<<<<< HEAD
 				if (get<0>(i).c_str()== prj || (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4))
+=======
+				if (get<0>(i).c_str() == prj || (get<5>(i) >= value1 && get<4>(i) >= value2 && get<8>(i) >= value3 && get<9>(i) >= value4))
+>>>>>>> origin/master
 				{
 					if (get<0>(i).c_str() == fir)
 					{
@@ -388,6 +432,7 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 						proc.sentData = (get<8>(i));
 						proc.receiveData = (get<9>(i));
 						proc.pid = std::to_string(get<1>(i));
+<<<<<<< HEAD
 					      for (auto i : url) {
 							proc.URLs.push_back(i);
 							
@@ -400,6 +445,20 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 
 					}
 					
+=======
+						for (auto i : url) {
+							proc.URLs.push_back(i);
+
+						}
+
+						vector<string>().swap(url);
+						cout << proc.name;
+						process.push_back(proc);
+
+
+					}
+
+>>>>>>> origin/master
 
 					else{
 						vector<string>().swap(proc.URLs);
@@ -410,11 +469,16 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 						proc.receiveData = (get<9>(i));
 						proc.pid = std::to_string(get<1>(i));
 						process.push_back(proc);
+<<<<<<< HEAD
 						
+=======
+
+>>>>>>> origin/master
 					}
 				}
 			}
 		}
+<<<<<<< HEAD
 		
 			  manage.sendStoredData();
 			  cout << receiveData << "\n";
@@ -437,6 +501,30 @@ void Manager::FilterAllAvgProcesses(int samples, double value1, double value2, d
 			   db.insertData(process);
 				//cout << "ERROR: " << tx.what() << endl;
 			}
+=======
+
+		manage.sendStoredData();
+
+		try {
+
+			if (regVal == false){
+				manage.Register();
+			}
+
+			if (regVal == true){
+				transport->open();
+				val = client.pushProcessesInfo(process);
+				cout << "Data Pushed" << endl;
+				transport->close();
+			}
+		}
+		catch (TException& tx) {
+			regVal = false;
+			db.createTable();
+			db.insertData(process);
+			//cout << "ERROR: " << tx.what() << endl;
+		}
+>>>>>>> origin/master
 
 	}
 	tCompleted = true;
@@ -506,7 +594,7 @@ vector<ProcessF> Manager::GetAllProcesses()
 
 void Manager::fullData(int time){
 
-	
+
 	Manager manage;
 	vector<ProcessF> procF;
 	string line;
@@ -514,7 +602,7 @@ void Manager::fullData(int time){
 	line = manage.ConfigFile();
 	istringstream ss(line);
 	string token;
-	
+
 	while (getline(ss, token, ',')) {
 		fileRead.push_back(token);
 	}
@@ -529,7 +617,7 @@ void Manager::fullData(int time){
 		if (regVal == false){
 			manage.Register();
 		}
-		
+
 		procF = manage.GetAllProcesses();
 		bool val = false;
 		std::vector<HydraCN::ThriftAgentProcessInfo> process;
@@ -548,25 +636,25 @@ void Manager::fullData(int time){
 		}
 
 		manage.sendStoredData();
-			try {
-				if (regVal == false){
-					manage.Register();
-				}
+		try {
+			if (regVal == false){
+				manage.Register();
+			}
 
-				transport->open();
-				cout << "Data Pushed" << endl;
-				val = client.pushProcessesInfo(process);
-				transport->close();
-			}
-			catch (TException& tx) {
-				regVal = false;
-				db.createTable();
-				db.insertData(process);
-				
-				cout << "ERROR: " << tx.what() << endl;
-			}
-			Sleep(time * 60000);
-		} 
+			transport->open();
+			cout << "Data Pushed" << endl;
+			val = client.pushProcessesInfo(process);
+			transport->close();
+		}
+		catch (TException& tx) {
+			regVal = false;
+			db.createTable();
+			db.insertData(process);
+
+			cout << "ERROR: " << tx.what() << endl;
+		}
+		Sleep(time * 60000);
+	}
 
 	tCompleted = true;
 }
@@ -612,19 +700,19 @@ void Manager::currentData(int time){
 			process.push_back(proc);
 		}
 		manage.sendStoredData();
-			try {
-				transport->open();
-				cout << "Data Pushed" << endl;
-				val = client.pushProcessesInfo(process);
-				transport->close();
-			}
-			catch (TException& tx) {
-				regVal = false;
-				db.createTable();
-				db.insertData(process);
-				
-				cout << "ERROR: " << tx.what() << endl;
-			}
+		try {
+			transport->open();
+			cout << "Data Pushed" << endl;
+			val = client.pushProcessesInfo(process);
+			transport->close();
+		}
+		catch (TException& tx) {
+			regVal = false;
+			db.createTable();
+			db.insertData(process);
+
+			cout << "ERROR: " << tx.what() << endl;
+		}
 		Sleep(time * 60000);
 	}
 	tCompleted = true;
@@ -649,12 +737,12 @@ void Manager::importantData(int time){
 	RegisterDeviceServiceClient client(protocol);
 	HydraCN::ThriftAgentProcessInfo proc;
 	std::vector<HydraCN::ThriftAgentProcessInfo> process;
-	
+
 	while (tRetired == true){
 		if (regVal == false){
 			manage.Register();
 		}
-		
+
 		for (int i = 0; i < time + 2; i++)
 		{
 			d.GetData();
@@ -679,19 +767,19 @@ void Manager::importantData(int time){
 			}
 		}
 		manage.sendStoredData();
-			try {
-				transport->open();
-				cout << "Data Pushed" << endl;
-				val = client.pushProcessesInfo(process);
-				transport->close();
-			}
-			catch (TException& tx) {
-				regVal = false;
-				db.createTable();
-				db.insertData(process);
-				
-				cout << "ERROR: " << tx.what() << endl;
-			}
+		try {
+			transport->open();
+			cout << "Data Pushed" << endl;
+			val = client.pushProcessesInfo(process);
+			transport->close();
+		}
+		catch (TException& tx) {
+			regVal = false;
+			db.createTable();
+			db.insertData(process);
+
+			cout << "ERROR: " << tx.what() << endl;
+		}
 	}
 	tCompleted = true;
 }
@@ -732,6 +820,7 @@ void Manager::sendStoredData(){
 	}
 
 	bool val = false;
+<<<<<<< HEAD
 		try {
 			if (regVal == false){
 				manage.Register();
@@ -744,7 +833,21 @@ void Manager::sendStoredData(){
 		}
 		catch (TException& tx) {
 			//cout << "ERROR: " << tx.what() << endl;
+=======
+	try {
+		if (regVal == false){
+			manage.Register();
+>>>>>>> origin/master
 		}
+		transport->open();
+		cout << "Data Pushed" << endl;
+		val = client.pushProcessesInfo(process);
+		transport->close();
+		db.deleteData();
+	}
+	catch (TException& tx) {
+		//cout << "ERROR: " << tx.what() << endl;
+	}
 
 }
 void Manager::Register(){
@@ -774,17 +877,23 @@ void Manager::Register(){
 	device.name = manage.getComputerName();
 
 
-		try {
+	try {
 
-			transport->open();
-			regVal =client.registerDevice(device);
-			cout << "Registered" << endl;
-			transport->close();
-		}
+		transport->open();
+		regVal = client.registerDevice(device);
+		cout << "Registered" << endl;
+		transport->close();
+	}
 
+<<<<<<< HEAD
 		catch (TException& tx) {
 			//cout << "ERROR: " << tx.what() << endl;
 		}
+=======
+	catch (TException& tx) {
+		//cout << "ERROR: " << tx.what() << endl;
+	}
+>>>>>>> origin/master
 }
 void Manager::deviceClient(){
 	Manager manage;
@@ -811,9 +920,15 @@ void Manager::deviceClient(){
 	device.IPAddress = manage.getIP();
 	device.type = type;
 	device.group = fileRead[1];
+<<<<<<< HEAD
 	device.name= manage.getComputerName();
 
 	
+=======
+	device.name = manage.getComputerName();
+
+
+>>>>>>> origin/master
 
 	do{
 		try {
@@ -903,7 +1018,7 @@ double Manager::getSystemMem(){
 	statex.dwLength = sizeof(statex); 
 
 	GlobalMemoryStatusEx(&statex);
-	return (float)statex.ullTotalPhys / (1024 * 1024*1024);
+	return (float)statex.ullTotalPhys / (1024 * 1024 * 1024);
 
 }
 
@@ -917,7 +1032,7 @@ double Manager::getUsedMem(){
 
 	double physMemUsed = memInfo.ullTotalPhys - memInfo.ullAvailPhys;
 
-	return physMemUsed/(1024*1024*1024);
+	return physMemUsed / (1024 * 1024 * 1024);
 
 }
 

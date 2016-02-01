@@ -60,5 +60,10 @@ public:
 	static vector<myStruct::myUserAccountDetailsStruct> getAllUserInformation(int summarizationLevel);
 	static void sendStoredData();
 	static void storeImportantLogData();
+
+	static vector<myStruct::myLogStructure> getAllLogs(int timePeriodInMilliSeconds1, int summarizationLevel);
+	static vector<myStruct::myLogStructure> getAllLogsWithSecurityConstraint(std::string str_securityLevel, int timePeriodInMilliSeconds1, int summarizationLevel);
+	static vector<myStruct::myLogStructure> getAllLogsForAProcess(int timePeriodInMilliSeconds1, int summarizationLevel, std::string process_name);
+	static vector<myStruct::myLogStructure> getAllLogsForAProcessWithSecurityConstraint(string securityLevel, string process_name, int timeGapInMilliSeconds, int summarizationLevel);
 };
 #endif

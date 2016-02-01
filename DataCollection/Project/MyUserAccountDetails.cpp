@@ -15,6 +15,7 @@
 #include <sddl.h>               /* for ConvertSidToStringSid function */
 #include <Lmcons.h>
 #include <tchar.h>
+#include <wtsapi32.h>
 
 using namespace myStruct;
 using namespace std;
@@ -33,13 +34,13 @@ MyUserAccountDetails::MyUserAccountDetails()
 
 myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUserInformation(int summarizationLevel)
 {
-	LPWSTR  computerName;
-	LPWSTR usri4_name;
+	LPWSTR  computerName = L"";
+	LPWSTR usri4_name = L"";
 	DWORD usri4_password_age;
 	DWORD usri4_priv;
 	DWORD usri4_flags;
-	LPWSTR usri4_usr_comment;
-	LPWSTR usri4_parms;
+	LPWSTR usri4_usr_comment = L"";
+	LPWSTR usri4_parms = L"";
 	DWORD usri4_last_logon;
 	DWORD usri4_last_logoff;
 	DWORD usri4_acct_expires;
@@ -51,7 +52,7 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 	DWORD usri4_country_code;
 	DWORD usri4_code_page;
 	DWORD usri4_primary_group_id;
-	LPWSTR usri4_profile;
+	LPWSTR usri4_profile = L"";
 	DWORD usri4_password_expired;
 	DWORD usri4_auth_flags;
 
@@ -63,114 +64,154 @@ myStruct::myUserAccountDetailsStruct MyUserAccountDetails::getCurrentLoggedOnUse
 	NET_API_STATUS nStatus;
 
 	LPTSTR sStringSid = NULL;
-
-	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
-	TCHAR  infoBuf[INFO_BUFFER_SIZE];
+	TCHAR  infoBuf2[INFO_BUFFER_SIZE];
 	DWORD  bufCharCount = INFO_BUFFER_SIZE;
 	// Get and display the name of the computer. 
 	bufCharCount = INFO_BUFFER_SIZE;
-	if (!GetComputerName(infoBuf, &bufCharCount))
+	if (!GetComputerName(infoBuf2, &bufCharCount))
 		printError(TEXT("GetComputerName"));
-	computerName = infoBuf;
+	computerName = infoBuf2;
 	//_tprintf(TEXT("\tComputer name:      %s\n"), infoBuf);
 
-	// Get and display the user name. 
-	bufCharCount = INFO_BUFFER_SIZE;
-	if (!GetUserName(infoBuf, &bufCharCount))
-		printError(TEXT("GetUserName"));
-	usri4_name = infoBuf;
-	//_tprintf(TEXT("\nUser name:          %s\n"), infoBuf);
+	PWTS_SESSION_INFO pSessions = NULL;
+	DWORD dwCount = 0;
+	DWORD dwError;
 
-	// Call the NetUserGetInfo function.
-	LPCWSTR servername = NULL;
-	LPCWSTR username = infoBuf;//L"Jeyatharshini";
-	nStatus = NetUserGetInfo(servername, username, dwLevel, (LPBYTE *)& pBuf);
-	// If the call succeeds, print the user information.
-	if (nStatus == NERR_Success)
+	if (!WTSEnumerateSessions(WTS_CURRENT_SERVER_HANDLE, 0, 1, &pSessions, &dwCount))
 	{
-		if (pBuf != NULL)
-		{
-			pBuf4 = (LPUSER_INFO_4)pBuf;
-			usri4_name = pBuf4->usri4_name;
-			//wprintf(L"\tPassword: %s\n", pBuf4->usri4_password);
-			usri4_password_age = pBuf4->usri4_password_age;
-
-			usri4_priv = pBuf4->usri4_priv;
-			
-			//wprintf(L"\tHome directory: %s\n", pBuf4->usri4_home_dir);
-			//wprintf(L"\tComment: %s\n", pBuf4->usri4_comment);
-			usri4_flags = pBuf4->usri4_flags;
-		
-			//wprintf(L"\tScript path: %s\n", pBuf4->usri4_script_path);
-			
-			//wprintf(L"\tFull name: %s\n", pBuf4->usri4_full_name);
-			usri4_usr_comment = pBuf4->usri4_usr_comment;
-			
-			usri4_parms = pBuf4->usri4_parms;
-			
-			//wprintf(L"\tWorkstations: %s\n", pBuf4->usri4_workstations);
-			usri4_last_logon = pBuf4->usri4_last_logon;
-			
-			usri4_last_logoff = pBuf4->usri4_last_logoff;
-			
-			usri4_acct_expires = pBuf4->usri4_acct_expires;
-			
-			usri4_max_storage = pBuf4->usri4_max_storage;
-			
-			usri4_units_per_week = pBuf4->usri4_units_per_week;
-
-			usri4_logon_hours = pBuf4->usri4_logon_hours;
-			
-			/**
-			for (j = 0; j < 21; j++)
-			{
-			printf(" %x", (BYTE)pBuf4->usri4_logon_hours[j]);
-			}
-			*/
-			usri4_bad_pw_count = pBuf4->usri4_bad_pw_count;
-			
-			usri4_num_logons = pBuf4->usri4_num_logons;
-			
-			//(L"\tLogon server: %s\n", pBuf4->usri4_logon_server);
-			usri4_country_code = pBuf4->usri4_country_code;
-			
-			usri4_code_page = pBuf4->usri4_code_page;
-			
-			/*
-			if (ConvertSidToStringSid(pBuf4->usri4_user_sid, &sStringSid))
-			{
-				wprintf(L"\tUser SID: %s\n", sStringSid);
-				LocalFree(sStringSid);
-			}
-			else
-				wprintf(L"ConvertSidToSTringSid failed with error %d\n",GetLastError());
-			*/
-			usri4_primary_group_id = pBuf4->usri4_primary_group_id;
-			usri4_auth_flags = pBuf4->usri4_auth_flags;
-			
-			usri4_profile = pBuf4->usri4_profile;
-			
-			//wprintf(L"\tHome directory drive letter: %s\n",pBuf4->usri4_home_dir_drive);
-			usri4_password_expired = pBuf4->usri4_password_expired;
-			
-			myCurrentUserAccountStructure = new MyUserAccountDetailsStructure(computerName, usri4_name, usri4_password_age, usri4_priv,
-				usri4_flags, usri4_usr_comment, usri4_parms, usri4_last_logon, usri4_last_logoff,
-				usri4_acct_expires, usri4_max_storage, usri4_units_per_week, usri4_logon_hours,
-				usri4_bad_pw_count, usri4_num_logons, usri4_country_code, usri4_code_page,
-				usri4_primary_group_id, usri4_profile, usri4_password_expired, usri4_auth_flags);
-		}
-		// Otherwise, print the system error.
-		//
-		else
-			fprintf(stderr, "NetUserGetinfo failed with error: %d\n", nStatus);
-		//
-		// Free the allocated memory.
-		//
+		dwError = GetLastError();
+		std::cout << "Error enumerating sessions: " << dwError << std::endl;
 	}
-	//myCurrentUserAccountStructure->print();
-	myUserAccountDetailsStruct userString = myCurrentUserAccountStructure->toUserDetailsStruct(summarizationLevel);
+	else if (dwCount == 0)
+	{
+		std::cout << "No sessions available" << std::endl;
+	}
+	else
+	{
+		DWORD dwNumActive = 0;
+		for (DWORD i = 0; i < dwCount; ++i)
+		{
+			if (pSessions[i].State == WTSActive) // has a logged in user
+			{
+				++dwNumActive;
+
+				//std::cout << "Session: " << pSessions[i].SessionId << ", ";
+
+				DWORD dwBufSize = 0;
+
+				if (!WTSQuerySessionInformationW(WTS_CURRENT_SERVER_HANDLE, pSessions[i].SessionId, WTSUserName, &usri4_name, &dwBufSize))
+				{
+					dwError = GetLastError();
+					std::cout << "Error getting username: " << dwError;
+				}
+				else
+				{
+					// Call the NetUserGetInfo function.
+					LPCWSTR servername = NULL;
+					LPCWSTR username = usri4_name;//L"Jeyatharshini";
+					nStatus = NetUserGetInfo(servername, username, dwLevel, (LPBYTE *)& pBuf);
+					if (nStatus == NERR_Success)
+					{
+						if (pBuf != NULL)
+						{
+							pBuf4 = (LPUSER_INFO_4)pBuf;
+							//usri4_name = pBuf4->usri4_name;
+							//wprintf(L"\tPassword: %s\n", pBuf4->usri4_password);
+							usri4_password_age = pBuf4->usri4_password_age;
+
+							usri4_priv = pBuf4->usri4_priv;
+
+							//wprintf(L"\tHome directory: %s\n", pBuf4->usri4_home_dir);
+							//wprintf(L"\tComment: %s\n", pBuf4->usri4_comment);
+							usri4_flags = pBuf4->usri4_flags;
+
+							//wprintf(L"\tScript path: %s\n", pBuf4->usri4_script_path);
+
+							//wprintf(L"\tFull name: %s\n", pBuf4->usri4_full_name);
+							usri4_usr_comment = pBuf4->usri4_usr_comment;
+
+							usri4_parms = pBuf4->usri4_parms;
+
+							//wprintf(L"\tWorkstations: %s\n", pBuf4->usri4_workstations);
+							usri4_last_logon = pBuf4->usri4_last_logon;
+
+							usri4_last_logoff = pBuf4->usri4_last_logoff;
+
+							usri4_acct_expires = pBuf4->usri4_acct_expires;
+
+							usri4_max_storage = pBuf4->usri4_max_storage;
+
+							usri4_units_per_week = pBuf4->usri4_units_per_week;
+
+							usri4_logon_hours = pBuf4->usri4_logon_hours;
+
+							/**
+							for (j = 0; j < 21; j++)
+							{
+							printf(" %x", (BYTE)pBuf4->usri4_logon_hours[j]);
+							}
+							*/
+							usri4_bad_pw_count = pBuf4->usri4_bad_pw_count;
+
+							usri4_num_logons = pBuf4->usri4_num_logons;
+
+							//(L"\tLogon server: %s\n", pBuf4->usri4_logon_server);
+							usri4_country_code = pBuf4->usri4_country_code;
+
+							usri4_code_page = pBuf4->usri4_code_page;
+
+							/*
+							if (ConvertSidToStringSid(pBuf4->usri4_user_sid, &sStringSid))
+							{
+							wprintf(L"\tUser SID: %s\n", sStringSid);
+							LocalFree(sStringSid);
+							}
+							else
+							wprintf(L"ConvertSidToSTringSid failed with error %d\n",GetLastError());
+							*/
+							usri4_primary_group_id = pBuf4->usri4_primary_group_id;
+							usri4_auth_flags = pBuf4->usri4_auth_flags;
+
+							usri4_profile = pBuf4->usri4_profile;
+
+							//wprintf(L"\tHome directory drive letter: %s\n",pBuf4->usri4_home_dir_drive);
+							usri4_password_expired = pBuf4->usri4_password_expired;
+						}
+						// Otherwise, print the system error.
+						//
+
+						else
+						{
+							fprintf(stderr, "NetUserGetinfo failed with error: %d\n", nStatus);
+						}
+						//
+						// Free the allocated memory.
+						//
+					}
+				}
+			}
+		}
+
+		if (!dwNumActive)
+			std::cout << "No users are logged in" << std::endl;
+	}
+	
+	myCurrentUserAccountStructure = new MyUserAccountDetailsStructure(computerName, usri4_name, usri4_password_age, usri4_priv,
+		usri4_flags, usri4_usr_comment, usri4_parms, usri4_last_logon, usri4_last_logoff,
+		usri4_acct_expires, usri4_max_storage, usri4_units_per_week, usri4_logon_hours,
+		usri4_bad_pw_count, usri4_num_logons, usri4_country_code, usri4_code_page,
+		usri4_primary_group_id, usri4_profile, usri4_password_expired, usri4_auth_flags);
+	myUserAccountDetailsStruct userString;
+	if (myCurrentUserAccountStructure != NULL)
+	{
+		userString = myCurrentUserAccountStructure->toUserDetailsStruct(summarizationLevel);
+	}
 	if (pBuf != NULL)
+	{
+		WTSFreeMemory(usri4_name);
+		WTSFreeMemory(pSessions);
 		NetApiBufferFree(pBuf);
+	}
 	//wprintf(L"++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 	return userString;
 }
