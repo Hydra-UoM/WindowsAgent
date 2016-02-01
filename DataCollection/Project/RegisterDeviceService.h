@@ -8,7 +8,7 @@
 #define RegisterDeviceService_H
 
 #include <thrift/TDispatchProcessor.h>
-#include "centralNodeServiceV10_types.h"
+#include "centralNodeServiceV11_types.h"
 
 namespace HydraCN {
 
@@ -329,8 +329,8 @@ typedef struct _RegisterDeviceService_pushProcessesInfo_args__isset {
 class RegisterDeviceService_pushProcessesInfo_args {
  public:
 
-  static const char* ascii_fingerprint; // = "175EAA2D5EEECDCCC68AE13255E25B63";
-  static const uint8_t binary_fingerprint[16]; // = {0x17,0x5E,0xAA,0x2D,0x5E,0xEE,0xCD,0xCC,0xC6,0x8A,0xE1,0x32,0x55,0xE2,0x5B,0x63};
+  static const char* ascii_fingerprint; // = "A5E9118306C547B97C6F586880AE72F0";
+  static const uint8_t binary_fingerprint[16]; // = {0xA5,0xE9,0x11,0x83,0x06,0xC5,0x47,0xB9,0x7C,0x6F,0x58,0x68,0x80,0xAE,0x72,0xF0};
 
   RegisterDeviceService_pushProcessesInfo_args(const RegisterDeviceService_pushProcessesInfo_args&);
   RegisterDeviceService_pushProcessesInfo_args& operator=(const RegisterDeviceService_pushProcessesInfo_args&);
@@ -366,8 +366,8 @@ class RegisterDeviceService_pushProcessesInfo_args {
 class RegisterDeviceService_pushProcessesInfo_pargs {
  public:
 
-  static const char* ascii_fingerprint; // = "175EAA2D5EEECDCCC68AE13255E25B63";
-  static const uint8_t binary_fingerprint[16]; // = {0x17,0x5E,0xAA,0x2D,0x5E,0xEE,0xCD,0xCC,0xC6,0x8A,0xE1,0x32,0x55,0xE2,0x5B,0x63};
+  static const char* ascii_fingerprint; // = "A5E9118306C547B97C6F586880AE72F0";
+  static const uint8_t binary_fingerprint[16]; // = {0xA5,0xE9,0x11,0x83,0x06,0xC5,0x47,0xB9,0x7C,0x6F,0x58,0x68,0x80,0xAE,0x72,0xF0};
 
 
   virtual ~RegisterDeviceService_pushProcessesInfo_pargs() throw();

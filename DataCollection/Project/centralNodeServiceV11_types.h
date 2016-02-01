@@ -4,8 +4,8 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#ifndef centralNodeServiceV3_TYPES_H
-#define centralNodeServiceV3_TYPES_H
+#ifndef centralNodeServiceV11_TYPES_H
+#define centralNodeServiceV11_TYPES_H
 
 #include <iosfwd>
 
@@ -18,17 +18,6 @@
 
 
 namespace HydraCN {
-
-struct CommandType {
-  enum type {
-    USER_DEFINED_COMMAND = 0,
-    FULL_INFO_COMMAND = 1,
-    CRITICAL_EVENTS_COMMAND = 2,
-    INSTANT_EVENTS_COMMAND = 3
-  };
-};
-
-extern const std::map<int, const char*> _CommandType_VALUES_TO_NAMES;
 
 class Device;
 
@@ -79,24 +68,24 @@ class myTimeStamp;
 class myLogStructure;
 
 typedef struct _Device__isset {
-  _Device__isset() : deviceId(false), IPAddress(false), port(false), type(false), group(false), commandType(false) {}
+  _Device__isset() : deviceId(false), IPAddress(false), port(false), type(false), group(false), name(false) {}
   bool deviceId :1;
   bool IPAddress :1;
   bool port :1;
   bool type :1;
   bool group :1;
-  bool commandType :1;
+  bool name :1;
 } _Device__isset;
 
 class Device {
  public:
 
-  static const char* ascii_fingerprint; // = "01C9456ECDC9B13B3949B013F9E488D4";
-  static const uint8_t binary_fingerprint[16]; // = {0x01,0xC9,0x45,0x6E,0xCD,0xC9,0xB1,0x3B,0x39,0x49,0xB0,0x13,0xF9,0xE4,0x88,0xD4};
+  static const char* ascii_fingerprint; // = "873CB9E5A4C10A7ECE7476FD192F55EE";
+  static const uint8_t binary_fingerprint[16]; // = {0x87,0x3C,0xB9,0xE5,0xA4,0xC1,0x0A,0x7E,0xCE,0x74,0x76,0xFD,0x19,0x2F,0x55,0xEE};
 
   Device(const Device&);
   Device& operator=(const Device&);
-  Device() : deviceId(), IPAddress(), port(), type(), group(), commandType((CommandType::type)0) {
+  Device() : deviceId(), IPAddress(), port(), type(), group(), name() {
   }
 
   virtual ~Device() throw();
@@ -105,7 +94,7 @@ class Device {
   std::string port;
   std::string type;
   std::string group;
-  CommandType::type commandType;
+  std::string name;
 
   _Device__isset __isset;
 
@@ -119,7 +108,7 @@ class Device {
 
   void __set_group(const std::string& val);
 
-  void __set_commandType(const CommandType::type val);
+  void __set_name(const std::string& val);
 
   bool operator == (const Device & rhs) const
   {
@@ -133,7 +122,7 @@ class Device {
       return false;
     if (!(group == rhs.group))
       return false;
-    if (!(commandType == rhs.commandType))
+    if (!(name == rhs.name))
       return false;
     return true;
   }
@@ -152,7 +141,7 @@ class Device {
 void swap(Device &a, Device &b);
 
 typedef struct _ThriftAgentProcessInfo__isset {
-  _ThriftAgentProcessInfo__isset() : name(false), packageName(false), ramUsage(false), cpuUsage(false), sentData(false), receiveData(false), pid(false), type(false), mac(false) {}
+  _ThriftAgentProcessInfo__isset() : name(false), packageName(false), ramUsage(false), cpuUsage(false), sentData(false), receiveData(false), pid(false), type(false), mac(false), timestamp(false), URLs(false), totalReceivedData(false) {}
   bool name :1;
   bool packageName :1;
   bool ramUsage :1;
@@ -162,17 +151,20 @@ typedef struct _ThriftAgentProcessInfo__isset {
   bool pid :1;
   bool type :1;
   bool mac :1;
+  bool timestamp :1;
+  bool URLs :1;
+  bool totalReceivedData :1;
 } _ThriftAgentProcessInfo__isset;
 
 class ThriftAgentProcessInfo {
  public:
 
-  static const char* ascii_fingerprint; // = "D7B12137D03A7E62E08F64DAEDA995A6";
-  static const uint8_t binary_fingerprint[16]; // = {0xD7,0xB1,0x21,0x37,0xD0,0x3A,0x7E,0x62,0xE0,0x8F,0x64,0xDA,0xED,0xA9,0x95,0xA6};
+  static const char* ascii_fingerprint; // = "0F645F098E311D3C3E4EACFD901ABA11";
+  static const uint8_t binary_fingerprint[16]; // = {0x0F,0x64,0x5F,0x09,0x8E,0x31,0x1D,0x3C,0x3E,0x4E,0xAC,0xFD,0x90,0x1A,0xBA,0x11};
 
   ThriftAgentProcessInfo(const ThriftAgentProcessInfo&);
   ThriftAgentProcessInfo& operator=(const ThriftAgentProcessInfo&);
-  ThriftAgentProcessInfo() : name(), packageName(), ramUsage(0), cpuUsage(0), sentData(0), receiveData(0), pid(), type(), mac() {
+  ThriftAgentProcessInfo() : name(), packageName(), ramUsage(0), cpuUsage(0), sentData(0), receiveData(0), pid(), type(), mac(), timestamp(), totalReceivedData(0) {
   }
 
   virtual ~ThriftAgentProcessInfo() throw();
@@ -185,6 +177,9 @@ class ThriftAgentProcessInfo {
   std::string pid;
   std::string type;
   std::string mac;
+  std::string timestamp;
+  std::vector<std::string>  URLs;
+  double totalReceivedData;
 
   _ThriftAgentProcessInfo__isset __isset;
 
@@ -206,6 +201,12 @@ class ThriftAgentProcessInfo {
 
   void __set_mac(const std::string& val);
 
+  void __set_timestamp(const std::string& val);
+
+  void __set_URLs(const std::vector<std::string> & val);
+
+  void __set_totalReceivedData(const double val);
+
   bool operator == (const ThriftAgentProcessInfo & rhs) const
   {
     if (!(name == rhs.name))
@@ -226,6 +227,12 @@ class ThriftAgentProcessInfo {
       return false;
     if (!(mac == rhs.mac))
       return false;
+    if (!(timestamp == rhs.timestamp))
+      return false;
+    if (!(URLs == rhs.URLs))
+      return false;
+    if (!(totalReceivedData == rhs.totalReceivedData))
+      return false;
     return true;
   }
   bool operator != (const ThriftAgentProcessInfo &rhs) const {
@@ -243,7 +250,7 @@ class ThriftAgentProcessInfo {
 void swap(ThriftAgentProcessInfo &a, ThriftAgentProcessInfo &b);
 
 typedef struct _myUserAccountDetailsStruct__isset {
-  _myUserAccountDetailsStruct__isset() : computerName(false), usri4_name(false), usri4_password_age(false), usri4_priv(false), usri4_flags(false), usri4_usr_comment(false), usri4_parms(false), usri4_last_logon(false), usri4_last_logoff(false), usri4_acct_expires(false), usri4_max_storage(false), usri4_units_per_week(false), usri4_logon_hours(false), usri4_bad_pw_count(false), usri4_num_logons(false), usri4_country_code(false), usri4_code_page(false), usri4_primary_group_id(false), usri4_profile(false), usri4_password_expired(false), usri4_auth_flags(false) {}
+  _myUserAccountDetailsStruct__isset() : computerName(false), usri4_name(false), usri4_password_age(false), usri4_priv(false), usri4_flags(false), usri4_usr_comment(false), usri4_parms(false), usri4_last_logon(false), usri4_last_logoff(false), usri4_acct_expires(false), usri4_max_storage(false), usri4_units_per_week(false), usri4_logon_hours(false), usri4_bad_pw_count(false), usri4_num_logons(false), usri4_country_code(false), usri4_code_page(false), usri4_primary_group_id(false), usri4_profile(false), usri4_password_expired(false), usri4_auth_flags(false), mac(false) {}
   bool computerName :1;
   bool usri4_name :1;
   bool usri4_password_age :1;
@@ -265,17 +272,18 @@ typedef struct _myUserAccountDetailsStruct__isset {
   bool usri4_profile :1;
   bool usri4_password_expired :1;
   bool usri4_auth_flags :1;
+  bool mac :1;
 } _myUserAccountDetailsStruct__isset;
 
 class myUserAccountDetailsStruct {
  public:
 
-  static const char* ascii_fingerprint; // = "14A937C7B20A7673F42A4C3F91819A82";
-  static const uint8_t binary_fingerprint[16]; // = {0x14,0xA9,0x37,0xC7,0xB2,0x0A,0x76,0x73,0xF4,0x2A,0x4C,0x3F,0x91,0x81,0x9A,0x82};
+  static const char* ascii_fingerprint; // = "718995DDEEB51481B32A298AFBFBF8DC";
+  static const uint8_t binary_fingerprint[16]; // = {0x71,0x89,0x95,0xDD,0xEE,0xB5,0x14,0x81,0xB3,0x2A,0x29,0x8A,0xFB,0xFB,0xF8,0xDC};
 
   myUserAccountDetailsStruct(const myUserAccountDetailsStruct&);
   myUserAccountDetailsStruct& operator=(const myUserAccountDetailsStruct&);
-  myUserAccountDetailsStruct() : computerName(), usri4_name(), usri4_password_age(), usri4_priv(), usri4_flags(), usri4_usr_comment(), usri4_parms(), usri4_last_logon(), usri4_last_logoff(), usri4_acct_expires(), usri4_max_storage(), usri4_units_per_week(), usri4_logon_hours(), usri4_bad_pw_count(), usri4_num_logons(), usri4_country_code(), usri4_code_page(), usri4_primary_group_id(), usri4_profile(), usri4_password_expired(), usri4_auth_flags() {
+  myUserAccountDetailsStruct() : computerName(), usri4_name(), usri4_password_age(), usri4_priv(), usri4_flags(), usri4_usr_comment(), usri4_parms(), usri4_last_logon(), usri4_last_logoff(), usri4_acct_expires(), usri4_max_storage(), usri4_units_per_week(), usri4_logon_hours(), usri4_bad_pw_count(), usri4_num_logons(), usri4_country_code(), usri4_code_page(), usri4_primary_group_id(), usri4_profile(), usri4_password_expired(), usri4_auth_flags(), mac() {
   }
 
   virtual ~myUserAccountDetailsStruct() throw();
@@ -300,6 +308,7 @@ class myUserAccountDetailsStruct {
   std::string usri4_profile;
   std::string usri4_password_expired;
   std::string usri4_auth_flags;
+  std::string mac;
 
   _myUserAccountDetailsStruct__isset __isset;
 
@@ -345,6 +354,8 @@ class myUserAccountDetailsStruct {
 
   void __set_usri4_auth_flags(const std::string& val);
 
+  void __set_mac(const std::string& val);
+
   bool operator == (const myUserAccountDetailsStruct & rhs) const
   {
     if (!(computerName == rhs.computerName))
@@ -388,6 +399,8 @@ class myUserAccountDetailsStruct {
     if (!(usri4_password_expired == rhs.usri4_password_expired))
       return false;
     if (!(usri4_auth_flags == rhs.usri4_auth_flags))
+      return false;
+    if (!(mac == rhs.mac))
       return false;
     return true;
   }
@@ -1554,7 +1567,7 @@ class myTimeStamp {
 void swap(myTimeStamp &a, myTimeStamp &b);
 
 typedef struct _myLogStructure__isset {
-  _myLogStructure__isset() : message(false), levelMessageString(false), taskMessageString(false), opCodeMessageString(false), channelMessageString(false), providerMessageString(false), keywords(false), executionProcessID(false), executionThreadID(false), computer(false), EventID(false), mySubject1(false), myProviderInformation1(false), myObject1(false), myNetworkInformation1(false), myLayerInformation1(false), myFilterInformation1(false), myChangeInformation1(false), myCalloutInformation1(false), myApplicationInformation1(false), myAccessRequestInformation1(false), myRuleInformation1(false), myErrorInformation1(false), myProcessInformation1(false), myLogonType1(false), myImpersonationLevel1(false), myAccountForWhichLogonFailed1(false), myFailureInformation1(false), myNewLogon1(false), myDetailedAuthenticationInformation1(false), myTimeStamp1(false), mac(false) {}
+  _myLogStructure__isset() : message(false), levelMessageString(false), taskMessageString(false), opCodeMessageString(false), channelMessageString(false), providerMessageString(false), keywords(false), executionProcessID(false), executionThreadID(false), computer(false), EventID(false), mySubject1(false), myProviderInformation1(false), myObject1(false), myNetworkInformation1(false), myLayerInformation1(false), myFilterInformation1(false), myChangeInformation1(false), myCalloutInformation1(false), myApplicationInformation1(false), myAccessRequestInformation1(false), myRuleInformation1(false), myErrorInformation1(false), myProcessInformation1(false), myLogonType1(false), myImpersonationLevel1(false), myAccountForWhichLogonFailed1(false), myFailureInformation1(false), myNewLogon1(false), myDetailedAuthenticationInformation1(false), myTimeStamp1(false), mac(false), eventCategory(false), processName(false) {}
   bool message :1;
   bool levelMessageString :1;
   bool taskMessageString :1;
@@ -1587,17 +1600,19 @@ typedef struct _myLogStructure__isset {
   bool myDetailedAuthenticationInformation1 :1;
   bool myTimeStamp1 :1;
   bool mac :1;
+  bool eventCategory :1;
+  bool processName :1;
 } _myLogStructure__isset;
 
 class myLogStructure {
  public:
 
-  static const char* ascii_fingerprint; // = "5E94DF497B92961E06D4DCFD1263FDA0";
-  static const uint8_t binary_fingerprint[16]; // = {0x5E,0x94,0xDF,0x49,0x7B,0x92,0x96,0x1E,0x06,0xD4,0xDC,0xFD,0x12,0x63,0xFD,0xA0};
+  static const char* ascii_fingerprint; // = "BD77504154E7AE11E36E0AAF493D8B66";
+  static const uint8_t binary_fingerprint[16]; // = {0xBD,0x77,0x50,0x41,0x54,0xE7,0xAE,0x11,0xE3,0x6E,0x0A,0xAF,0x49,0x3D,0x8B,0x66};
 
   myLogStructure(const myLogStructure&);
   myLogStructure& operator=(const myLogStructure&);
-  myLogStructure() : message(), levelMessageString(), taskMessageString(), opCodeMessageString(), channelMessageString(), providerMessageString(), keywords(), executionProcessID(), executionThreadID(), computer(), EventID(), mac() {
+  myLogStructure() : message(), levelMessageString(), taskMessageString(), opCodeMessageString(), channelMessageString(), providerMessageString(), keywords(), executionProcessID(), executionThreadID(), computer(), EventID(), mac(), eventCategory(), processName() {
   }
 
   virtual ~myLogStructure() throw();
@@ -1633,6 +1648,8 @@ class myLogStructure {
   myDetailedAuthenticationInformation myDetailedAuthenticationInformation1;
   myTimeStamp myTimeStamp1;
   std::string mac;
+  std::string eventCategory;
+  std::string processName;
 
   _myLogStructure__isset __isset;
 
@@ -1700,6 +1717,10 @@ class myLogStructure {
 
   void __set_mac(const std::string& val);
 
+  void __set_eventCategory(const std::string& val);
+
+  void __set_processName(const std::string& val);
+
   bool operator == (const myLogStructure & rhs) const
   {
     if (!(message == rhs.message))
@@ -1765,6 +1786,10 @@ class myLogStructure {
     if (!(myTimeStamp1 == rhs.myTimeStamp1))
       return false;
     if (!(mac == rhs.mac))
+      return false;
+    if (!(eventCategory == rhs.eventCategory))
+      return false;
+    if (!(processName == rhs.processName))
       return false;
     return true;
   }

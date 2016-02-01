@@ -4,7 +4,7 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "centralNodeServiceV10_types.h"
+#include "centralNodeServiceV11_types.h"
 
 #include <algorithm>
 #include <ostream>
@@ -252,8 +252,12 @@ void ThriftAgentProcessInfo::__set_URLs(const std::vector<std::string> & val) {
   this->URLs = val;
 }
 
-const char* ThriftAgentProcessInfo::ascii_fingerprint = "40456E6D5B67D49BBB9A788AA6949F6F";
-const uint8_t ThriftAgentProcessInfo::binary_fingerprint[16] = {0x40,0x45,0x6E,0x6D,0x5B,0x67,0xD4,0x9B,0xBB,0x9A,0x78,0x8A,0xA6,0x94,0x9F,0x6F};
+void ThriftAgentProcessInfo::__set_totalReceivedData(const double val) {
+  this->totalReceivedData = val;
+}
+
+const char* ThriftAgentProcessInfo::ascii_fingerprint = "0F645F098E311D3C3E4EACFD901ABA11";
+const uint8_t ThriftAgentProcessInfo::binary_fingerprint[16] = {0x0F,0x64,0x5F,0x09,0x8E,0x31,0x1D,0x3C,0x3E,0x4E,0xAC,0xFD,0x90,0x1A,0xBA,0x11};
 
 uint32_t ThriftAgentProcessInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -375,6 +379,14 @@ uint32_t ThriftAgentProcessInfo::read(::apache::thrift::protocol::TProtocol* ipr
           xfer += iprot->skip(ftype);
         }
         break;
+      case 12:
+        if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
+          xfer += iprot->readDouble(this->totalReceivedData);
+          this->__isset.totalReceivedData = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -444,6 +456,10 @@ uint32_t ThriftAgentProcessInfo::write(::apache::thrift::protocol::TProtocol* op
   }
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("totalReceivedData", ::apache::thrift::protocol::T_DOUBLE, 12);
+  xfer += oprot->writeDouble(this->totalReceivedData);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   oprot->decrementRecursionDepth();
@@ -463,6 +479,7 @@ void swap(ThriftAgentProcessInfo &a, ThriftAgentProcessInfo &b) {
   swap(a.mac, b.mac);
   swap(a.timestamp, b.timestamp);
   swap(a.URLs, b.URLs);
+  swap(a.totalReceivedData, b.totalReceivedData);
   swap(a.__isset, b.__isset);
 }
 
@@ -478,6 +495,7 @@ ThriftAgentProcessInfo::ThriftAgentProcessInfo(const ThriftAgentProcessInfo& oth
   mac = other8.mac;
   timestamp = other8.timestamp;
   URLs = other8.URLs;
+  totalReceivedData = other8.totalReceivedData;
   __isset = other8.__isset;
 }
 ThriftAgentProcessInfo& ThriftAgentProcessInfo::operator=(const ThriftAgentProcessInfo& other9) {
@@ -492,6 +510,7 @@ ThriftAgentProcessInfo& ThriftAgentProcessInfo::operator=(const ThriftAgentProce
   mac = other9.mac;
   timestamp = other9.timestamp;
   URLs = other9.URLs;
+  totalReceivedData = other9.totalReceivedData;
   __isset = other9.__isset;
   return *this;
 }
@@ -509,6 +528,7 @@ std::ostream& operator<<(std::ostream& out, const ThriftAgentProcessInfo& obj) {
   out << ", " << "mac=" << to_string(obj.mac);
   out << ", " << "timestamp=" << to_string(obj.timestamp);
   out << ", " << "URLs=" << to_string(obj.URLs);
+  out << ", " << "totalReceivedData=" << to_string(obj.totalReceivedData);
   out << ")";
   return out;
 }
